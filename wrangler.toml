@@ -20,3 +20,7 @@ migrations_dir = "migrations"
 # [[r2_buckets]]
 # binding = "BUCKET"
 # bucket_name = "sahanlar-egzoz-bucket"
+
+routes = [
+  { pattern = "www.sahanlaregzozexhaust.com", custom_domain = true }
+]
