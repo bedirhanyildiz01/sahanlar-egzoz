@@ -1,0 +1,18 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "sahanlar-egzoz"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# You can set environment variables here if needed
+JWT_SECRET = "super-secret-egzoz-key-321!_admin_sec"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sahanlar_egzoz_db"
+database_id = "6082b495-e801-4045-8a15-18e2db7c9f2a"
+migrations_dir = "migrations"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "sahanlar-egzoz-bucket"

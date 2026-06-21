@@ -1,0 +1,1 @@
+globalThis.__RSC_MANIFEST=(globalThis.__RSC_MANIFEST||{});globalThis.__RSC_MANIFEST["/api/auth/logout/route"]={"moduleLoading":{"prefix":"/_next/"},"ssrModuleMapping":{},"edgeSSRModuleMapping":{},"clientModules":{},"entryCSSFiles":{"C:\\Users\\Monster\\OneDrive\\Masaüstü\\sahanlar-egzoz\\src\\app\\api\\auth\\logout\\route":[]},"rscModuleMapping":{},"edgeRscModuleMapping":{}};
