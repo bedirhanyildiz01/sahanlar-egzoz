@@ -22,5 +22,7 @@ migrations_dir = "migrations"
 # bucket_name = "sahanlar-egzoz-bucket"
 
 routes = [
-  { pattern = "www.sahanlaregzozexhaust.com", custom_domain = true }
+  { pattern = "www.sahanlaregzozexhaust.com", custom_domain = true },
+  { pattern = "sahanlaregzozexhaust.com", custom_domain = true }
 ]
+
