@@ -18,6 +18,8 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProductDetailPage(props: PageProps) {
   const { id } = await props.params;
   const productId = parseInt(id, 10);

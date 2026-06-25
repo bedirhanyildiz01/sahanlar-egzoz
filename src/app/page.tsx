@@ -4,6 +4,8 @@ import { getDb, products, productCarCompatibility, cars } from '@/db';
 import { eq, inArray } from 'drizzle-orm';
 import { Disc, ShieldAlert } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage() {
   const db = getDb();
 
