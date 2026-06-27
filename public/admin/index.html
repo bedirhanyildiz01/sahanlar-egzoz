@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Giriş — Şahanlar Egzoz</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔩</text></svg>">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">🔩</div>
+      <div class="login-logo-title">ŞAHANLAR EGZOZ</div>
+      <div class="login-logo-sub">Admin Paneli</div>
+    </div>
+
+    <form id="login-form" autocomplete="off">
+      <div class="form-group" style="margin-bottom:16px">
+        <label class="form-label required" for="username">Kullanıcı Adı</label>
+        <input
+          type="text"
+          id="username"
+          class="form-input"
+          placeholder="admin"
+          autocomplete="username"
+          required>
+      </div>
+
+      <div class="form-group" style="margin-bottom:24px">
+        <label class="form-label required" for="password">Şifre</label>
+        <div style="position:relative">
+          <input
+            type="password"
+            id="password"
+            class="form-input"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            required
+            style="padding-right:44px">
+          <button
+            type="button"
+            id="toggle-password"
+            style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;color:var(--text-muted);font-size:1rem;cursor:pointer;padding:4px"
+            title="Şifreyi göster/gizle">
+            👁️
+          </button>
+        </div>
+      </div>
+
+      <div id="login-error" style="display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:var(--radius-sm);padding:10px 14px;font-size:0.8rem;color:#f87171;margin-bottom:16px;text-align:center"></div>
+
+      <button type="submit" class="btn btn-primary" style="width:100%;padding:13px" id="login-btn">
+        🔐 Giriş Yap
+      </button>
+    </form>
+
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);text-align:center">
+      <a href="/" style="font-size:0.78rem;color:var(--text-muted);transition:var(--transition)" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">
+        ← Siteye Dön
+      </a>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { auth } from '/admin/js/auth.js';
+
+// Already logged in?
+auth.isAuthenticated().then(yes => {
+  if (yes) window.location.href = '/admin/dashboard.html';
+});
+
+// Toggle password visibility
+document.getElementById('toggle-password').addEventListener('click', () => {
+  const input = document.getElementById('password');
+  input.type = input.type === 'password' ? 'text' : 'password';
+});
+
+// Login form
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  const btn = document.getElementById('login-btn');
+  const errorEl = document.getElementById('login-error');
+
+  if (!username || !password) return;
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Giriş yapılıyor...';
+  errorEl.style.display = 'none';
+
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.token) {
+      auth.setSession(data.token, data.user);
+      window.location.href = '/admin/dashboard.html';
+    } else {
+      errorEl.textContent = data.error || 'Giriş başarısız. Bilgilerinizi kontrol edin.';
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = '🔐 Giriş Yap';
+    }
+  } catch (err) {
+    errorEl.textContent = 'Bağlantı hatası. Lütfen tekrar deneyin.';
+    errorEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = '🔐 Giriş Yap';
+  }
+});
+</script>
+</body>
+</html>
