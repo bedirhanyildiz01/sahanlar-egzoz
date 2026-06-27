@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ürün Yönetimi — Şahanlar Egzoz Admin</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔩</text></svg>">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon">🔩</div>
+      <div class="sidebar-brand-text">ŞAHANLAR EGZOZ<small>Admin Paneli</small></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Ana Menü</div>
+      <a href="/admin/dashboard.html" class="sidebar-link"><span class="icon">📊</span> Dashboard</a>
+      <a href="/admin/products.html" class="sidebar-link active"><span class="icon">📦</span> Ürün Yönetimi</a>
+      <a href="/admin/add-product.html" class="sidebar-link"><span class="icon">➕</span> Ürün Ekle</a>
+      <div class="sidebar-section-label" style="margin-top:24px">Site</div>
+      <a href="/" target="_blank" class="sidebar-link"><span class="icon">🌐</span> Siteyi Görüntüle</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar" id="sidebar-avatar">A</div>
+        <div>
+          <div class="sidebar-user-name" id="sidebar-username">Admin</div>
+          <div class="sidebar-user-role">Yönetici</div>
+        </div>
+      </div>
+      <button id="logout-btn" class="btn" style="width:100%;margin-top:10px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#f87171;padding:8px;font-size:0.78rem">🚪 Çıkış Yap</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <span class="topbar-title">Ürün Yönetimi</span>
+      <div class="topbar-actions">
+        <a href="/admin/add-product.html" class="topbar-btn primary">➕ Yeni Ürün</a>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <div class="admin-table-wrapper">
+        <div class="admin-table-header">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <div class="table-search">
+              <span>🔍</span>
+              <input type="text" id="table-search" placeholder="Ürün ara...">
+            </div>
+            <select id="filter-category" style="background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 14px;color:var(--text-primary);font-size:0.8rem;cursor:pointer">
+              <option value="">Tüm Kategoriler</option>
+              <option value="Binek">Binek</option>
+              <option value="Ticari">Ticari</option>
+              <option value="Kamyon">Kamyon</option>
+              <option value="Motorsiklet">Motorsiklet</option>
+              <option value="Spor">Spor Egzoz</option>
+              <option value="Genel">Genel</option>
+            </select>
+            <select id="filter-status" style="background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 14px;color:var(--text-primary);font-size:0.8rem;cursor:pointer">
+              <option value="">Tüm Durumlar</option>
+              <option value="in_stock">Stokta</option>
+              <option value="active">Aktif</option>
+              <option value="out_of_stock">Stok Yok</option>
+              <option value="inactive">Pasif</option>
+            </select>
+          </div>
+          <div id="table-results" style="font-size:0.78rem;color:var(--text-muted)"></div>
+        </div>
+
+        <div style="overflow-x:auto">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:60px">Foto</th>
+                <th>Ürün Adı</th>
+                <th>ŞHN No</th>
+                <th>OEM No</th>
+                <th>Marka / Model</th>
+                <th>Kategori</th>
+                <th>Durum</th>
+                <th>Tarih</th>
+                <th style="text-align:right">İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="products-tbody">
+              <tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text-muted)">Yükleniyor...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="admin-pagination" id="pagination-area">
+          <span id="pagination-info"></span>
+          <div class="pagination-btns" id="pagination-btns"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<button class="sidebar-toggle-btn" id="sidebar-toggle">☰</button>
+<div id="toast-container" class="toast-container"></div>
+
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal">
+    <h3 class="modal-title" id="confirm-title">Onay</h3>
+    <p class="modal-body" id="confirm-message"></p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="cancel-btn">İptal</button>
+      <button class="btn btn-danger" id="confirm-btn">Sil</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { auth } from '/admin/js/auth.js';
+import { showToast, renderStatusBadge, formatDate, showConfirmModal } from '/admin/js/admin.js';
+
+const isAuth = await auth.requireAuth();
+if (!isAuth) throw new Error('Not auth');
+
+let currentPage = 1;
+let totalPages = 1;
+let searchTimeout;
+
+// Filters
+const searchInput = document.getElementById('table-search');
+const categoryFilter = document.getElementById('filter-category');
+const statusFilter = document.getElementById('filter-status');
+
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => { currentPage = 1; loadProducts(); }, 400);
+});
+
+categoryFilter.addEventListener('change', () => { currentPage = 1; loadProducts(); });
+statusFilter.addEventListener('change', () => { currentPage = 1; loadProducts(); });
+
+async function loadProducts() {
+  const tbody = document.getElementById('products-tbody');
+  tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text-muted)">⏳ Yükleniyor...</td></tr>';
+
+  const params = new URLSearchParams({
+    page: currentPage,
+    limit: 15,
+    sort: 'created_at_desc',
+  });
+
+  const q = searchInput.value.trim();
+  const cat = categoryFilter.value;
+  const stat = statusFilter.value;
+  if (q) params.set('q', q);
+  if (cat) params.set('category', cat);
+  if (stat) params.set('status', stat);
+
+  const endpoint = q ? `/api/search?${params}` : `/api/products?${params}`;
+
+  try {
+    const res = await fetch(endpoint);
+    const data = await res.json();
+
+    totalPages = data.pagination?.totalPages || 1;
+    const total = data.pagination?.total || 0;
+    document.getElementById('table-results').textContent = `${total} ürün`;
+
+    if (!data.products || data.products.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text-muted)">Ürün bulunamadı</td></tr>';
+      renderPagination(0);
+      return;
+    }
+
+    tbody.innerHTML = data.products.map(p => `
+      <tr>
+        <td>
+          <div class="product-thumb" style="margin:0">
+            ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}">` : '⚙️'}
+          </div>
+        </td>
+        <td>
+          <div class="product-name-cell">${p.name}</div>
+        </td>
+        <td>${p.shn_no ? `<span class="mono-code">${p.shn_no}</span>` : '<span style="color:var(--text-muted);font-size:0.8rem">-</span>'}</td>
+        <td>${p.oem_no ? `<span class="mono-code">${p.oem_no}</span>` : '<span style="color:var(--text-muted);font-size:0.8rem">-</span>'}</td>
+        <td style="color:var(--text-secondary);font-size:0.8rem">${p.brand || '-'}${p.model ? ' / ' + p.model : ''}</td>
+        <td style="color:var(--text-muted);font-size:0.78rem">${p.category || 'Genel'}</td>
+        <td>${renderStatusBadge(p.status)}</td>
+        <td style="color:var(--text-muted);font-size:0.78rem">${formatDate(p.created_at)}</td>
+        <td>
+          <div class="td-actions" style="justify-content:flex-end">
+            <a href="/admin/edit-product.html?id=${p.id}" class="action-btn edit" title="Düzenle">✏️</a>
+            <a href="/product-detail.html?id=${p.id}" target="_blank" class="action-btn view" title="Görüntüle">👁️</a>
+            <button class="action-btn delete" title="Sil" data-id="${p.id}" data-name="${p.name.replace(/"/g, '&quot;')}">🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+
+    // Delete handlers
+    tbody.querySelectorAll('.action-btn.delete').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = parseInt(btn.dataset.id);
+        const name = btn.dataset.name;
+        showConfirmModal({
+          title: 'Ürünü Sil',
+          message: `"${name}" ürününü silmek istediğinize emin misiniz?`,
+          confirmText: 'Evet, Sil',
+          onConfirm: () => deleteProduct(id),
+        });
+      });
+    });
+
+    renderPagination(total);
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:40px;color:#f87171">⚠️ Hata: ${err.message}</td></tr>`;
+  }
+}
+
+async function deleteProduct(id) {
+  const token = auth.getToken();
+  try {
+    const res = await fetch(`/api/products/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    if (res.ok) {
+      showToast('Ürün silindi', 'success');
+      loadProducts();
+    } else {
+      const e = await res.json();
+      showToast(e.error || 'Silinemedi', 'error');
+    }
+  } catch (e) {
+    showToast('Hata: ' + e.message, 'error');
+  }
+}
+
+function renderPagination(total) {
+  const info = document.getElementById('pagination-info');
+  const btns = document.getElementById('pagination-btns');
+  info.textContent = `Sayfa ${currentPage} / ${totalPages} (${total} ürün)`;
+
+  if (totalPages <= 1) { btns.innerHTML = ''; return; }
+
+  let html = '';
+  if (currentPage > 1) html += `<button class="pg-btn" data-page="${currentPage-1}">‹</button>`;
+  for (let i = Math.max(1, currentPage-2); i <= Math.min(totalPages, currentPage+2); i++) {
+    html += `<button class="pg-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+  }
+  if (currentPage < totalPages) html += `<button class="pg-btn" data-page="${currentPage+1}">›</button>`;
+  btns.innerHTML = html;
+  btns.querySelectorAll('.pg-btn').forEach(btn => {
+    btn.addEventListener('click', () => { currentPage = parseInt(btn.dataset.page); loadProducts(); });
+  });
+}
+
+loadProducts();
+</script>
+</body>
+</html>

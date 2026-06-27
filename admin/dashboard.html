@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Şahanlar Egzoz Admin</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔩</text></svg>">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon">🔩</div>
+      <div class="sidebar-brand-text">
+        ŞAHANLAR EGZOZ
+        <small>Admin Paneli</small>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Ana Menü</div>
+      <a href="/admin/dashboard.html" class="sidebar-link active">
+        <span class="icon">📊</span> Dashboard
+      </a>
+      <a href="/admin/products.html" class="sidebar-link">
+        <span class="icon">📦</span> Ürün Yönetimi
+      </a>
+      <a href="/admin/add-product.html" class="sidebar-link">
+        <span class="icon">➕</span> Ürün Ekle
+      </a>
+
+      <div class="sidebar-section-label" style="margin-top:24px">Site</div>
+      <a href="/" target="_blank" class="sidebar-link">
+        <span class="icon">🌐</span> Siteyi Görüntüle
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar" id="sidebar-avatar">A</div>
+        <div>
+          <div class="sidebar-user-name" id="sidebar-username">Admin</div>
+          <div class="sidebar-user-role">Yönetici</div>
+        </div>
+      </div>
+      <button id="logout-btn" class="btn" style="width:100%;margin-top:10px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#f87171;padding:8px;font-size:0.78rem">
+        🚪 Çıkış Yap
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <span class="topbar-title">Dashboard</span>
+      <div class="topbar-actions">
+        <a href="/admin/add-product.html" class="topbar-btn primary">➕ Ürün Ekle</a>
+        <a href="/" target="_blank" class="topbar-btn ghost">🌐 Siteye Git</a>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <!-- Stats -->
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-icon">📦</div>
+          <div class="stat-card-value" id="stat-total">—</div>
+          <div class="stat-card-label">Toplam Ürün</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">✅</div>
+          <div class="stat-card-value" id="stat-in-stock">—</div>
+          <div class="stat-card-label">Stokta</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">🚗</div>
+          <div class="stat-card-value" id="stat-brands">—</div>
+          <div class="stat-card-label">Araç Markası</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">🏷️</div>
+          <div class="stat-card-value" id="stat-categories">—</div>
+          <div class="stat-card-label">Kategori</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px">
+        <a href="/admin/add-product.html" style="background:var(--gradient-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;display:flex;align-items:center;gap:16px;transition:var(--transition);text-decoration:none" class="quick-card">
+          <div style="font-size:2rem">➕</div>
+          <div>
+            <div style="font-family:Oswald,sans-serif;font-size:1rem;color:var(--text-primary);margin-bottom:4px">Yeni Ürün Ekle</div>
+            <div style="font-size:0.78rem;color:var(--text-muted)">Platforma yeni egzoz parçası ekleyin</div>
+          </div>
+        </a>
+        <a href="/admin/products.html" style="background:var(--gradient-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;display:flex;align-items:center;gap:16px;transition:var(--transition);text-decoration:none" class="quick-card">
+          <div style="font-size:2rem">📋</div>
+          <div>
+            <div style="font-family:Oswald,sans-serif;font-size:1rem;color:var(--text-primary);margin-bottom:4px">Ürünleri Yönet</div>
+            <div style="font-size:0.78rem;color:var(--text-muted)">Ürün listesini görüntüle ve düzenle</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Recent Products -->
+      <div class="admin-table-wrapper">
+        <div class="admin-table-header">
+          <span class="admin-table-title">Son Eklenen Ürünler</span>
+          <a href="/admin/products.html" class="topbar-btn ghost" style="font-size:0.75rem;padding:6px 14px">Tümünü Gör →</a>
+        </div>
+
+        <div id="recent-table-body">
+          <table>
+            <thead>
+              <tr>
+                <th>Ürün</th>
+                <th>ŞHN No</th>
+                <th>OEM No</th>
+                <th>Marka / Model</th>
+                <th>Kategori</th>
+                <th>Durum</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="recent-tbody">
+              <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted)">Yükleniyor...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<button class="sidebar-toggle-btn" id="sidebar-toggle">☰</button>
+<div id="toast-container" class="toast-container"></div>
+
+<!-- Confirm Modal -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal">
+    <h3 class="modal-title" id="confirm-title">Onay</h3>
+    <p class="modal-body" id="confirm-message"></p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="cancel-btn">İptal</button>
+      <button class="btn btn-danger" id="confirm-btn" id="confirm-text">Sil</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.quick-card:hover { border-color: var(--border-active); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+</style>
+
+<script type="module">
+import { auth } from '/admin/js/auth.js';
+import { showToast, renderStatusBadge, formatDate, showConfirmModal } from '/admin/js/admin.js';
+
+// Auth check
+const isAuth = await auth.requireAuth();
+if (!isAuth) throw new Error('Not authenticated');
+
+// Load dashboard data
+async function loadDashboard() {
+  const token = auth.getToken();
+
+  try {
+    const [catRes, prodRes] = await Promise.all([
+      fetch('/api/categories').then(r => r.json()),
+      fetch('/api/products?limit=8&sort=created_at_desc').then(r => r.json()),
+    ]);
+
+    // Stats
+    if (catRes.stats) {
+      document.getElementById('stat-total').textContent = catRes.stats.total || 0;
+      document.getElementById('stat-in-stock').textContent = catRes.stats.in_stock || 0;
+      document.getElementById('stat-brands').textContent = catRes.stats.brands || 0;
+      document.getElementById('stat-categories').textContent = catRes.stats.categories || 0;
+    }
+
+    // Recent products table
+    const tbody = document.getElementById('recent-tbody');
+    if (prodRes.products && prodRes.products.length > 0) {
+      tbody.innerHTML = prodRes.products.map(p => `
+        <tr>
+          <td>
+            <div class="td-name">
+              <div class="product-thumb">
+                ${p.image_url ? `<img src="${p.image_url}" alt="${p.name}">` : '⚙️'}
+              </div>
+              <div>
+                <div class="product-name-cell">${p.name}</div>
+                <div class="product-cat-cell">${formatDate(p.created_at)}</div>
+              </div>
+            </div>
+          </td>
+          <td>${p.shn_no ? `<span class="mono-code">${p.shn_no}</span>` : '<span style="color:var(--text-muted)">-</span>'}</td>
+          <td>${p.oem_no ? `<span class="mono-code">${p.oem_no}</span>` : '<span style="color:var(--text-muted)">-</span>'}</td>
+          <td style="color:var(--text-secondary)">${p.brand || '-'} ${p.model ? `/ ${p.model}` : ''}</td>
+          <td style="color:var(--text-muted);font-size:0.8rem">${p.category || 'Genel'}</td>
+          <td>${renderStatusBadge(p.status)}</td>
+          <td>
+            <div class="td-actions">
+              <a href="/admin/edit-product.html?id=${p.id}" class="action-btn edit" title="Düzenle">✏️</a>
+              <a href="/product-detail.html?id=${p.id}" target="_blank" class="action-btn view" title="Görüntüle">👁️</a>
+              <button class="action-btn delete" title="Sil" onclick="deleteProduct(${p.id}, '${p.name.replace(/'/g, "\\'")}')">🗑️</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    } else {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted)">Henüz ürün eklenmedi.</td></tr>';
+    }
+  } catch (err) {
+    showToast('Veriler yüklenirken hata: ' + err.message, 'error');
+  }
+}
+
+window.deleteProduct = async function(id, name) {
+  showConfirmModal({
+    title: 'Ürünü Sil',
+    message: `"${name}" ürününü silmek istediğinize emin misiniz? Bu işlem geri alınamaz.`,
+    confirmText: 'Evet, Sil',
+    onConfirm: async () => {
+      try {
+        const token = auth.getToken();
+        const res = await fetch(`/api/products/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
+        if (res.ok) {
+          showToast('Ürün başarıyla silindi', 'success');
+          loadDashboard();
+        } else {
+          const err = await res.json();
+          showToast(err.error || 'Silme işlemi başarısız', 'error');
+        }
+      } catch (e) {
+        showToast('Hata: ' + e.message, 'error');
+      }
+    },
+  });
+};
+
+loadDashboard();
+</script>
+</body>
+</html>

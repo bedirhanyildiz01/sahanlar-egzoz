@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ürün Kataloğu — Şahanlar Egzoz</title>
+  <meta name="description" content="Şahanlar Egzoz ürün kataloğu. Marka, model ve kategoriye göre egzoz parçalarını filtreleyin.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔩</text></svg>">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .page-hero {
+      margin-top: 72px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 0 40px;
+    }
+    .products-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .results-info { font-size: 0.875rem; color: var(--text-secondary); }
+    .results-info span { color: var(--primary); font-weight: 600; }
+    .sort-select {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 14px;
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      cursor: pointer;
+      appearance: none;
+      padding-right: 32px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23606078' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+    .filter-mobile-toggle {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 16px;
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .filter-mobile-toggle { display: flex; }
+      .filter-sidebar { display: none; }
+      .filter-sidebar.open { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-icon">🔩</div><div class="logo-text">ŞAHANLAR <span>EGZOZ</span></div></a>
+    <nav class="nav-links">
+      <a href="/" class="nav-link">Ana Sayfa</a>
+      <a href="/products.html" class="nav-link active">Ürünler</a>
+      <a href="/search.html" class="nav-link">Arama</a>
+      <a href="/about.html" class="nav-link">Kurumsal</a>
+      <a href="/contact.html" class="nav-link">İletişim</a>
+    </nav>
+    <div class="nav-search">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="nav-search-input" placeholder="Ürün, OEM veya ŞHN ara...">
+    </div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav-backdrop" id="mobile-backdrop"></div>
+  <div class="mobile-nav-drawer">
+    <button class="mobile-nav-close" id="mobile-close">✕</button>
+    <a href="/" class="mobile-nav-link">🏠 Ana Sayfa</a>
+    <a href="/products.html" class="mobile-nav-link active">📦 Ürünler</a>
+    <a href="/search.html" class="mobile-nav-link">🔍 Arama</a>
+    <a href="/about.html" class="mobile-nav-link">🏢 Kurumsal</a>
+    <a href="/contact.html" class="mobile-nav-link">📞 İletişim</a>
+  </div>
+</div>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Ana Sayfa</a>
+      <span class="separator">›</span>
+      <span class="current">Ürün Kataloğu</span>
+    </div>
+    <h1 class="section-title">Ürün <span>Kataloğu</span></h1>
+    <p style="color:var(--text-secondary);margin-top:8px;font-size:0.95rem">Filtreler ile araç tipinize uygun egzoz parçasını kolayca bulun.</p>
+  </div>
+</div>
+
+<!-- Main Content -->
+<section class="section-sm">
+  <div class="container">
+    <div class="products-toolbar">
+      <div class="results-info" id="results-info">Ürünler yükleniyor...</div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <button class="filter-mobile-toggle" id="filter-toggle">⚙️ Filtreler</button>
+        <select class="sort-select" id="sort-select">
+          <option value="created_at_desc">En Yeni</option>
+          <option value="created_at_asc">En Eski</option>
+          <option value="name_asc">İsim (A→Z)</option>
+          <option value="name_desc">İsim (Z→A)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="products-layout">
+      <!-- Filter Sidebar -->
+      <aside class="filter-sidebar" id="filter-sidebar">
+        <div class="filter-title">
+          Filtreler
+          <button class="filter-clear" id="clear-filters">Temizle</button>
+        </div>
+
+        <!-- Arama -->
+        <div class="filter-group">
+          <div class="filter-group-title">Ürün Adı</div>
+          <input type="text" class="filter-search" id="filter-search" placeholder="Ürün ara...">
+        </div>
+
+        <!-- Kategori -->
+        <div class="filter-group">
+          <div class="filter-group-title">Kategori</div>
+          <div id="filter-categories">
+            <!-- JS ile doldurulacak -->
+          </div>
+        </div>
+
+        <!-- Marka -->
+        <div class="filter-group">
+          <div class="filter-group-title">Araç Markası</div>
+          <div id="filter-brands">
+            <!-- JS ile doldurulacak -->
+          </div>
+        </div>
+
+        <!-- Durum -->
+        <div class="filter-group">
+          <div class="filter-group-title">Stok Durumu</div>
+          <div id="filter-status">
+            <div class="filter-option" data-status="in_stock">
+              <div class="filter-checkbox"></div>
+              <span class="filter-option-label">Stokta</span>
+            </div>
+            <div class="filter-option" data-status="active">
+              <div class="filter-checkbox"></div>
+              <span class="filter-option-label">Aktif</span>
+            </div>
+            <div class="filter-option" data-status="out_of_stock">
+              <div class="filter-checkbox"></div>
+              <span class="filter-option-label">Stok Yok</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;margin-top:8px" id="apply-filters">Filtrele</button>
+      </aside>
+
+      <!-- Product Grid -->
+      <div>
+        <div class="products-grid" id="products-grid">
+          <!-- skeleton -->
+          <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium"></div></div></div>
+        </div>
+        <div id="pagination" class="pagination" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <div class="footer-logo"><div class="logo-icon">🔩</div><span>ŞAHANLAR EGZOZ</span></div>
+      <nav style="display:flex;gap:16px;flex-wrap:wrap">
+        <a href="/" class="footer-link">Ana Sayfa</a>
+        <a href="/products.html" class="footer-link">Ürünler</a>
+        <a href="/about.html" class="footer-link">Kurumsal</a>
+        <a href="/contact.html" class="footer-link">İletişim</a>
+      </nav>
+      <p class="footer-copy">© 2024 <span>Şahanlar Egzoz</span></p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script type="module">
+import { api } from '/js/api.js';
+import { renderProductCard } from '/js/main.js';
+
+let currentPage = 1;
+let totalPages = 1;
+let activeFilters = {};
+let activeCategory = null;
+let activeBrand = null;
+let activeStatus = null;
+
+// URL params
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('category')) {
+  activeCategory = urlParams.get('category');
+}
+
+// Mobile filter toggle
+document.getElementById('filter-toggle').addEventListener('click', () => {
+  document.getElementById('filter-sidebar').classList.toggle('open');
+});
+
+// Sort
+document.getElementById('sort-select').addEventListener('change', () => {
+  currentPage = 1;
+  loadProducts();
+});
+
+// Filter search
+let searchTimeout;
+document.getElementById('filter-search').addEventListener('input', () => {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => { currentPage = 1; loadProducts(); }, 400);
+});
+
+// Apply filters
+document.getElementById('apply-filters').addEventListener('click', () => {
+  currentPage = 1;
+  loadProducts();
+});
+
+// Clear filters
+document.getElementById('clear-filters').addEventListener('click', () => {
+  activeCategory = null; activeBrand = null; activeStatus = null;
+  document.getElementById('filter-search').value = '';
+  document.querySelectorAll('.filter-option').forEach(o => o.classList.remove('checked'));
+  currentPage = 1;
+  loadProducts();
+  renderFilters({});
+});
+
+// Status filters
+document.querySelectorAll('#filter-status .filter-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const status = opt.dataset.status;
+    if (activeStatus === status) {
+      activeStatus = null;
+      opt.classList.remove('checked');
+    } else {
+      document.querySelectorAll('#filter-status .filter-option').forEach(o => o.classList.remove('checked'));
+      activeStatus = status;
+      opt.classList.add('checked');
+    }
+  });
+});
+
+async function loadFilters() {
+  try {
+    const data = await api.getCategories();
+    renderFilters(data);
+  } catch (e) { console.error(e); }
+}
+
+function renderFilters(data) {
+  // Categories
+  const catEl = document.getElementById('filter-categories');
+  const cats = data.categories || [];
+  catEl.innerHTML = cats.length
+    ? cats.map(c => `
+        <div class="filter-option ${activeCategory === c.category ? 'checked' : ''}" data-category="${c.category}">
+          <div class="filter-checkbox"></div>
+          <span class="filter-option-label">${c.category}</span>
+          <span class="filter-option-count">${c.count}</span>
+        </div>`).join('')
+    : '<p style="color:var(--text-muted);font-size:0.8rem">Kategori bulunamadı</p>';
+
+  catEl.querySelectorAll('.filter-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const cat = opt.dataset.category;
+      activeCategory = activeCategory === cat ? null : cat;
+      catEl.querySelectorAll('.filter-option').forEach(o => o.classList.remove('checked'));
+      if (activeCategory) opt.classList.add('checked');
+      loadProducts();
+    });
+  });
+
+  // Brands
+  const brandEl = document.getElementById('filter-brands');
+  const brands = data.brands || [];
+  brandEl.innerHTML = brands.slice(0, 10).map(b => `
+    <div class="filter-option ${activeBrand === b.brand ? 'checked' : ''}" data-brand="${b.brand}">
+      <div class="filter-checkbox"></div>
+      <span class="filter-option-label">${b.brand}</span>
+      <span class="filter-option-count">${b.count}</span>
+    </div>`).join('');
+
+  brandEl.querySelectorAll('.filter-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const br = opt.dataset.brand;
+      activeBrand = activeBrand === br ? null : br;
+      brandEl.querySelectorAll('.filter-option').forEach(o => o.classList.remove('checked'));
+      if (activeBrand) opt.classList.add('checked');
+      loadProducts();
+    });
+  });
+}
+
+async function loadProducts() {
+  const grid = document.getElementById('products-grid');
+  grid.innerHTML = Array(6).fill('<div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium"></div></div></div>').join('');
+
+  const params = {
+    page: currentPage,
+    limit: 12,
+    sort: document.getElementById('sort-select').value,
+  };
+  const searchVal = document.getElementById('filter-search').value.trim();
+  if (searchVal) params.q = searchVal;
+  if (activeCategory) params.category = activeCategory;
+  if (activeBrand) params.brand = activeBrand;
+  if (activeStatus) params.status = activeStatus;
+
+  try {
+    const url = searchVal ? '/api/search' : '/api/products';
+    const data = searchVal
+      ? await api.search(params)
+      : await api.getProducts(params);
+
+    totalPages = data.pagination?.totalPages || 1;
+    const total = data.pagination?.total || 0;
+    document.getElementById('results-info').innerHTML = `<span>${total}</span> ürün bulundu`;
+
+    if (data.products && data.products.length > 0) {
+      grid.innerHTML = data.products.map(renderProductCard).join('');
+    } else {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-state-icon">📦</div>
+        <p class="empty-state-title">Ürün bulunamadı</p>
+        <p class="empty-state-desc">Farklı filtreler deneyin.</p>
+        <button class="btn btn-outline" onclick="document.getElementById('clear-filters').click()">Filtreleri Temizle</button>
+      </div>`;
+    }
+
+    renderPagination();
+  } catch (err) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><p class="empty-state-title">⚠️ Hata: ${err.message}</p></div>`;
+  }
+}
+
+function renderPagination() {
+  const pag = document.getElementById('pagination');
+  if (totalPages <= 1) { pag.style.display = 'none'; return; }
+  pag.style.display = 'flex';
+  let html = '';
+  if (currentPage > 1) html += `<button class="pagination-btn" data-page="${currentPage-1}">‹</button>`;
+  for (let i = Math.max(1, currentPage-2); i <= Math.min(totalPages, currentPage+2); i++) {
+    html += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+  }
+  if (currentPage < totalPages) html += `<button class="pagination-btn" data-page="${currentPage+1}">›</button>`;
+  pag.innerHTML = html;
+  pag.querySelectorAll('.pagination-btn').forEach(btn => {
+    btn.addEventListener('click', () => { currentPage = parseInt(btn.dataset.page); loadProducts(); window.scrollTo({top:0,behavior:'smooth'}); });
+  });
+}
+
+// Init
+loadFilters();
+loadProducts();
+</script>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

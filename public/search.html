@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ürün Arama — Şahanlar Egzoz</title>
+  <meta name="description" content="OEM numarası, ŞHN numarası veya ürün adıyla egzoz parçası arayın.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔩</text></svg>">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-icon">🔩</div><div class="logo-text">ŞAHANLAR <span>EGZOZ</span></div></a>
+    <nav class="nav-links">
+      <a href="/" class="nav-link">Ana Sayfa</a>
+      <a href="/products.html" class="nav-link">Ürünler</a>
+      <a href="/search.html" class="nav-link active">Arama</a>
+      <a href="/about.html" class="nav-link">Kurumsal</a>
+      <a href="/contact.html" class="nav-link">İletişim</a>
+    </nav>
+    <div class="nav-search"><span class="search-icon">🔍</span><input type="text" id="nav-search-input" placeholder="Ürün, OEM veya ŞHN ara..."></div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav-backdrop" id="mobile-backdrop"></div>
+  <div class="mobile-nav-drawer">
+    <button class="mobile-nav-close" id="mobile-close">✕</button>
+    <a href="/" class="mobile-nav-link">🏠 Ana Sayfa</a>
+    <a href="/products.html" class="mobile-nav-link">📦 Ürünler</a>
+    <a href="/search.html" class="mobile-nav-link active">🔍 Arama</a>
+    <a href="/about.html" class="mobile-nav-link">🏢 Kurumsal</a>
+    <a href="/contact.html" class="mobile-nav-link">📞 İletişim</a>
+  </div>
+</div>
+
+<!-- Search Hero -->
+<div class="search-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Ana Sayfa</a>
+      <span class="separator">›</span>
+      <span class="current">Ürün Arama</span>
+    </div>
+    <h1 class="search-hero-title">Parça <span style="background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Arama</span></h1>
+
+    <!-- Search Mode Tabs -->
+    <div class="search-tabs-bar">
+      <button class="search-tab-btn active" data-mode="text" id="tab-text">📝 Ürün Adı / Marka</button>
+      <button class="search-tab-btn" data-mode="oem" id="tab-oem">🔢 OEM Numarası</button>
+      <button class="search-tab-btn" data-mode="shn" id="tab-shn">📋 ŞHN Numarası</button>
+    </div>
+
+    <!-- Search Inputs -->
+    <div id="search-panel-text">
+      <div class="search-input-large">
+        <span>🔍</span>
+        <input type="text" id="search-text" placeholder="Ürün adı, açıklaması veya araç markası girin...">
+        <button class="btn btn-primary btn-sm" id="btn-search-text">Ara</button>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+        <input type="text" class="form-input" id="filter-brand" placeholder="Araç Markası (ör: BMW)" style="max-width:200px">
+        <input type="text" class="form-input" id="filter-model" placeholder="Model (ör: E46)" style="max-width:200px">
+        <select class="form-select" id="filter-category" style="max-width:200px">
+          <option value="">Tüm Kategoriler</option>
+          <option value="Binek">Binek</option>
+          <option value="Ticari">Ticari</option>
+          <option value="Kamyon">Kamyon</option>
+          <option value="Motorsiklet">Motorsiklet</option>
+          <option value="Spor">Spor Egzoz</option>
+          <option value="Genel">Genel</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="search-panel-oem" style="display:none">
+      <div class="search-input-large">
+        <span>🔢</span>
+        <input type="text" id="search-oem" placeholder="OEM numarasını tam veya kısmi olarak girin (ör: 18100-11J00, 1J025...)">
+        <button class="btn btn-primary btn-sm" id="btn-search-oem">OEM Ara</button>
+      </div>
+      <p style="margin-top:12px;font-size:0.8rem;color:var(--text-muted)">💡 OEM numarasının bir kısmını da girebilirsiniz, sistemimiz en yakın eşleşmeleri getirecektir.</p>
+    </div>
+
+    <div id="search-panel-shn" style="display:none">
+      <div class="search-input-large">
+        <span>📋</span>
+        <input type="text" id="search-shn" placeholder="ŞHN numarasını girin (ör: SHN-001, SHN-...)">
+        <button class="btn btn-primary btn-sm" id="btn-search-shn">ŞHN Ara</button>
+      </div>
+      <p style="margin-top:12px;font-size:0.8rem;color:var(--text-muted)">💡 ŞHN numarasının bir kısmını da girebilirsiniz.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Results -->
+<section class="section-sm">
+  <div class="container">
+    <div id="results-header" style="margin-bottom:24px;display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div class="results-info" id="results-count"></div>
+        <div id="active-query-tags" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+      </div>
+    </div>
+
+    <div class="products-grid" id="search-results">
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-state-icon">🔍</div>
+        <p class="empty-state-title">Aramaya Başlayın</p>
+        <p class="empty-state-desc">Yukarıdaki arama kutusunu kullanarak ürün, OEM veya ŞHN numarasıyla arama yapın.</p>
+      </div>
+    </div>
+
+    <div id="pagination" class="pagination" style="display:none"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <div class="footer-logo"><div class="logo-icon">🔩</div><span>ŞAHANLAR EGZOZ</span></div>
+      <p class="footer-copy">© 2024 <span>Şahanlar Egzoz</span></p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script type="module">
+import { api } from '/js/api.js';
+import { renderProductCard } from '/js/main.js';
+
+let currentMode = 'text';
+let currentPage = 1;
+let totalPages = 1;
+
+// Read URL params
+const urlParams = new URLSearchParams(window.location.search);
+
+// Tab switching
+document.querySelectorAll('.search-tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.search-tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMode = btn.dataset.mode;
+    ['text','oem','shn'].forEach(m => {
+      document.getElementById(`search-panel-${m}`).style.display = m === currentMode ? 'block' : 'none';
+    });
+  });
+});
+
+// Auto-fill from URL
+if (urlParams.get('q')) {
+  document.getElementById('search-text').value = urlParams.get('q');
+  doSearch();
+} else if (urlParams.get('oem')) {
+  document.getElementById('tab-oem').click();
+  document.getElementById('search-oem').value = urlParams.get('oem');
+  doSearch();
+} else if (urlParams.get('shn')) {
+  document.getElementById('tab-shn').click();
+  document.getElementById('search-shn').value = urlParams.get('shn');
+  doSearch();
+}
+
+// Search buttons
+document.getElementById('btn-search-text').addEventListener('click', () => { currentPage = 1; doSearch(); });
+document.getElementById('btn-search-oem').addEventListener('click', () => { currentPage = 1; doSearch(); });
+document.getElementById('btn-search-shn').addEventListener('click', () => { currentPage = 1; doSearch(); });
+
+// Enter keys
+['search-text','search-oem','search-shn','filter-brand','filter-model'].forEach(id => {
+  document.getElementById(id)?.addEventListener('keydown', e => { if (e.key === 'Enter') { currentPage = 1; doSearch(); } });
+});
+document.getElementById('filter-category')?.addEventListener('change', () => { currentPage = 1; doSearch(); });
+
+async function doSearch() {
+  const grid = document.getElementById('search-results');
+  grid.innerHTML = Array(6).fill('<div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium"></div></div></div>').join('');
+
+  const params = { page: currentPage, limit: 12 };
+
+  if (currentMode === 'text') {
+    const q = document.getElementById('search-text').value.trim();
+    const brand = document.getElementById('filter-brand').value.trim();
+    const model = document.getElementById('filter-model').value.trim();
+    const category = document.getElementById('filter-category').value;
+    if (q) params.q = q;
+    if (brand) params.brand = brand;
+    if (model) params.model = model;
+    if (category) params.category = category;
+  } else if (currentMode === 'oem') {
+    const oem = document.getElementById('search-oem').value.trim();
+    if (oem) params.oem = oem;
+  } else if (currentMode === 'shn') {
+    const shn = document.getElementById('search-shn').value.trim();
+    if (shn) params.shn = shn;
+  }
+
+  if (!Object.keys(params).some(k => k !== 'page' && k !== 'limit')) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-state-icon">🔍</div><p class="empty-state-title">Aramaya Başlayın</p></div>`;
+    document.getElementById('results-header').style.display = 'none';
+    return;
+  }
+
+  try {
+    const data = await api.search(params);
+    totalPages = data.pagination?.totalPages || 1;
+    const total = data.pagination?.total || 0;
+
+    document.getElementById('results-header').style.display = 'flex';
+    document.getElementById('results-count').innerHTML = `<span style="color:var(--primary);font-weight:600">${total}</span> sonuç bulundu`;
+
+    // Active tags
+    const tagsEl = document.getElementById('active-query-tags');
+    const tags = [];
+    if (params.q) tags.push(`📝 "${params.q}"`);
+    if (params.oem) tags.push(`🔢 OEM: ${params.oem}`);
+    if (params.shn) tags.push(`📋 ŞHN: ${params.shn}`);
+    if (params.brand) tags.push(`🚗 ${params.brand}`);
+    if (params.model) tags.push(`📌 ${params.model}`);
+    if (params.category) tags.push(`🏷️ ${params.category}`);
+    tagsEl.innerHTML = tags.map(t => `<span style="background:rgba(255,107,0,.12);border:1px solid rgba(255,107,0,.25);border-radius:20px;padding:4px 12px;font-size:0.75rem;color:var(--primary-light)">${t}</span>`).join('');
+
+    if (data.products && data.products.length > 0) {
+      grid.innerHTML = data.products.map(renderProductCard).join('');
+    } else {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-state-icon">😕</div>
+        <p class="empty-state-title">Sonuç bulunamadı</p>
+        <p class="empty-state-desc">Farklı anahtar kelimeler veya numaralar deneyin.</p>
+      </div>`;
+    }
+
+    renderPagination();
+  } catch (err) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><p class="empty-state-title">⚠️ ${err.message}</p></div>`;
+  }
+}
+
+function renderPagination() {
+  const pag = document.getElementById('pagination');
+  if (totalPages <= 1) { pag.style.display = 'none'; return; }
+  pag.style.display = 'flex';
+  let html = '';
+  if (currentPage > 1) html += `<button class="pagination-btn" data-page="${currentPage-1}">‹</button>`;
+  for (let i = Math.max(1, currentPage-2); i <= Math.min(totalPages, currentPage+2); i++) {
+    html += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+  }
+  if (currentPage < totalPages) html += `<button class="pagination-btn" data-page="${currentPage+1}">›</button>`;
+  pag.innerHTML = html;
+  pag.querySelectorAll('.pagination-btn').forEach(btn => {
+    btn.addEventListener('click', () => { currentPage = parseInt(btn.dataset.page); doSearch(); window.scrollTo({top:0,behavior:'smooth'}); });
+  });
+}
+</script>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

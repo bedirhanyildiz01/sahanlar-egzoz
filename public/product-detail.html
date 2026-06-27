@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Ürün Detayı — Şahanlar Egzoz</title>
+  <meta name="description" content="Şahanlar Egzoz ürün detay sayfası.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔩</text></svg>">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .share-btns { display:flex; gap:8px; flex-wrap:wrap; }
+    .share-btn { padding:8px 14px; border-radius:var(--radius-sm); font-size:0.78rem; font-weight:600; background:var(--glass-bg); border:1px solid var(--border); color:var(--text-secondary); cursor:pointer; transition:var(--transition); display:flex; align-items:center; gap:6px; }
+    .share-btn:hover { border-color:var(--border-active); color:var(--primary); }
+    .related-section { padding:60px 0; background:var(--bg-surface); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><div class="logo-icon">🔩</div><div class="logo-text">ŞAHANLAR <span>EGZOZ</span></div></a>
+    <nav class="nav-links">
+      <a href="/" class="nav-link">Ana Sayfa</a>
+      <a href="/products.html" class="nav-link">Ürünler</a>
+      <a href="/search.html" class="nav-link">Arama</a>
+      <a href="/about.html" class="nav-link">Kurumsal</a>
+      <a href="/contact.html" class="nav-link">İletişim</a>
+    </nav>
+    <div class="nav-search"><span class="search-icon">🔍</span><input type="text" id="nav-search-input" placeholder="Ürün, OEM veya ŞHN ara..."></div>
+    <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav-backdrop" id="mobile-backdrop"></div>
+  <div class="mobile-nav-drawer">
+    <button class="mobile-nav-close" id="mobile-close">✕</button>
+    <a href="/" class="mobile-nav-link">🏠 Ana Sayfa</a>
+    <a href="/products.html" class="mobile-nav-link">📦 Ürünler</a>
+    <a href="/search.html" class="mobile-nav-link">🔍 Arama</a>
+    <a href="/about.html" class="mobile-nav-link">🏢 Kurumsal</a>
+    <a href="/contact.html" class="mobile-nav-link">📞 İletişim</a>
+  </div>
+</div>
+
+<!-- Product Detail Hero -->
+<div class="product-detail-hero">
+  <div class="container">
+    <div class="breadcrumb" id="breadcrumb">
+      <a href="/">Ana Sayfa</a><span class="separator">›</span>
+      <a href="/products.html">Ürünler</a><span class="separator">›</span>
+      <span class="current" id="bc-title">Yükleniyor...</span>
+    </div>
+
+    <!-- Loading skeleton -->
+    <div id="product-skeleton" class="product-detail-grid">
+      <div class="skeleton" style="border-radius:var(--radius-xl);aspect-ratio:4/3;width:100%"></div>
+      <div style="padding-top:8px">
+        <div class="skeleton skeleton-line short" style="margin-bottom:16px;height:18px"></div>
+        <div class="skeleton skeleton-line" style="margin-bottom:10px;height:32px"></div>
+        <div class="skeleton skeleton-line medium" style="margin-bottom:10px;height:32px"></div>
+        <div class="skeleton" style="height:180px;border-radius:var(--radius-lg);margin:24px 0"></div>
+        <div class="skeleton skeleton-line" style="height:48px;border-radius:var(--radius-md)"></div>
+      </div>
+    </div>
+
+    <!-- Product Content -->
+    <div id="product-content" class="product-detail-grid" style="display:none">
+      <div>
+        <div class="product-image-viewer" id="product-image-viewer">
+          <div class="product-no-image" id="product-no-image">
+            ⚙️
+            <span style="font-size:0.875rem;font-family:Inter;color:var(--text-muted)">Fotoğraf mevcut değil</span>
+          </div>
+          <img id="product-image" src="" alt="" style="display:none">
+        </div>
+      </div>
+
+      <div class="product-detail-info">
+        <div class="product-detail-category" id="product-category"></div>
+        <h1 class="product-detail-title" id="product-name"></h1>
+
+        <div class="product-detail-specs" id="product-specs">
+          <!-- JS ile doldurulacak -->
+        </div>
+
+        <p class="product-detail-desc" id="product-desc"></p>
+
+        <div class="product-detail-actions" style="margin-bottom:24px">
+          <a href="/contact.html" class="btn btn-primary btn-lg">📞 Fiyat Sor</a>
+          <button class="btn btn-ghost" onclick="history.back()">← Geri</button>
+        </div>
+
+        <div class="share-btns">
+          <button class="share-btn" onclick="copyLink()">🔗 Linki Kopyala</button>
+          <button class="share-btn" onclick="shareWhatsApp()">💬 WhatsApp</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Not found -->
+    <div id="product-notfound" style="display:none" class="empty-state">
+      <div class="empty-state-icon">😕</div>
+      <h2 class="empty-state-title">Ürün bulunamadı</h2>
+      <p class="empty-state-desc">Bu ürün mevcut değil ya da kaldırılmış olabilir.</p>
+      <a href="/products.html" class="btn btn-primary" style="margin-top:16px">Ürünlere Dön</a>
+    </div>
+  </div>
+</div>
+
+<!-- Related Products -->
+<div class="related-section" id="related-section" style="display:none">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Benzer Ürünler</div>
+      <h2 class="section-title">İlgili <span>Ürünler</span></h2>
+    </div>
+    <div class="products-grid" id="related-products"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <div class="footer-logo"><div class="logo-icon">🔩</div><span>ŞAHANLAR EGZOZ</span></div>
+      <p class="footer-copy">© 2024 <span>Şahanlar Egzoz</span></p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script type="module">
+import { api } from '/js/api.js';
+import { renderProductCard, showToast } from '/js/main.js';
+
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get('id');
+
+const statusLabels = { active:'Aktif', inactive:'Pasif', in_stock:'Stokta ✓', out_of_stock:'Stok Yok' };
+const statusColors = { active:'var(--text-secondary)', inactive:'#9ca3af', in_stock:'#4ade80', out_of_stock:'#f87171' };
+
+async function loadProduct() {
+  if (!productId) {
+    document.getElementById('product-skeleton').style.display = 'none';
+    document.getElementById('product-notfound').style.display = 'block';
+    return;
+  }
+
+  try {
+    const { product, related } = await api.getProduct(productId);
+
+    // Update page title + breadcrumb
+    document.getElementById('page-title').textContent = `${product.name} — Şahanlar Egzoz`;
+    document.getElementById('bc-title').textContent = product.name;
+
+    // Image
+    if (product.image_url) {
+      const img = document.getElementById('product-image');
+      img.src = product.image_url;
+      img.alt = product.name;
+      img.style.display = 'block';
+      document.getElementById('product-no-image').style.display = 'none';
+    }
+
+    // Category & title
+    document.getElementById('product-category').textContent = product.category || 'Genel';
+    document.getElementById('product-name').textContent = product.name;
+
+    // Specs
+    const specs = [];
+    if (product.shn_no) specs.push({ label: 'ŞHN Numarası', value: product.shn_no, mono: true });
+    if (product.oem_no) specs.push({ label: 'OEM Numarası', value: product.oem_no, mono: true });
+    if (product.brand) specs.push({ label: 'Araç Markası', value: product.brand });
+    if (product.model) specs.push({ label: 'Araç Modeli', value: product.model });
+    specs.push({ label: 'Kategori', value: product.category || 'Genel' });
+    specs.push({ label: 'Durum', value: statusLabels[product.status] || product.status, color: statusColors[product.status] });
+
+    document.getElementById('product-specs').innerHTML = specs.map(s => `
+      <div class="spec-row">
+        <span class="spec-label">${s.label}</span>
+        <span class="spec-value ${s.mono ? 'mono' : ''}" ${s.color ? `style="color:${s.color}"` : ''}>${s.value}</span>
+      </div>`).join('');
+
+    // Description
+    const descEl = document.getElementById('product-desc');
+    if (product.description) {
+      descEl.textContent = product.description;
+    } else {
+      descEl.style.display = 'none';
+    }
+
+    // Show content
+    document.getElementById('product-skeleton').style.display = 'none';
+    document.getElementById('product-content').style.display = 'grid';
+
+    // Related
+    if (related && related.length > 0) {
+      document.getElementById('related-section').style.display = 'block';
+      document.getElementById('related-products').innerHTML = related.map(renderProductCard).join('');
+    }
+  } catch (err) {
+    document.getElementById('product-skeleton').style.display = 'none';
+    document.getElementById('product-notfound').style.display = 'block';
+  }
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => showToast('Link kopyalandı!', 'success'));
+}
+
+function shareWhatsApp() {
+  const text = `Şahanlar Egzoz — ${document.getElementById('product-name').textContent}\n${window.location.href}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+}
+
+window.copyLink = copyLink;
+window.shareWhatsApp = shareWhatsApp;
+
+loadProduct();
+</script>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

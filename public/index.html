@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Şahanlar Egzoz — Türkiye'nin Güvenilir Egzoz Parçaları Tedarikçisi</title>
+  <meta name="description" content="Şahanlar Egzoz; binek, ticari araç ve kamyon için egzoz manifoldu, katalizör, susturucu ve egzoz borusu. OEM ve ŞHN numarasıyla hızlı parça bulun.">
+  <meta name="keywords" content="egzoz parçaları, manifold, katalizör, susturucu, egzoz borusu, OEM, ŞHN, araç egzoz">
+  <meta property="og:title" content="Şahanlar Egzoz — Egzoz Parçaları Platformu">
+  <meta property="og:description" content="Türkiye'nin güvenilir egzoz parçaları tedarikçisi. OEM ve ŞHN numarasıyla hızlı arama yapın.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔩</text></svg>">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="site-header" id="site-header">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-icon">🔩</div>
+      <div class="logo-text">ŞAHANLAR <span>EGZOZ</span></div>
+    </a>
+
+    <nav class="nav-links">
+      <a href="/" class="nav-link active">Ana Sayfa</a>
+      <a href="/products.html" class="nav-link">Ürünler</a>
+      <a href="/search.html" class="nav-link">Arama</a>
+      <a href="/about.html" class="nav-link">Kurumsal</a>
+      <a href="/contact.html" class="nav-link">İletişim</a>
+    </nav>
+
+    <div class="nav-search">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="nav-search-input" placeholder="Ürün, OEM veya ŞHN ara..." autocomplete="off">
+    </div>
+
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menüyü aç">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ── Mobile Nav ── -->
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav-backdrop" id="mobile-backdrop"></div>
+  <div class="mobile-nav-drawer">
+    <button class="mobile-nav-close" id="mobile-close">✕</button>
+    <div class="nav-logo" style="margin-bottom:24px">
+      <div class="logo-icon">🔩</div>
+      <div class="logo-text">ŞAHANLAR <span style="color:var(--primary)">EGZOZ</span></div>
+    </div>
+    <a href="/" class="mobile-nav-link active">🏠 Ana Sayfa</a>
+    <a href="/products.html" class="mobile-nav-link">📦 Ürünler</a>
+    <a href="/search.html" class="mobile-nav-link">🔍 Arama</a>
+    <a href="/about.html" class="mobile-nav-link">🏢 Kurumsal</a>
+    <a href="/contact.html" class="mobile-nav-link">📞 İletişim</a>
+  </div>
+</div>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-content container">
+    <div class="hero-badge">
+      🔥 Türkiye'nin Egzoz Uzmanı
+    </div>
+    <h1 class="hero-title">
+      Doğru Egzoz Parçası<br>
+      <span class="highlight">Anında Burada</span>
+    </h1>
+    <p class="hero-subtitle">
+      OEM ve ŞHN numarasıyla saniyeler içinde arama yapın. Binek, ticari araç ve kamyon için binlerce egzoz parçası tek platformda.
+    </p>
+
+    <!-- Search Bar -->
+    <div class="hero-search">
+      <div class="hero-search-tabs">
+        <button class="search-tab active" data-mode="text">Ürün Adı</button>
+        <button class="search-tab" data-mode="oem">OEM No</button>
+        <button class="search-tab" data-mode="shn">ŞHN No</button>
+      </div>
+      <input type="text" class="hero-search-input" id="hero-search-input" placeholder="Arama yapın...">
+      <button class="hero-search-btn" id="hero-search-btn">🔍 Ara</button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="value" id="stat-products">—</div>
+        <div class="label">Ürün Çeşidi</div>
+      </div>
+      <div class="hero-stat">
+        <div class="value" id="stat-brands">—</div>
+        <div class="label">Araç Markası</div>
+      </div>
+      <div class="hero-stat">
+        <div class="value" id="stat-categories">—</div>
+        <div class="label">Kategori</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Categories ── -->
+<section class="section" style="background: var(--bg-surface)">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="section-label">Kategoriler</div>
+      <h2 class="section-title">Araç Tipine Göre <span>Göz At</span></h2>
+      <p class="section-desc" style="margin:16px auto 0">Her araç tipi için özel egzoz çözümleri. Kategorinizi seçin, ürünü bulun.</p>
+    </div>
+    <div class="categories-grid" id="categories-grid">
+      <!-- JS ile doldurulacak -->
+      <div class="category-card skeleton" style="min-height:160px"></div>
+      <div class="category-card skeleton" style="min-height:160px"></div>
+      <div class="category-card skeleton" style="min-height:160px"></div>
+      <div class="category-card skeleton" style="min-height:160px"></div>
+      <div class="category-card skeleton" style="min-height:160px"></div>
+      <div class="category-card skeleton" style="min-height:160px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Featured Products ── -->
+<section class="section">
+  <div class="container">
+    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
+      <div>
+        <div class="section-label">Öne Çıkanlar</div>
+        <h2 class="section-title">Son Eklenen <span>Ürünler</span></h2>
+      </div>
+      <a href="/products.html" class="btn btn-outline">Tümünü Gör →</a>
+    </div>
+    <div class="products-grid" id="featured-products">
+      <!-- JS ile doldurulacak (skeleton) -->
+      <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium" style="margin-bottom:6px"></div><div class="skeleton skeleton-line"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium" style="margin-bottom:6px"></div><div class="skeleton skeleton-line"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium" style="margin-bottom:6px"></div><div class="skeleton skeleton-line"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Stats Banner ── -->
+<div class="stats-banner">
+  <div class="container">
+    <div class="stats-banner-grid">
+      <div class="stat-item"><div class="num">15+</div><div class="label">Yıl Tecrübe</div></div>
+      <div class="stat-item"><div class="num">5000+</div><div class="label">Ürün Çeşidi</div></div>
+      <div class="stat-item"><div class="num">50+</div><div class="label">Araç Markası</div></div>
+      <div class="stat-item"><div class="num">%100</div><div class="label">Müşteri Memnuniyeti</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Features ── -->
+<section class="section" style="background: var(--bg-surface)">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="section-label">Neden Biz?</div>
+      <h2 class="section-title">Şahanlar <span>Farkı</span></h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3 class="feature-title">OEM & ŞHN Araması</h3>
+        <p class="feature-desc">Numaranızı girin, saniyeler içinde doğru parçayı bulun. Hızlı ve kesin sonuç garantisi.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏭</div>
+        <h3 class="feature-title">Geniş Ürün Yelpazesi</h3>
+        <p class="feature-desc">Manifold, katalizör, susturucu, orta boru ve daha fazlası. Tüm araç tipleri için stok.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3 class="feature-title">Hızlı Temin</h3>
+        <p class="feature-desc">Stokta olan ürünler hızla temin edilir. Özel siparişler için kısa bekleme süresi.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3 class="feature-title">Garantili Ürünler</h3>
+        <p class="feature-desc">Tüm ürünlerimiz kalite kontrolünden geçirilmiş ve garantilidir. Güvenle satın alın.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚗</div>
+        <h3 class="feature-title">Her Marka & Model</h3>
+        <p class="feature-desc">BMW, Mercedes, Volkswagen, Toyota, Ford ve daha onlarca araç markası için parçalar mevcut.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📞</div>
+        <h3 class="feature-title">Uzman Destek</h3>
+        <p class="feature-desc">Teknik ekibimiz doğru parçayı bulmanıza yardımcı olmak için hazır. Hemen arayın.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Quick Search Section ── -->
+<section class="section">
+  <div class="container-sm" style="text-align:center">
+    <div class="section-label" style="justify-content:center">Hızlı Arama</div>
+    <h2 class="section-title" style="margin-bottom:16px">OEM veya ŞHN Numaranızla <span>Ara</span></h2>
+    <p style="color:var(--text-secondary);margin-bottom:40px;font-size:0.95rem">Eliminizdeki parça numarasını direkt girerek saniyeler içinde ürünü bulun.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:600px;margin:0 auto">
+      <div class="search-input-large">
+        <span>🔢</span>
+        <input type="text" id="oem-input" placeholder="OEM Numarası girin...">
+      </div>
+      <div class="search-input-large">
+        <span>📋</span>
+        <input type="text" id="shn-input" placeholder="ŞHN Numarası girin...">
+      </div>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary" id="oem-search-btn">OEM ile Ara</button>
+      <button class="btn btn-outline" id="shn-search-btn">ŞHN ile Ara</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="logo-icon">🔩</div>
+          <span>ŞAHANLAR EGZOZ</span>
+        </div>
+        <p class="footer-desc">Türkiye'nin güvenilir egzoz parçaları tedarikçisi. 15 yıllık tecrübeyle binlerce araç için kaliteli çözümler sunuyoruz.</p>
+        <div class="footer-socials">
+          <div class="social-btn" title="Facebook">📘</div>
+          <div class="social-btn" title="Instagram">📸</div>
+          <div class="social-btn" title="WhatsApp">💬</div>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Hızlı Bağlantılar</h4>
+        <div class="footer-links">
+          <a href="/" class="footer-link">→ Ana Sayfa</a>
+          <a href="/products.html" class="footer-link">→ Tüm Ürünler</a>
+          <a href="/search.html" class="footer-link">→ Ürün Ara</a>
+          <a href="/about.html" class="footer-link">→ Kurumsal</a>
+          <a href="/contact.html" class="footer-link">→ İletişim</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Kategoriler</h4>
+        <div class="footer-links">
+          <a href="/products.html?category=Binek" class="footer-link">→ Binek Araç</a>
+          <a href="/products.html?category=Ticari" class="footer-link">→ Ticari Araç</a>
+          <a href="/products.html?category=Kamyon" class="footer-link">→ Kamyon</a>
+          <a href="/products.html?category=Motorsiklet" class="footer-link">→ Motorsiklet</a>
+          <a href="/products.html?category=Spor" class="footer-link">→ Spor Egzoz</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-title">İletişim</h4>
+        <div class="footer-links">
+          <span class="footer-link">📍 İstanbul, Türkiye</span>
+          <a href="tel:+905001234567" class="footer-link">📞 +90 500 123 45 67</a>
+          <a href="mailto:info@sahanlaregzoz.com" class="footer-link">✉️ info@sahanlaregzoz.com</a>
+          <span class="footer-link">🕐 Hft-Cts: 08:00-18:00</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2024 <span>Şahanlar Egzoz</span>. Tüm hakları saklıdır.</p>
+      <p class="footer-copy">Türkiye'nin Egzoz Uzmanı 🔩</p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script type="module">
+import { api, categoryList } from '/js/api.js';
+import { renderProductCard, animateCounter } from '/js/main.js';
+
+// ── Hero Search ────────────────────────────────────────────────────
+let searchMode = 'text';
+document.querySelectorAll('.search-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.search-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    searchMode = btn.dataset.mode;
+    const placeholders = { text: 'Ürün adı ile arama yapın...', oem: 'OEM numarası girin (ör: 18100-11J00)', shn: 'ŞHN numarası girin (ör: SHN-001)' };
+    document.getElementById('hero-search-input').placeholder = placeholders[searchMode];
+  });
+});
+
+document.getElementById('hero-search-btn').addEventListener('click', doHeroSearch);
+document.getElementById('hero-search-input').addEventListener('keydown', e => { if (e.key === 'Enter') doHeroSearch(); });
+
+function doHeroSearch() {
+  const val = document.getElementById('hero-search-input').value.trim();
+  if (!val) return;
+  const params = new URLSearchParams();
+  if (searchMode === 'text') params.set('q', val);
+  else if (searchMode === 'oem') params.set('oem', val);
+  else if (searchMode === 'shn') params.set('shn', val);
+  window.location.href = `/search.html?${params.toString()}`;
+}
+
+// ── OEM/ŞHN Quick Search ───────────────────────────────────────────
+document.getElementById('oem-search-btn').addEventListener('click', () => {
+  const val = document.getElementById('oem-input').value.trim();
+  if (val) window.location.href = `/search.html?oem=${encodeURIComponent(val)}`;
+});
+document.getElementById('shn-search-btn').addEventListener('click', () => {
+  const val = document.getElementById('shn-input').value.trim();
+  if (val) window.location.href = `/search.html?shn=${encodeURIComponent(val)}`;
+});
+
+// ── Load Data ──────────────────────────────────────────────────────
+async function loadPage() {
+  try {
+    const [catData, prodData] = await Promise.all([
+      api.getCategories(),
+      api.getProducts({ limit: 6, sort: 'created_at_desc' }),
+    ]);
+
+    // Stats
+    if (catData.stats) {
+      animateCounter(document.getElementById('stat-products'), catData.stats.total || 0);
+      animateCounter(document.getElementById('stat-brands'), catData.stats.brands || 0);
+      animateCounter(document.getElementById('stat-categories'), catData.stats.categories || 0);
+    }
+
+    // Categories
+    const catGrid = document.getElementById('categories-grid');
+    const catIcons = { 'Binek': '🚗', 'Ticari': '🚐', 'Kamyon': '🚛', 'Motorsiklet': '🏍️', 'Spor': '🏎️', 'Genel': '⚙️' };
+    if (catData.categories && catData.categories.length > 0) {
+      catGrid.innerHTML = catData.categories.map(c => `
+        <div class="category-card" onclick="window.location.href='/products.html?category=${encodeURIComponent(c.category)}'">
+          <div class="category-icon">${catIcons[c.category] || '⚙️'}</div>
+          <div class="category-name">${c.category}</div>
+          <div class="category-count">${c.count} ürün</div>
+        </div>
+      `).join('');
+    } else {
+      catGrid.innerHTML = categoryList.map(c => `
+        <div class="category-card" onclick="window.location.href='/products.html?category=${encodeURIComponent(c.id)}'">
+          <div class="category-icon">${c.icon}</div>
+          <div class="category-name">${c.name}</div>
+          <div class="category-count">Ürünler →</div>
+        </div>
+      `).join('');
+    }
+
+    // Featured Products
+    const featuredEl = document.getElementById('featured-products');
+    if (prodData.products && prodData.products.length > 0) {
+      featuredEl.innerHTML = prodData.products.map(renderProductCard).join('');
+    } else {
+      featuredEl.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-state-icon">📦</div><p class="empty-state-title">Henüz ürün eklenmedi</p></div>';
+    }
+  } catch (err) {
+    console.error('Sayfa yüklenirken hata:', err);
+  }
+}
+
+loadPage();
+</script>
+
+<script src="/js/main.js" type="module"></script>
+</body>
+</html>
