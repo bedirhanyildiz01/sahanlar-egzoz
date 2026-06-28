@@ -58,8 +58,8 @@ export async function onRequestPost(context) {
       },
     });
 
-    // Public URL oluştur (R2 public bucket URL formatı)
-    const imageUrl = `https://pub-${env.R2_PUBLIC_ID || 'YOUR_R2_PUBLIC_ID'}.r2.dev/${filename}`;
+    // API proxy üzerinden URL oluştur
+    const imageUrl = `/api/images/${encodeURIComponent(filename)}`;
 
     return new Response(JSON.stringify({
       success: true,

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gelen Mesajlar — Şahanlar Egzoz Admin</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔩</text></svg>">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon">🔩</div>
+      <div class="sidebar-brand-text">ŞAHANLAR EGZOZ<small>Admin Paneli</small></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Ana Menü</div>
+      <a href="/admin/dashboard.html" class="sidebar-link"><span class="icon">📊</span> Dashboard</a>
+      <a href="/admin/products.html" class="sidebar-link"><span class="icon">📦</span> Ürün Yönetimi</a>
+      <a href="/admin/add-product.html" class="sidebar-link"><span class="icon">➕</span> Ürün Ekle</a>
+      <a href="/admin/messages.html" class="sidebar-link active"><span class="icon">📩</span> Gelen Mesajlar <span class="badge" id="sidebar-unread"></span></a>
+      <div class="sidebar-section-label" style="margin-top:24px">Site</div>
+      <a href="/" target="_blank" class="sidebar-link"><span class="icon">🌐</span> Siteyi Görüntüle</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar" id="sidebar-avatar">A</div>
+        <div>
+          <div class="sidebar-user-name" id="sidebar-username">Admin</div>
+          <div class="sidebar-user-role">Yönetici</div>
+        </div>
+      </div>
+      <button id="logout-btn" class="btn" style="width:100%;margin-top:10px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#f87171;padding:8px;font-size:0.78rem">🚪 Çıkış Yap</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <span class="topbar-title">📩 Gelen Mesajlar</span>
+      <div class="topbar-actions">
+        <select id="filter-read" style="background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 14px;color:var(--text-primary);font-size:0.8rem;cursor:pointer">
+          <option value="">Tümü</option>
+          <option value="unread">Okunmamış</option>
+          <option value="read">Okunmuş</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <!-- Stats -->
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px">
+        <div class="stat-card">
+          <div class="stat-card-icon">📩</div>
+          <div class="stat-card-value" id="stat-total">—</div>
+          <div class="stat-card-label">Toplam Mesaj</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">🔴</div>
+          <div class="stat-card-value" id="stat-unread">—</div>
+          <div class="stat-card-label">Okunmamış</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">✅</div>
+          <div class="stat-card-value" id="stat-read">—</div>
+          <div class="stat-card-label">Okunmuş</div>
+        </div>
+      </div>
+
+      <!-- Messages List -->
+      <div class="admin-table-wrapper">
+        <div style="overflow-x:auto">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:40px"></th>
+                <th>Gönderen</th>
+                <th>Konu</th>
+                <th>Mesaj</th>
+                <th>Tarih</th>
+                <th style="text-align:right">İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="messages-tbody">
+              <tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-muted)">Yükleniyor...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="admin-pagination" id="pagination-area">
+          <span id="pagination-info"></span>
+          <div class="pagination-btns" id="pagination-btns"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<button class="sidebar-toggle-btn" id="sidebar-toggle">☰</button>
+<div id="toast-container" class="toast-container"></div>
+
+<!-- Confirm Modal -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal">
+    <h3 class="modal-title" id="confirm-title">Onay</h3>
+    <p class="modal-body" id="confirm-message"></p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="cancel-btn">İptal</button>
+      <button class="btn btn-danger" id="confirm-btn"><span id="confirm-text">Sil</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Message Detail Modal -->
+<div class="modal-overlay" id="message-modal">
+  <div class="modal" style="max-width:600px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h3 class="modal-title" style="margin-bottom:0" id="msg-modal-title">Mesaj Detayı</h3>
+      <button class="preview-remove" id="close-msg-modal" style="position:static;width:32px;height:32px">✕</button>
+    </div>
+    <div id="msg-modal-body" style="color:var(--text-secondary);font-size:0.875rem;line-height:1.8">
+    </div>
+    <div class="modal-actions" style="margin-top:20px">
+      <button class="btn btn-secondary" id="msg-toggle-read">✓ Okundu</button>
+      <button class="btn btn-danger" id="msg-delete-btn">🗑️ Sil</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.msg-unread { background: rgba(255,107,0,0.04) !important; }
+.msg-unread td { color: var(--text-primary) !important; font-weight: 500; }
+.msg-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.msg-dot.unread { background: var(--primary); box-shadow: 0 0 6px rgba(255,107,0,0.5); }
+.msg-dot.read { background: var(--text-muted); }
+.msg-detail-row { display: flex; gap: 8px; margin-bottom: 10px; }
+.msg-detail-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; min-width: 70px; }
+.msg-detail-value { color: var(--text-primary); }
+.msg-body-text { background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-top: 12px; white-space: pre-wrap; line-height: 1.7; color: var(--text-secondary); }
+</style>
+
+<script type="module">
+import { auth } from '/admin/js/auth.js';
+import { showToast, formatDate, showConfirmModal } from '/admin/js/admin.js';
+
+const isAuth = await auth.requireAuth();
+if (!isAuth) throw new Error('Not auth');
+
+let currentPage = 1;
+let totalPages = 1;
+
+const filterSelect = document.getElementById('filter-read');
+filterSelect.addEventListener('change', () => { currentPage = 1; loadMessages(); });
+
+async function loadMessages() {
+  const tbody = document.getElementById('messages-tbody');
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-muted)">⏳ Yükleniyor...</td></tr>';
+
+  const token = auth.getToken();
+  const filter = filterSelect.value;
+  const params = new URLSearchParams({ page: currentPage, limit: 20 });
+  if (filter) params.set('filter', filter);
+
+  try {
+    const res = await fetch(`/api/messages?${params}`, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;color:#f87171">⚠️ ${data.error}</td></tr>`;
+      return;
+    }
+
+    totalPages = data.pagination?.totalPages || 1;
+    const total = data.pagination?.total || 0;
+    const unread = data.unread || 0;
+
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-unread').textContent = unread;
+    document.getElementById('stat-read').textContent = total - unread;
+
+    const sidebarBadge = document.getElementById('sidebar-unread');
+    if (sidebarBadge) sidebarBadge.textContent = unread > 0 ? unread : '';
+
+    if (!data.messages || data.messages.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-muted)">📭 Henüz mesaj yok</td></tr>';
+      renderPagination(0);
+      return;
+    }
+
+    const subjectMap = { fiyat: '💰 Fiyat Sorgusu', teknik: '🔧 Teknik Destek', siparis: '📦 Sipariş Takibi', bayi: '🏪 Bayi / Toptan', diger: '📌 Diğer' };
+
+    tbody.innerHTML = data.messages.map(m => `
+      <tr class="${m.is_read ? '' : 'msg-unread'}" data-id="${m.id}" style="cursor:pointer">
+        <td><span class="msg-dot ${m.is_read ? 'read' : 'unread'}"></span></td>
+        <td>
+          <div style="font-weight:${m.is_read ? 400 : 600};color:var(--text-primary);font-size:0.85rem">${escapeHtml(m.name)}</div>
+          <div style="font-size:0.72rem;color:var(--text-muted)">${m.email || m.phone || '-'}</div>
+        </td>
+        <td style="font-size:0.8rem">${subjectMap[m.subject] || m.subject || '-'}</td>
+        <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.82rem;color:var(--text-secondary)">${escapeHtml(m.message)}</td>
+        <td style="color:var(--text-muted);font-size:0.78rem;white-space:nowrap">${formatDate(m.created_at)}</td>
+        <td>
+          <div class="td-actions" style="justify-content:flex-end">
+            <button class="action-btn view msg-view-btn" title="Görüntüle" data-id="${m.id}">👁️</button>
+            <button class="action-btn delete msg-delete-btn" title="Sil" data-id="${m.id}" data-name="${escapeHtml(m.name)}">🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+
+    // Row click → open detail
+    tbody.querySelectorAll('tr[data-id]').forEach(row => {
+      row.addEventListener('click', (e) => {
+        if (e.target.closest('.action-btn')) return;
+        openMessage(parseInt(row.dataset.id));
+      });
+    });
+
+    // View button
+    tbody.querySelectorAll('.msg-view-btn').forEach(btn => {
+      btn.addEventListener('click', () => openMessage(parseInt(btn.dataset.id)));
+    });
+
+    // Delete button
+    tbody.querySelectorAll('.msg-delete-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = parseInt(btn.dataset.id);
+        const name = btn.dataset.name;
+        showConfirmModal({
+          title: 'Mesajı Sil',
+          message: `"${name}" tarafından gönderilen mesajı silmek istediğinize emin misiniz?`,
+          confirmText: 'Evet, Sil',
+          onConfirm: () => deleteMessage(id),
+        });
+      });
+    });
+
+    renderPagination(total);
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;color:#f87171">⚠️ Hata: ${err.message}</td></tr>`;
+  }
+}
+
+async function openMessage(id) {
+  const token = auth.getToken();
+  try {
+    const res = await fetch(`/api/messages/${id}`, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    const data = await res.json();
+    if (!res.ok) { showToast(data.error || 'Hata', 'error'); return; }
+
+    const m = data.message;
+    const subjectMap = { fiyat: '💰 Fiyat Sorgusu', teknik: '🔧 Teknik Destek', siparis: '📦 Sipariş Takibi', bayi: '🏪 Bayi / Toptan', diger: '📌 Diğer' };
+
+    document.getElementById('msg-modal-title').textContent = `${m.name} — Mesaj`;
+    document.getElementById('msg-modal-body').innerHTML = `
+      <div class="msg-detail-row"><span class="msg-detail-label">Ad Soyad</span><span class="msg-detail-value">${escapeHtml(m.name)}</span></div>
+      ${m.email ? `<div class="msg-detail-row"><span class="msg-detail-label">E-posta</span><span class="msg-detail-value"><a href="mailto:${escapeHtml(m.email)}" style="color:var(--primary)">${escapeHtml(m.email)}</a></span></div>` : ''}
+      ${m.phone ? `<div class="msg-detail-row"><span class="msg-detail-label">Telefon</span><span class="msg-detail-value"><a href="tel:${escapeHtml(m.phone)}" style="color:var(--primary)">${escapeHtml(m.phone)}</a></span></div>` : ''}
+      ${m.subject ? `<div class="msg-detail-row"><span class="msg-detail-label">Konu</span><span class="msg-detail-value">${subjectMap[m.subject] || escapeHtml(m.subject)}</span></div>` : ''}
+      ${m.oem_no ? `<div class="msg-detail-row"><span class="msg-detail-label">OEM/ŞHN No</span><span class="msg-detail-value"><span class="mono-code">${escapeHtml(m.oem_no)}</span></span></div>` : ''}
+      <div class="msg-detail-row"><span class="msg-detail-label">Tarih</span><span class="msg-detail-value">${new Date(m.created_at).toLocaleString('tr-TR')}</span></div>
+      <div class="msg-body-text">${escapeHtml(m.message)}</div>
+    `;
+
+    const toggleBtn = document.getElementById('msg-toggle-read');
+    toggleBtn.textContent = m.is_read ? '📩 Okunmadı İşaretle' : '✓ Okundu İşaretle';
+    toggleBtn.onclick = async () => {
+      await fetch(`/api/messages/${m.id}`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ is_read: !m.is_read }),
+      });
+      document.getElementById('message-modal').classList.remove('open');
+      loadMessages();
+      showToast(m.is_read ? 'Okunmadı olarak işaretlendi' : 'Okundu olarak işaretlendi', 'success');
+    };
+
+    document.getElementById('msg-delete-btn').onclick = () => {
+      document.getElementById('message-modal').classList.remove('open');
+      showConfirmModal({
+        title: 'Mesajı Sil',
+        message: `"${m.name}" tarafından gönderilen mesajı silmek istediğinize emin misiniz?`,
+        confirmText: 'Evet, Sil',
+        onConfirm: () => deleteMessage(m.id),
+      });
+    };
+
+    document.getElementById('message-modal').classList.add('open');
+
+    // Refresh list (mark as read)
+    loadMessages();
+  } catch (err) {
+    showToast('Mesaj yüklenemedi: ' + err.message, 'error');
+  }
+}
+
+document.getElementById('close-msg-modal').addEventListener('click', () => {
+  document.getElementById('message-modal').classList.remove('open');
+});
+
+async function deleteMessage(id) {
+  const token = auth.getToken();
+  try {
+    const res = await fetch(`/api/messages/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    if (res.ok) {
+      showToast('Mesaj silindi', 'success');
+      loadMessages();
+    } else {
+      const e = await res.json();
+      showToast(e.error || 'Silinemedi', 'error');
+    }
+  } catch (e) {
+    showToast('Hata: ' + e.message, 'error');
+  }
+}
+
+function renderPagination(total) {
+  const info = document.getElementById('pagination-info');
+  const btns = document.getElementById('pagination-btns');
+  info.textContent = `Sayfa ${currentPage} / ${totalPages} (${total} mesaj)`;
+
+  if (totalPages <= 1) { btns.innerHTML = ''; return; }
+
+  let html = '';
+  if (currentPage > 1) html += `<button class="pg-btn" data-page="${currentPage-1}">‹</button>`;
+  for (let i = Math.max(1, currentPage-2); i <= Math.min(totalPages, currentPage+2); i++) {
+    html += `<button class="pg-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+  }
+  if (currentPage < totalPages) html += `<button class="pg-btn" data-page="${currentPage+1}">›</button>`;
+  btns.innerHTML = html;
+  btns.querySelectorAll('.pg-btn').forEach(btn => {
+    btn.addEventListener('click', () => { currentPage = parseInt(btn.dataset.page); loadMessages(); });
+  });
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+loadMessages();
+</script>
+</body>
+</html>
