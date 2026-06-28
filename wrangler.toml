@@ -6,8 +6,8 @@ pages_build_output_dir = "public"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "sahanlar_egzoz_db"
-database_id = "6082b495-e801-4045-8a15-18e2db7c9f2a"
+database_name = "sahanlar-egzoz-db"
+database_id = "407b17c9-2d5c-4a98-930e-a862cf8bec8c"
 migrations_dir = "migrations"
 
 [[r2_buckets]]
