@@ -123,12 +123,16 @@ export const statusLabels = {
   out_of_stock: 'Stok Yok',
 };
 
-// Kategori listesi
+// Kategori listesi — Egzoz Parça Türleri
 export const categoryList = [
-  { id: 'Binek', name: 'Binek Araç', icon: '🚗' },
-  { id: 'Ticari', name: 'Ticari Araç', icon: '🚐' },
-  { id: 'Kamyon', name: 'Kamyon', icon: '🚛' },
-  { id: 'Motorsiklet', name: 'Motorsiklet', icon: '🏍️' },
-  { id: 'Spor', name: 'Spor Egzoz', icon: '🏎️' },
-  { id: 'Genel', name: 'Genel', icon: '⚙️' },
+  { id: 'Manifold', name: 'Egzoz Manifoldu', icon: '🔥' },
+  { id: 'Katalizor', name: 'Katalizör', icon: '♻️' },
+  { id: 'Susturucu', name: 'Susturucu', icon: '🔇' },
+  { id: 'Boru', name: 'Egzoz Borusu', icon: '🔧' },
+  { id: 'Spiral', name: 'Egzoz Spirali', icon: '🌀' },
+  { id: 'Kelepce', name: 'Kelepçe Çeşitleri', icon: '🔩' },
+  { id: 'Conta', name: 'Egzoz Contası', icon: '⭕' },
+  { id: 'Filtre', name: 'Partikül Filtresi (DPF)', icon: '🛡️' },
+  { id: 'Flexboru', name: 'Flex Boru', icon: '〰️' },
+  { id: 'Aksesuar', name: 'Aksesuar & Aparat', icon: '⚙️' },
 ];
