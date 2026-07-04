@@ -164,21 +164,29 @@ h1, h2, h3, h4, h5, h6 {
 .nav-logo .logo-text span { color: var(--primary); }
 
 .logo-img {
-  height: 52px;
+  height: 48px;
   width: auto;
   display: block;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  padding: 4px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
   transition: var(--transition);
 }
 .logo-img:hover {
-  transform: scale(1.02);
+  transform: scale(1.05);
 }
 
 .logo-img-footer {
-  height: 64px;
+  height: 60px;
   width: auto;
   display: block;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  padding: 6px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
 }
 
 .nav-links {
