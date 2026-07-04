@@ -1680,15 +1680,16 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
 }
 .header-socials-desktop a:hover {
-  color: var(--primary);
   transform: translateY(-1px);
 }
-.header-socials-desktop a.sahibinden-link {
-  font-weight: bold;
-  color: #ffe600;
-  font-size: 0.9rem;
-}
+.header-socials-desktop a.whatsapp-icon:hover { color: #25D366; }
+.header-socials-desktop a.instagram-icon:hover { color: #e1306c; }
+.header-socials-desktop a.facebook-icon:hover { color: #1877f2; }
+.header-socials-desktop a.tiktok-icon:hover { color: #ffffff; }
+.header-socials-desktop a.sahibinden-icon:hover { transform: translateY(-1px) scale(1.05); }
+
 @media (max-width: 1024px) {
   .header-socials-desktop { display: none; }
 }
+
 
