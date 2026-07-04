@@ -183,3 +183,30 @@ export function renderSkeletonCards(count = 6) {
     </div>
   `).join('');
 }
+
+// ── WhatsApp Widget Toggle ──────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const wpFloat = document.getElementById('whatsapp-float');
+  const wpPopup = document.getElementById('whatsapp-popup');
+  const wpClose = document.getElementById('whatsapp-popup-close');
+
+  if (wpFloat && wpPopup) {
+    wpFloat.addEventListener('click', (e) => {
+      e.stopPropagation();
+      wpPopup.classList.toggle('open');
+    });
+
+    wpClose?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      wpPopup.classList.remove('open');
+    });
+
+    // Close popup when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!wpPopup.contains(e.target) && e.target !== wpFloat) {
+        wpPopup.classList.remove('open');
+      }
+    });
+  }
+});
+
