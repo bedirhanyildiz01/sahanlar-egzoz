@@ -107,7 +107,7 @@
         <p class="product-detail-desc" id="product-desc"></p>
 
         <div class="product-detail-actions" style="margin-bottom:24px">
-          <a href="/contact.html" class="btn btn-primary btn-lg">📞 Fiyat Sor</a>
+          <button class="btn btn-primary btn-lg" id="btn-ask-price">💬 Fiyat Sor</button>
           <button class="btn btn-ghost" onclick="history.back()">← Geri</button>
         </div>
 
@@ -231,10 +231,22 @@ async function loadProduct() {
     specs.push({ label: 'Durum', value: statusLabels[product.status] || product.status, color: statusColors[product.status] });
 
     document.getElementById('product-specs').innerHTML = specs.map(s => `
-      <div class="spec-row">
+      <div class="spec-card">
         <span class="spec-label">${s.label}</span>
         <span class="spec-value ${s.mono ? 'mono' : ''}" ${s.color ? `style="color:${s.color}"` : ''}>${s.value}</span>
       </div>`).join('');
+
+    // Dynamic WhatsApp Inquiry
+    const askPriceBtn = document.getElementById('btn-ask-price');
+    if (askPriceBtn) {
+      askPriceBtn.addEventListener('click', () => {
+        const name = product.name;
+        const shn = product.shn_no || '-';
+        const oem = product.oem_no || '-';
+        const msg = `Merhaba, ${name} (ŞHN: ${shn}, OEM: ${oem}) ürününüz hakkında fiyat bilgisi alabilir miyim?`;
+        window.open(`https://wa.me/905444394560?text=${encodeURIComponent(msg)}`, '_blank');
+      });
+    }
 
     // Description
     const descEl = document.getElementById('product-desc');
