@@ -1616,3 +1616,79 @@ h1, h2, h3, h4, h5, h6 {
   .hero-stats { flex-direction: column; gap: 16px; }
   .stats-banner-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* WhatsApp Floating Button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  background-color: #25D366;
+  color: #fff !important;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  z-index: 999;
+  transition: var(--transition);
+}
+.whatsapp-float:hover {
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+/* Socials Hover Colors */
+.social-btn.facebook:hover {
+  background: rgba(24, 119, 242, 0.15) !important;
+  border-color: rgba(24, 119, 242, 0.4) !important;
+  color: #1877f2 !important;
+}
+.social-btn.instagram:hover {
+  background: rgba(225, 48, 108, 0.15) !important;
+  border-color: rgba(225, 48, 108, 0.4) !important;
+  color: #e1306c !important;
+}
+.social-btn.whatsapp:hover {
+  background: rgba(37, 211, 102, 0.15) !important;
+  border-color: rgba(37, 211, 102, 0.4) !important;
+  color: #25D366 !important;
+}
+.social-btn.tiktok:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #fff !important;
+}
+.social-btn.sahibinden:hover {
+  background: rgba(255, 230, 0, 0.15) !important;
+  border-color: rgba(255, 230, 0, 0.4) !important;
+  color: #ffe600 !important;
+}
+
+/* Header Socials */
+.header-socials-desktop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 16px;
+}
+.header-socials-desktop a {
+  color: var(--text-secondary);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+.header-socials-desktop a:hover {
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+.header-socials-desktop a.sahibinden-link {
+  font-weight: bold;
+  color: #ffe600;
+  font-size: 0.9rem;
+}
+@media (max-width: 1024px) {
+  .header-socials-desktop { display: none; }
+}
+
