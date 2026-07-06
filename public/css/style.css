@@ -1886,4 +1886,127 @@ h1, h2, h3, h4, h5, h6 {
   .header-socials-desktop { display: none; }
 }
 
+/* ── Catalog Banner Section (Görseldeki Gibi) ── */
+.catalog-banner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  align-items: center;
+  gap: 48px;
+}
+
+.catalog-banner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.catalog-banner-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  letter-spacing: 0.02em;
+}
+
+.catalog-banner-desc {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.catalog-banner-btn {
+  padding: 14px 36px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: var(--gradient-brand);
+  color: white;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+}
+
+.catalog-banner-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+}
+
+.catalog-banner-image-container {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.catalog-banner-image-crop {
+  width: 100%;
+  height: 320px;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.catalog-banner-img {
+  width: 133%; /* Genişliği artırarak sol taraftaki metni kesiyoruz */
+  height: 100%;
+  object-fit: cover;
+  object-position: right center; /* Görselin sağındaki egzoz şemasına odaklan */
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+/* ── Category Card Image Styles ── */
+.category-img-wrapper {
+  width: 100%;
+  height: 140px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.category-card:hover .category-img-wrapper {
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.1);
+}
+
+.category-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.category-card:hover .category-img {
+  transform: scale(1.06);
+}
+
+@media (max-width: 768px) {
+  .catalog-banner-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    text-align: center;
+  }
+  .catalog-banner-content {
+    align-items: center;
+    text-align: center;
+  }
+  .catalog-banner-image-crop {
+    height: 240px;
+  }
+  .catalog-banner-img {
+    width: 100%;
+    object-position: center;
+  }
+}
+
 

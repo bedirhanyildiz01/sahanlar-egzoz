@@ -170,43 +170,22 @@
   </div>
 </div>
 
-<!-- ── Features ── -->
-<section class="section" style="background: var(--bg-surface)">
+<!-- ── Product Catalog Section (Görseldeki Gibi) ── -->
+<section class="section catalog-banner-section" style="background: var(--bg-surface); padding: 80px 0;">
   <div class="container">
-    <div class="section-header centered">
-      <div class="section-label">Neden Biz?</div>
-      <h2 class="section-title">Şahanlar <span>Farkı</span></h2>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🔍</div>
-        <h3 class="feature-title">OEM & ŞHN Araması</h3>
-        <p class="feature-desc">Numaranızı girin, saniyeler içinde doğru parçayı bulun. Hızlı ve kesin sonuç garantisi.</p>
+    <div class="catalog-banner-grid">
+      <div class="catalog-banner-content">
+        <h2 class="catalog-banner-title">ÜRÜN KATALOĞU</h2>
+        <p class="catalog-banner-desc">3.500 adet farklı modele kolayca ulaşabilirsiniz.</p>
+        <a href="/products.html" class="btn btn-primary catalog-banner-btn">
+          <span>ÜRÜNLERİMİZ</span>
+          <span style="font-size: 1.1rem; margin-left: 8px;">→</span>
+        </a>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🏭</div>
-        <h3 class="feature-title">A'dan Z'ye Egzoz Ekipmanları</h3>
-        <p class="feature-desc">Manifold, katalizör, susturucu, kelepçe, spiral, conta, flex boru, DPF filtre ve tüm egzoz aksesuarları.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h3 class="feature-title">Hızlı Temin</h3>
-        <p class="feature-desc">Stokta olan ürünler hızla temin edilir. Özel siparişler için kısa bekleme süresi.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🛡️</div>
-        <h3 class="feature-title">Garantili Ürünler</h3>
-        <p class="feature-desc">Tüm ürünlerimiz kalite kontrolünden geçirilmiş ve garantilidir. Güvenle satın alın.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🚛</div>
-        <h3 class="feature-title">Kamyon, Tır & Binek</h3>
-        <p class="feature-desc">Mercedes, MAN, Volvo, Scania, DAF, Iveco, Ford Cargo, BMC ve tüm binek araç markaları için parçalar mevcut.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📞</div>
-        <h3 class="feature-title">Uzman Destek</h3>
-        <p class="feature-desc">Teknik ekibimiz doğru parçayı bulmanıza yardımcı olmak için hazır. Hemen arayın.</p>
+      <div class="catalog-banner-image-container">
+        <div class="catalog-banner-image-crop">
+          <img src="/exhaust_catalog.png" alt="Şahanlar Egzoz Ürün Kataloğu" class="catalog-banner-img">
+        </div>
       </div>
     </div>
   </div>
@@ -347,11 +326,25 @@ async function loadPage() {
 
     // Categories
     const catGrid = document.getElementById('categories-grid');
-    const catIcons = { 'Manifold': '🔥', 'Katalizor': '♻️', 'Susturucu': '🔇', 'Boru': '🔧', 'Spiral': '🌀', 'Kelepce': '🔩', 'Conta': '⭕', 'Filtre': '🛡️', 'Flexboru': '〰️', 'Aksesuar': '⚙️' };
+    const catImages = { 
+      'Manifold': 'https://images.unsplash.com/photo-1615906655593-ad098c44c16c?auto=format&fit=crop&q=80&w=400', 
+      'Katalizor': 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&q=80&w=400', 
+      'Susturucu': 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&q=80&w=400', 
+      'Boru': 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=400', 
+      'Spiral': 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=400', 
+      'Kelepce': 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=400', 
+      'Conta': 'https://images.unsplash.com/photo-1581092162384-8987c1796715?auto=format&fit=crop&q=80&w=400', 
+      'Filtre': 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=400', 
+      'Flexboru': 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=400', 
+      'Aksesuar': 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=400' 
+    };
+
     if (catData.categories && catData.categories.length > 0) {
       catGrid.innerHTML = catData.categories.map(c => `
         <div class="category-card" onclick="window.location.href='/products.html?category=${encodeURIComponent(c.category)}'">
-          <div class="category-icon">${catIcons[c.category] || '⚙️'}</div>
+          <div class="category-img-wrapper">
+            <img src="${catImages[c.category] || 'https://images.unsplash.com/photo-1615906655593-ad098c44c16c?auto=format&fit=crop&q=80&w=400'}" alt="${c.category}" class="category-img">
+          </div>
           <div class="category-name">${c.category}</div>
           <div class="category-count">${c.count} ürün</div>
         </div>
@@ -359,7 +352,9 @@ async function loadPage() {
     } else {
       catGrid.innerHTML = categoryList.map(c => `
         <div class="category-card" onclick="window.location.href='/products.html?category=${encodeURIComponent(c.id)}'">
-          <div class="category-icon">${c.icon}</div>
+          <div class="category-img-wrapper">
+            <img src="${catImages[c.name] || 'https://images.unsplash.com/photo-1615906655593-ad098c44c16c?auto=format&fit=crop&q=80&w=400'}" alt="${c.name}" class="category-img">
+          </div>
           <div class="category-name">${c.name}</div>
           <div class="category-count">Ürünler →</div>
         </div>
