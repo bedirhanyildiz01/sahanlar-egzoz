@@ -1889,7 +1889,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ── Catalog Banner Section (Görseldeki Gibi) ── */
 .catalog-banner-grid {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
+  grid-template-columns: 1fr 1.25fr; /* 1.25fr instead of 1.5fr for better balance with egzoz.webp */
   align-items: center;
   gap: 48px;
 }
@@ -1943,20 +1943,20 @@ h1, h2, h3, h4, h5, h6 {
 
 .catalog-banner-image-crop {
   width: 100%;
-  height: 320px;
+  height: 340px;
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .catalog-banner-img {
-  width: 133%; /* Genişliği artırarak sol taraftaki metni kesiyoruz */
+  width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: right center; /* Görselin sağındaki egzoz şemasına odaklan */
-  position: absolute;
-  right: 0;
-  top: 0;
+  object-fit: contain; /* Görselin tamamını kutuya sığdır */
+  object-position: center;
 }
 
 /* ── Category Card Image Styles ── */
