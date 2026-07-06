@@ -7,43 +7,43 @@
 
 /* ── Design Tokens ── */
 :root {
-  --primary: #FF6B00;
-  --primary-dark: #CC5500;
-  --primary-light: #FF8C38;
-  --primary-glow: rgba(255, 107, 0, 0.35);
-  --accent: #E94560;
-  --accent-glow: rgba(233, 69, 96, 0.3);
+  --primary: #d32f2f;
+  --primary-dark: #b71c1c;
+  --primary-light: #ef5350;
+  --primary-glow: rgba(211, 47, 47, 0.2);
+  --accent: #d32f2f;
+  --accent-glow: rgba(211, 47, 47, 0.15);
 
-  --bg-deep: #07070F;
-  --bg-primary: #0C0C1A;
-  --bg-surface: #12121E;
-  --bg-card: #181828;
-  --bg-card-hover: #1E1E32;
-  --bg-input: #1A1A2C;
+  --bg-deep: #f5f5f5;
+  --bg-primary: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fcfcfc;
+  --bg-input: #f5f5f5;
 
-  --text-primary: #F0F0FF;
-  --text-secondary: #9090A8;
-  --text-muted: #505068;
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --text-muted: #999999;
 
-  --border: rgba(255, 255, 255, 0.07);
-  --border-active: rgba(255, 107, 0, 0.6);
-  --border-hover: rgba(255, 255, 255, 0.14);
+  --border: rgba(0, 0, 0, 0.08);
+  --border-active: rgba(211, 47, 47, 0.5);
+  --border-hover: rgba(0, 0, 0, 0.15);
 
-  --gradient-brand: linear-gradient(135deg, #FF6B00 0%, #E94560 100%);
-  --gradient-dark: linear-gradient(135deg, #12121E 0%, #0C0C1A 100%);
-  --gradient-card: linear-gradient(145deg, #1E1E32 0%, #12121E 100%);
-  --gradient-hero: linear-gradient(135deg, #07070F 0%, #1A0A00 50%, #07070F 100%);
+  --gradient-brand: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+  --gradient-dark: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+  --gradient-card: linear-gradient(145deg, #ffffff 0%, #fcfcfc 100%);
+  --gradient-hero: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
 
-  --glass-bg: rgba(255, 255, 255, 0.04);
-  --glass-border: rgba(255, 255, 255, 0.09);
-  --glass-hover: rgba(255, 255, 255, 0.07);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-hover: rgba(255, 255, 255, 0.95);
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 40px rgba(255, 107, 0, 0.25);
-  --shadow-glow-sm: 0 0 20px rgba(255, 107, 0, 0.2);
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 40px rgba(211, 47, 47, 0.1);
+  --shadow-glow-sm: 0 0 20px rgba(211, 47, 47, 0.08);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.06);
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -118,7 +118,7 @@ h1, h2, h3, h4, h5, h6 {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  background: rgba(7, 7, 15, 0.85);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
@@ -126,8 +126,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .site-header.scrolled {
-  background: rgba(7, 7, 15, 0.97);
-  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.05);
 }
 
 .nav-inner {
@@ -324,7 +324,7 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background-image: linear-gradient(180deg, rgba(7, 7, 15, 0.75) 0%, rgba(7, 7, 15, 0.9) 100%), url('/hero-bg.png');
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.9) 100%), url('/hero-bg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -337,14 +337,14 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(255, 107, 0, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(233, 69, 96, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 50%, rgba(211, 47, 47, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(211, 47, 47, 0.03) 0%, transparent 50%),
     repeating-linear-gradient(
       45deg,
       transparent,
       transparent 60px,
-      rgba(255, 255, 255, 0.01) 60px,
-      rgba(255, 255, 255, 0.01) 61px
+      rgba(0, 0, 0, 0.01) 60px,
+      rgba(0, 0, 0, 0.01) 61px
     );
 }
 
