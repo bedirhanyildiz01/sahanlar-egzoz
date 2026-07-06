@@ -58,7 +58,7 @@ export default async function HomePage() {
       <header style={styles.header} className="glass-panel">
         <div className="container" style={styles.headerContainer}>
           <div style={styles.brand}>
-            <Disc size={32} color="#ff5e00" style={styles.logoIcon} />
+            <Disc size={32} color="#d32f2f" style={styles.logoIcon} />
             <div>
               <h1 style={styles.brandName}>ŞAHANLAR EGZOZ</h1>
               <p style={styles.brandSubtitle}>Egzoz Sistemleri Katalog ve Satış</p>
@@ -145,7 +145,7 @@ const styles: Record<string, React.CSSProperties> = {
   brandName: {
     fontSize: '20px',
     fontWeight: '800',
-    color: '#fff',
+    color: '#111',
     lineHeight: '1.1',
     letterSpacing: '0.5px',
   },
@@ -163,7 +163,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: '600',
     padding: '10px 18px',
     borderRadius: '8px',
-    background: 'rgba(255, 255, 255, 0.03)',
+    background: 'rgba(0, 0, 0, 0.02)',
     border: '1px solid var(--border-color)',
     color: 'var(--text-secondary)',
     cursor: 'pointer',
@@ -182,7 +182,7 @@ const styles: Record<string, React.CSSProperties> = {
     width: '60vw',
     height: '60vw',
     borderRadius: '50%',
-    background: 'radial-gradient(circle, rgba(255, 94, 0, 0.04) 0%, transparent 60%)',
+    background: 'radial-gradient(circle, rgba(211, 47, 47, 0.04) 0%, transparent 60%)',
     zIndex: -1,
     pointerEvents: 'none',
   },
@@ -196,7 +196,7 @@ const styles: Record<string, React.CSSProperties> = {
   heroTitle: {
     fontSize: '36px',
     fontWeight: '800',
-    color: '#fff',
+    color: '#111',
     letterSpacing: '-0.5px',
   },
   heroDescription: {
@@ -225,7 +225,7 @@ const styles: Record<string, React.CSSProperties> = {
   footerLogoText: {
     fontSize: '18px',
     fontWeight: '800',
-    color: '#fff',
+    color: '#111',
   },
   footerTextMuted: {
     fontSize: '13px',

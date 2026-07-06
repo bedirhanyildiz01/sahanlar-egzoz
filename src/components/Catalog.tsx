@@ -341,8 +341,8 @@ const styles: Record<string, React.CSSProperties> = {
     animation: 'fadeIn 0.6s ease-out',
   },
   searchHero: {
-    background: 'linear-gradient(to bottom, var(--bg-secondary), rgba(19, 19, 22, 0.5))',
-    border: '1px solid var(--border-color)',
+    background: 'linear-gradient(to bottom, #f5f5f5, rgba(245, 245, 245, 0.5))',
+    border: '1px solid #e0e0e0',
     borderRadius: '16px',
     padding: '40px 32px',
     textAlign: 'center',
@@ -361,7 +361,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: '24px',
     fontWeight: '800',
     letterSpacing: '1px',
-    color: '#fff',
+    color: '#111',
   },
   searchHeroSubtitle: {
     fontSize: '14px',
@@ -377,7 +377,7 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     height: '56px',
-    boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)',
+    boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.04)',
     transition: 'border-color 0.2s',
   },
   searchBarIcon: {
@@ -388,7 +388,7 @@ const styles: Record<string, React.CSSProperties> = {
     border: 'none',
     outline: 'none',
     fontSize: '16px',
-    color: '#fff',
+    color: '#111',
     background: 'none',
   },
   clearSearchBtn: {
@@ -423,7 +423,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: '16px',
     fontWeight: '700',
     letterSpacing: '0.5px',
-    color: '#fff',
+    color: '#111',
   },
   resetBtn: {
     fontSize: '13px',
@@ -480,7 +480,7 @@ const styles: Record<string, React.CSSProperties> = {
   noResultsTitle: {
     fontSize: '18px',
     fontWeight: '700',
-    color: '#fff',
+    color: '#111',
     marginTop: '12px',
   },
   noResultsText: {
@@ -526,8 +526,8 @@ const styles: Record<string, React.CSSProperties> = {
     position: 'absolute',
     top: '12px',
     right: '12px',
-    background: 'rgba(10, 10, 12, 0.75)',
-    border: '1px solid rgba(255,255,255,0.08)',
+    background: 'rgba(0, 0, 0, 0.5)',
+    border: '1px solid rgba(255,255,255,0.15)',
     backdropFilter: 'blur(4px)',
     padding: '4px 10px',
     borderRadius: '100px',
@@ -544,7 +544,7 @@ const styles: Record<string, React.CSSProperties> = {
   cardTitle: {
     fontSize: '16px',
     fontWeight: '700',
-    color: '#fff',
+    color: '#111',
     marginBottom: '12px',
     lineHeight: '1.4',
     height: '44px',
@@ -571,7 +571,7 @@ const styles: Record<string, React.CSSProperties> = {
   codeValue: {
     fontSize: '12px',
     fontWeight: '600',
-    color: '#fff',
+    color: '#111',
     fontFamily: 'monospace',
   },
   compatWrapper: {
@@ -593,8 +593,8 @@ const styles: Record<string, React.CSSProperties> = {
   compatLabel: {
     fontSize: '10px',
     padding: '2px 6px',
-    background: 'rgba(255,255,255,0.03)',
-    border: '1px solid rgba(255,255,255,0.05)',
+    background: 'rgba(0,0,0,0.03)',
+    border: '1px solid rgba(0,0,0,0.06)',
     borderRadius: '4px',
     color: 'var(--text-secondary)',
   },
@@ -638,7 +638,7 @@ const styles: Record<string, React.CSSProperties> = {
     gap: '4px',
     fontSize: '13px',
     fontWeight: '600',
-    color: '#fff',
+    color: '#111',
   },
   arrow: {
     transition: 'transform 0.2s',

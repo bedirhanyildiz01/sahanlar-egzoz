@@ -61,7 +61,7 @@ export default async function ProductDetailPage(props: PageProps) {
       <header style={styles.header} className="glass-panel">
         <div className="container" style={styles.headerContainer}>
           <Link href="/" style={styles.brand}>
-            <Disc size={32} color="#ff5e00" style={styles.logoIcon} />
+            <Disc size={32} color="#d32f2f" style={styles.logoIcon} />
             <div>
               <h1 style={styles.brandName}>ŞAHANLAR EGZOZ</h1>
               <p style={styles.brandSubtitle}>Egzoz Sistemleri Katalog ve Satış</p>
@@ -258,7 +258,7 @@ const styles: Record<string, React.CSSProperties> = {
   brandName: {
     fontSize: '20px',
     fontWeight: '800',
-    color: '#fff',
+    color: '#111',
     lineHeight: '1.1',
     letterSpacing: '0.5px',
   },
@@ -298,7 +298,7 @@ const styles: Record<string, React.CSSProperties> = {
     color: 'var(--text-muted)',
   },
   breadcrumbActive: {
-    color: '#fff',
+    color: '#111',
     fontWeight: '500',
   },
   detailCard: {
@@ -326,7 +326,7 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)',
+    boxShadow: 'inset 0 0 10px rgba(0,0,0,0.05)',
   },
   productImg: {
     width: '100%',
@@ -346,7 +346,7 @@ const styles: Record<string, React.CSSProperties> = {
   productTitle: {
     fontSize: '28px',
     fontWeight: '800',
-    color: '#fff',
+    color: '#111',
     lineHeight: '1.2',
     marginBottom: '16px',
   },
@@ -398,7 +398,7 @@ const styles: Record<string, React.CSSProperties> = {
   metaCodeValue: {
     fontSize: '16px',
     fontWeight: '700',
-    color: '#fff',
+    color: '#111',
     fontFamily: 'monospace',
   },
   descriptionSection: {
@@ -411,7 +411,7 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     fontSize: '15px',
     fontWeight: '700',
-    color: '#fff',
+    color: '#111',
   },
   descriptionText: {
     fontSize: '15px',
@@ -431,7 +431,7 @@ const styles: Record<string, React.CSSProperties> = {
   compatibilityTitle: {
     fontSize: '18px',
     fontWeight: '800',
-    color: '#fff',
+    color: '#111',
   },
   tableWrapper: {
     width: '100%',
@@ -471,7 +471,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   carBrandText: {
     fontWeight: '700',
-    color: '#fff',
+    color: '#111',
   },
   carModelText: {
     color: 'var(--text-secondary)',
@@ -499,7 +499,7 @@ const styles: Record<string, React.CSSProperties> = {
   footerLogoText: {
     fontSize: '18px',
     fontWeight: '800',
-    color: '#fff',
+    color: '#111',
   },
   footerTextMuted: {
     fontSize: '13px',
