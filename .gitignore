@@ -44,4 +44,4 @@ next-env.d.ts
 /.open-next/
 /.wrangler/
 /local.db
-
+*.backup.html

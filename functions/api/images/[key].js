@@ -8,7 +8,7 @@ const CORS = {
 };
 
 export async function onRequestGet(context) {
-  const { params, env } = context;
+  const { request, params, env } = context;
   const key = params.key;
 
   if (!key || !env.IMAGES) {
@@ -27,6 +27,21 @@ export async function onRequestGet(context) {
       const altObject = await env.IMAGES.get(altKey);
 
       if (!altObject) {
+        const isLocal = request && (request.url.includes('localhost') || request.url.includes('127.0.0.1'));
+        if (isLocal) {
+          try {
+            const liveRes = await fetch(`https://sahanlaregzozexhaust.com/api/images/${encodeURIComponent(decodedKey)}`);
+            if (liveRes.ok) {
+              return new Response(liveRes.body, {
+                headers: {
+                  ...CORS,
+                  'Content-Type': liveRes.headers.get('content-type') || 'image/png',
+                  'Cache-Control': 'public, max-age=31536000, immutable',
+                },
+              });
+            }
+          } catch (_) {}
+        }
         return new Response('Image not found', { status: 404, headers: CORS });
       }
 

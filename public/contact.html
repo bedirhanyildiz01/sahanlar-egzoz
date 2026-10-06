@@ -6,14 +6,14 @@
   <title>İletişim — Şahanlar Egzoz</title>
   <meta name="description" content="Şahanlar Egzoz ile iletişime geçin. Telefon, e-posta ve adres bilgileri.">
   <link rel="icon" href="/logo.png" type="image/png">
-  <link rel="stylesheet" href="/css/style.css?v=11">
+  <link rel="stylesheet" href="/css/style.css?v=29">
 </head>
 <body>
 
 <header class="site-header">
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="/logo.png" alt="Şahanlar Egzoz Logo" class="logo-img">
+      <img src="/logo.png?v=3" alt="Şahanlar Egzoz Logo" class="logo-img">
     </a>
     <nav class="nav-links">
       <a href="/" class="nav-link">Ana Sayfa</a>
@@ -69,10 +69,50 @@
   </div>
 </div>
 
+<!-- Map Section -->
+<div class="map-section" style="width: 100%; height: 350px; background: var(--bg-deep); border-bottom: 1px solid var(--border);">
+  <iframe 
+    src="https://maps.google.com/maps?q=Aydinlar%2094077.%20Sok%20No:10/2%20Eregli%20Konya&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+    width="100%" 
+    height="100%" 
+    frameborder="0" 
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy">
+  </iframe>
+</div>
+
 <!-- Contact Main -->
 <section class="section">
   <div class="container">
-    <div class="contact-grid">
+    <!-- Contact Quick Action Cards (Linear/Emil Kowalski micro-actions) -->
+    <div class="contact-action-cards reveal-on-scroll">
+      <a href="https://wa.me/905444394560" target="_blank" class="action-card">
+        <div class="action-card-icon whatsapp">💬</div>
+        <div>
+          <div class="action-card-title">WhatsApp Danışmanı</div>
+          <div class="action-card-sub">Fotoğraf & OEM ile anında parça tespiti</div>
+        </div>
+      </a>
+
+      <a href="tel:+905444394560" class="action-card">
+        <div class="action-card-icon phone">📞</div>
+        <div>
+          <div class="action-card-title">Doğrudan İletişim Hattı</div>
+          <div class="action-card-sub">+90 544 439 45 60 — Hızlı sipariş</div>
+        </div>
+      </a>
+
+      <a href="https://maps.google.com/maps?q=Aydinlar%2094077.%20Sok%20No:10/2%20Eregli%20Konya" target="_blank" class="action-card">
+        <div class="action-card-icon map">📍</div>
+        <div>
+          <div class="action-card-title">Atölye & Merkez Depo</div>
+          <div class="action-card-sub">Aydınlar, Ereğli / Konya — Yol Tarifi Al</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="contact-grid reveal-on-scroll">
       <!-- Contact Info -->
       <div>
         <h2 class="section-title" style="margin-bottom:32px">İletişim <span>Bilgileri</span></h2>
@@ -102,7 +142,7 @@
             <div class="contact-info-icon">✉️</div>
             <div>
               <div class="contact-info-label">E-posta</div>
-              <a href="mailto:info@sahanlaregzoz.com" class="contact-info-value" style="color:var(--primary)">info@sahanlaregzoz.com</a>
+              <a href="/cdn-cgi/l/email-protection#452c2b232a0536242d242b29243720223f2a3f6b262a28" class="contact-info-value" style="color:var(--primary)"><span class="__cf_email__" data-cfemail="553c3b333a1526343d343b39342730322f3a2f7b363a38">[email&#160;protected]</span></a>
             </div>
           </div>
           <div class="contact-info-item">
@@ -177,7 +217,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-logo">
-          <img src="/logo.png" alt="Şahanlar Egzoz Logo" class="logo-img-footer">
+          <img src="/logo-white.png?v=3" alt="Şahanlar Egzoz Logo" class="logo-img-footer">
         </div>
         <p class="footer-desc">Manifolddan susturucuya, kelepçeden spirale A'dan Z'ye tüm egzoz ekipmanları. Kamyon, tır ve binek araç için güvenilir tedarikçiniz.</p>
         <div class="footer-socials">
@@ -213,7 +253,7 @@
         <div class="footer-links">
           <span class="footer-link">📍 Aydınlar, 94077. sok no:10/2, 42320 Ereğli/Konya</span>
           <a href="tel:+905444394560" class="footer-link">📞 +90 544 439 45 60</a>
-          <a href="mailto:info@sahanlaregzoz.com" class="footer-link">✉️ info@sahanlaregzoz.com</a>
+          <a href="/cdn-cgi/l/email-protection#7f161119103f0c1e171e11131e0d1a18051005511c1012" class="footer-link">✉️ <span class="__cf_email__" data-cfemail="7c15121a133c0f1d141d12101d0e191b061306521f1311">[email&#160;protected]</span></a>
           <span class="footer-link">🕐 Hft-Cts: 08:00-18:00</span>
         </div>
       </div>
@@ -252,7 +292,7 @@
   </button>
 </div>
 
-<script type="module" src="/js/main.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module" src="/js/main.js"></script>
 
 <script>
 document.getElementById('contact-form').addEventListener('submit', async (e) => {

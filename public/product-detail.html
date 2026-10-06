@@ -6,12 +6,27 @@
   <title id="page-title">Ürün Detayı — Şahanlar Egzoz</title>
   <meta name="description" content="Şahanlar Egzoz ürün detay sayfası.">
   <link rel="icon" href="/logo.png" type="image/png">
-  <link rel="stylesheet" href="/css/style.css?v=11">
+  <link rel="stylesheet" href="/css/style.css?v=29">
   <style>
     .share-btns { display:flex; gap:8px; flex-wrap:wrap; }
     .share-btn { padding:8px 14px; border-radius:var(--radius-sm); font-size:0.78rem; font-weight:600; background:var(--glass-bg); border:1px solid var(--border); color:var(--text-secondary); cursor:pointer; transition:var(--transition); display:flex; align-items:center; gap:6px; }
     .share-btn:hover { border-color:var(--border-active); color:var(--primary); }
     .related-section { padding:60px 0; background:var(--bg-surface); }
+    .product-image-viewer { position: relative; }
+    .product-image-viewer::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50%; height: 50%;
+      background-image: url('/logo.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 1;
+    }
   </style>
 </head>
 <body>
@@ -19,7 +34,7 @@
 <header class="site-header">
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="/logo.png" alt="Şahanlar Egzoz Logo" class="logo-img">
+      <img src="/logo.png?v=3" alt="Şahanlar Egzoz Logo" class="logo-img">
     </a>
     <nav class="nav-links">
       <a href="/" class="nav-link">Ana Sayfa</a>
@@ -144,7 +159,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-logo">
-          <img src="/logo.png" alt="Şahanlar Egzoz Logo" class="logo-img-footer">
+          <img src="/logo-white.png?v=3" alt="Şahanlar Egzoz Logo" class="logo-img-footer">
         </div>
         <p class="footer-desc">Manifolddan susturucuya, kelepçeden spirale A'dan Z'ye tüm egzoz ekipmanları. Kamyon, tır ve binek araç için güvenilir tedarikçiniz.</p>
         <div class="footer-socials">
@@ -180,7 +195,7 @@
         <div class="footer-links">
           <span class="footer-link">📍 Aydınlar, 94077. sok no:10/2, 42320 Ereğli/Konya</span>
           <a href="tel:+905444394560" class="footer-link">📞 +90 544 439 45 60</a>
-          <a href="mailto:info@sahanlaregzoz.com" class="footer-link">✉️ info@sahanlaregzoz.com</a>
+          <a href="/cdn-cgi/l/email-protection#9df4f3fbf2ddeefcf5fcf3f1fceff8fae7f2e7b3fef2f0" class="footer-link">✉️ <span class="__cf_email__" data-cfemail="573e3931381724363f36393b362532302d382d7934383a">[email&#160;protected]</span></a>
           <span class="footer-link">🕐 Hft-Cts: 08:00-18:00</span>
         </div>
       </div>
@@ -219,7 +234,7 @@
   </button>
 </div>
 
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { api } from '/js/api.js';
 import { renderProductCard, showToast } from '/js/main.js';
 

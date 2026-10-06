@@ -6,14 +6,14 @@
   <title>Kurumsal — Şahanlar Egzoz</title>
   <meta name="description" content="Şahanlar Egzoz hakkında bilgi edinin. 15 yıllık tecrübemiz, misyonumuz ve değerlerimiz.">
   <link rel="icon" href="/logo.png" type="image/png">
-  <link rel="stylesheet" href="/css/style.css?v=11">
+  <link rel="stylesheet" href="/css/style.css?v=29">
 </head>
 <body>
 
 <header class="site-header">
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="/logo.png" alt="Şahanlar Egzoz Logo" class="logo-img">
+      <img src="/logo.png?v=3" alt="Şahanlar Egzoz Logo" class="logo-img">
     </a>
     <nav class="nav-links">
       <a href="/" class="nav-link">Ana Sayfa</a>
@@ -79,11 +79,11 @@
 <!-- Stats Banner -->
 <div class="stats-banner">
   <div class="container">
-    <div class="stats-banner-grid">
-      <div class="stat-item"><div class="num">15+</div><div class="label">Yıllık Tecrübe</div></div>
-      <div class="stat-item"><div class="num">5000+</div><div class="label">Ürün Çeşidi</div></div>
-      <div class="stat-item"><div class="num">50+</div><div class="label">Araç Markası</div></div>
-      <div class="stat-item"><div class="num">10K+</div><div class="label">Mutlu Müşteri</div></div>
+    <div class="stats-banner-grid reveal-on-scroll">
+      <div class="stat-item"><div class="num" data-target="15">15+</div><div class="label">Yıllık Tecrübe</div></div>
+      <div class="stat-item"><div class="num" data-target="3500">3500+</div><div class="label">Ürün Çeşidi</div></div>
+      <div class="stat-item"><div class="num" data-target="50">50+</div><div class="label">Araç Markası</div></div>
+      <div class="stat-item"><div class="num" data-target="10000">10000+</div><div class="label">Mutlu Müşteri</div></div>
     </div>
   </div>
 </div>
@@ -91,7 +91,7 @@
 <!-- Mission & Vision -->
 <section class="section">
   <div class="container">
-    <div class="about-grid">
+    <div class="about-grid reveal-on-scroll">
       <div>
         <div class="section-label">Hikayemiz</div>
         <h2 class="section-title" style="margin-bottom:24px">Türkiye'nin <span>Egzoz Uzmanı</span></h2>
@@ -103,33 +103,56 @@
         </p>
         <a href="/products.html" class="btn btn-primary">Ürünleri İncele →</a>
       </div>
-      <div>
-        <div style="background:var(--gradient-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:40px">
-          <div style="display:flex;flex-direction:column;gap:24px">
-            <div style="display:flex;gap:16px;align-items:flex-start">
-              <div class="feature-icon" style="width:48px;height:48px;font-size:1.2rem;flex-shrink:0">🎯</div>
-              <div>
-                <h3 style="font-family:Oswald,sans-serif;font-size:1.1rem;margin-bottom:8px;color:var(--text-primary)">Misyonumuz</h3>
-                <p style="color:var(--text-secondary);font-size:0.875rem;line-height:1.7">Kamyon, tır ve binek araç için doğru egzoz parçasını en hızlı ve en güvenilir şekilde ulaştırmak.</p>
-              </div>
-            </div>
-            <div style="height:1px;background:var(--border)"></div>
-            <div style="display:flex;gap:16px;align-items:flex-start">
-              <div class="feature-icon" style="width:48px;height:48px;font-size:1.2rem;flex-shrink:0">🔭</div>
-              <div>
-                <h3 style="font-family:Oswald,sans-serif;font-size:1.1rem;margin-bottom:8px;color:var(--text-primary)">Vizyonumuz</h3>
-                <p style="color:var(--text-secondary);font-size:0.875rem;line-height:1.7">Türkiye'nin en büyük ve en kapsamlı egzoz ekipmanları tedarikçisi olmak.</p>
-              </div>
-            </div>
-            <div style="height:1px;background:var(--border)"></div>
-            <div style="display:flex;gap:16px;align-items:flex-start">
-              <div class="feature-icon" style="width:48px;height:48px;font-size:1.2rem;flex-shrink:0">💎</div>
-              <div>
-                <h3 style="font-family:Oswald,sans-serif;font-size:1.1rem;margin-bottom:8px;color:var(--text-primary)">Değerlerimiz</h3>
-                <p style="color:var(--text-secondary);font-size:0.875rem;line-height:1.7">Kalite, güvenilirlik, hızlı teslimat ve müşteri memnuniyeti odaklı çalışıyoruz.</p>
-              </div>
-            </div>
-          </div>
+      <div style="overflow:hidden; border:1px solid var(--border); border-radius:var(--radius-xl); box-shadow:var(--shadow-md); height:100%; min-height:360px;">
+        <img src="/about_warehouse.png" alt="Şahanlar Egzoz Deposu" style="width:100%; height:100%; object-fit:cover; display:block;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Gelişim Yolculuğumuz (Milestone Timeline) ── -->
+<section class="section" style="background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="section-header centered reveal-on-scroll">
+      <div class="section-label">Tarihçe & Dönüm Noktaları</div>
+      <h2 class="section-title">Gelişim <span>Yolculuğumuz</span></h2>
+      <p class="section-desc" style="margin:16px auto 0">Küçük bir atölyeden Türkiye'nin dört bir yanına parça ulaştıran dijital egzoz üssüne.</p>
+    </div>
+
+    <div class="milestone-timeline reveal-on-scroll">
+      <div class="timeline-step">
+        <div class="timeline-badge">01</div>
+        <div class="timeline-content">
+          <span class="timeline-year">2009</span>
+          <h3 class="timeline-title">Temellerin Atılması</h3>
+          <p class="timeline-desc">Konya Ereğli'de egzoz sistemleri montaj ve yerel servis hizmetleriyle sektöre ilk adımı attık.</p>
+        </div>
+      </div>
+
+      <div class="timeline-step">
+        <div class="timeline-badge">02</div>
+        <div class="timeline-content">
+          <span class="timeline-year">2016</span>
+          <h3 class="timeline-title">Ağır Vasıta & Tır Açılımı</h3>
+          <p class="timeline-desc">Mercedes, Scania, Volvo, MAN ve DAF modellerine yönelik yüksek dayanımlı ağır vasıta egzoz hatlarına odaklandık.</p>
+        </div>
+      </div>
+
+      <div class="timeline-step">
+        <div class="timeline-badge">03</div>
+        <div class="timeline-content">
+          <span class="timeline-year">2021</span>
+          <h3 class="timeline-title">Dijital OEM & ŞHN Eşleme</h3>
+          <p class="timeline-desc">Müşterilerimizin ve bayilerin saniyeler içinde doğru parçayı bulabilmesi için parça eşleme kataloğunu devreye aldık.</p>
+        </div>
+      </div>
+
+      <div class="timeline-step">
+        <div class="timeline-badge">04</div>
+        <div class="timeline-content">
+          <span class="timeline-year">2026</span>
+          <h3 class="timeline-title">3.500+ Model Liderliği</h3>
+          <p class="timeline-desc">Geniş merkez depo stoğu ve hızlı kargo altyapısıyla Türkiye'nin egzoz sektöründeki güvenilir markasıyız.</p>
         </div>
       </div>
     </div>
@@ -196,7 +219,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-logo">
-          <img src="/logo.png" alt="Şahanlar Egzoz Logo" class="logo-img-footer">
+          <img src="/logo-white.png?v=3" alt="Şahanlar Egzoz Logo" class="logo-img-footer">
         </div>
         <p class="footer-desc">Manifolddan susturucuya, kelepçeden spirale A'dan Z'ye tüm egzoz ekipmanları. Kamyon, tır ve binek araç için güvenilir tedarikçiniz.</p>
         <div class="footer-socials">
@@ -232,7 +255,7 @@
         <div class="footer-links">
           <span class="footer-link">📍 Aydınlar, 94077. sok no:10/2, 42320 Ereğli/Konya</span>
           <a href="tel:+905444394560" class="footer-link">📞 +90 544 439 45 60</a>
-          <a href="mailto:info@sahanlaregzoz.com" class="footer-link">✉️ info@sahanlaregzoz.com</a>
+          <a href="/cdn-cgi/l/email-protection#86efe8e0e9c6f5e7eee7e8eae7f4e3e1fce9fca8e5e9eb" class="footer-link">✉️ <span class="__cf_email__" data-cfemail="066f6860694675676e67686a677463617c697c2865696b">[email&#160;protected]</span></a>
           <span class="footer-link">🕐 Hft-Cts: 08:00-18:00</span>
         </div>
       </div>
@@ -271,7 +294,7 @@
   </button>
 </div>
 
-<script type="module" src="/js/main.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module" src="/js/main.js"></script>
 
 <style>
 @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr !important; } }

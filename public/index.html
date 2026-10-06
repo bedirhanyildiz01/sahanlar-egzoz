@@ -9,7 +9,7 @@
   <meta property="og:title" content="Şahanlar Egzoz — A'dan Z'ye Egzoz Ekipmanları">
   <meta property="og:description" content="Manifolddan susturucuya, kelepçeden spirale her türlü egzoz ekipmanı. Kamyon, tır ve binek araç için binlerce ürün.">
   <link rel="icon" href="/logo.png" type="image/png">
-  <link rel="stylesheet" href="/css/style.css?v=11">
+  <link rel="stylesheet" href="/css/style.css?v=29">
 </head>
 <body>
 
@@ -17,7 +17,7 @@
 <header class="site-header" id="site-header">
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="/logo.png" alt="Şahanlar Egzoz Logo" class="logo-img">
+      <img src="/logo.png?v=5" alt="Şahanlar Egzoz Logo" class="logo-img">
     </a>
 
     <nav class="nav-links">
@@ -77,43 +77,69 @@
 
 <!-- ── Hero ── -->
 <section class="hero">
-  <div class="hero-bg-pattern"></div>
-  <div class="hero-grid-overlay"></div>
-  <div class="hero-content container">
-    <div class="hero-badge">
-      🔥 A'dan Z'ye Egzoz Uzmanı
-    </div>
-    <h1 class="hero-title">
-      Egzoza Dair Herşey<br>
-      <span class="highlight">Tek Adreste</span>
-    </h1>
-    <p class="hero-subtitle">
-      Manifolddan susturucuya, kelepçeden spirale, contadan flex boruya — kamyon, tır ve binek araç için her türlü egzoz ekipmanı elimizde mevcuttur.
-    </p>
+  <div class="container">
+    <div class="hero-inner">
+      <!-- Left: Exhaust Image (Linear/Emil Kowalski floating polish) -->
+      <div class="hero-image-side">
+        <div class="hero-floating-badge badge-top">
+          <span class="badge-dot"></span>
+          <span>⚡ 3.500+ Hazır Stok Parça</span>
+        </div>
+        <img src="https://st.depositphotos.com/1000207/2429/i/450/depositphotos_24297009-stock-photo-car-muffler-exhaust-silencer-on.jpg" alt="Egzoz Susturucu" class="hero-exhaust-img">
+        <div class="hero-floating-badge badge-bottom">
+          <span>🚚</span>
+          <span>Aynı Gün Hızlı Kargo & OEM Eşleme</span>
+        </div>
+      </div>
+      <!-- Right: Text Content (sağdan kayarak gelecek) -->
+      <div class="hero-text-side reveal-on-scroll">
+        <h1 class="hero-title" style="text-align:left;">
+          Egzoza Dair Herşey<br>
+          <span class="highlight">Şahanlar'da</span>
+        </h1>
+        <p class="hero-subtitle" style="margin-left:0;text-align:left;">
+          Manifolddan susturucuya, kelepçeden spirale, contadan flex boruya — kamyon, tır ve binek araç için her türlü egzoz ekipmanı elimizde mevcuttur.
+        </p>
 
-    <!-- Search Bar -->
-    <div class="hero-search">
-      <div class="hero-search-tabs">
-        <button class="search-tab active" data-mode="text">Ürün Adı</button>
-        <button class="search-tab" data-mode="oem">OEM No</button>
-        <button class="search-tab" data-mode="shn">ŞHN No</button>
+        <!-- Search Bar -->
+        <div class="hero-search" style="margin-left:0;">
+          <div class="hero-search-tabs">
+            <button class="search-tab active" data-mode="text">Ürün Adı</button>
+            <button class="search-tab" data-mode="oem">OEM No</button>
+            <button class="search-tab" data-mode="shn">ŞHN No</button>
+          </div>
+          <input type="text" class="hero-search-input" id="hero-search-input" placeholder="Arama yapın...">
+          <button class="hero-search-btn" id="hero-search-btn">🔍 Ara</button>
+        </div>
       </div>
-      <input type="text" class="hero-search-input" id="hero-search-input" placeholder="Arama yapın...">
-      <button class="hero-search-btn" id="hero-search-btn">🔍 Ara</button>
     </div>
+  </div>
+  <!-- Hidden stats for JS compatibility -->
+  <div style="display:none;">
+    <div id="stat-products">0</div>
+    <div id="stat-brands">0</div>
+    <div id="stat-categories">0</div>
+  </div>
+</section>
 
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="value" id="stat-products">—</div>
-        <div class="label">Ürün Çeşidi</div>
+
+
+<!-- ── Product Catalog Section (Görseldeki Gibi) ── -->
+<section class="section catalog-banner-section" style="background: var(--bg-deep); padding: 80px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="catalog-banner-grid">
+      <div class="catalog-banner-content">
+        <h2 class="catalog-banner-title">ÜRÜN KATALOĞU</h2>
+        <p class="catalog-banner-desc">3.500 adet farklı modele kolayca ulaşabilirsiniz.</p>
+        <a href="/products.html" class="btn btn-primary catalog-banner-btn">
+          <span>ÜRÜNLERİMİZ</span>
+          <span style="font-size: 1.1rem; margin-left: 8px;">→</span>
+        </a>
       </div>
-      <div class="hero-stat">
-        <div class="value" id="stat-brands">—</div>
-        <div class="label">Araç Markası</div>
-      </div>
-      <div class="hero-stat">
-        <div class="value" id="stat-categories">—</div>
-        <div class="label">Kategori</div>
+      <div class="catalog-banner-image-container">
+        <div class="catalog-banner-image-crop">
+          <img src="/exhaust_catalog.png" alt="Şahanlar Egzoz Ürün Kataloğu" class="catalog-banner-img">
+        </div>
       </div>
     </div>
   </div>
@@ -139,53 +165,145 @@
   </div>
 </section>
 
-<!-- ── Featured Products ── -->
-<section class="section">
+<!-- ── Biz Kimiz (Kurumsal Panel) ── -->
+<section class="section about-premium-section" style="background: var(--bg-surface); padding: 80px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
-    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
-      <div>
-        <div class="section-label">Öne Çıkanlar</div>
-        <h2 class="section-title">Son Eklenen <span>Ürünler</span></h2>
+    <div class="about-premium-grid">
+      <!-- Left: Clean Exhaust Product Image -->
+      <div class="about-premium-image-side">
+        <div class="about-image-card">
+          <img src="/sahanlar_truck.png" alt="Şahanlar Egzoz Taşıma Aracı" class="about-card-img">
+        </div>
       </div>
-      <a href="/products.html" class="btn btn-outline">Tümünü Gör →</a>
-    </div>
-    <div class="products-grid" id="featured-products">
-      <!-- JS ile doldurulacak (skeleton) -->
-      <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium" style="margin-bottom:6px"></div><div class="skeleton skeleton-line"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium" style="margin-bottom:6px"></div><div class="skeleton skeleton-line"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div style="padding:16px"><div class="skeleton skeleton-line short" style="margin-bottom:8px"></div><div class="skeleton skeleton-line medium" style="margin-bottom:6px"></div><div class="skeleton skeleton-line"></div></div></div>
+      <!-- Right: Content -->
+      <div class="about-premium-content-side">
+        <div class="section-label">KURUMSAL</div>
+        <h2 class="about-premium-title">Şahanlar Egzoz <span>Kimdir?</span></h2>
+        <p class="about-premium-desc">
+          Şahanlar Egzoz olarak, otomotiv ve ağır vasıta sektöründe uzun yıllara dayanan tecrübemizle binek araç, tır, kamyon ve iş makinesi gruplarına yönelik yüksek kaliteli egzoz sistemleri tedarik ediyoruz. Geniş ürün kataloğumuz ve müşteri odaklı çözümlerimizle sektörde güvenilir iş ortağınız olmaya devam ediyoruz.
+        </p>
+        
+        <!-- Simple Features -->
+        <ul style="list-style: none; padding: 0; margin: 0 0 32px 0; display: flex; flex-direction: column; gap: 12px; text-align: left;">
+          <li style="display: flex; align-items: center; gap: 10px; font-size: 0.98rem; color: var(--text-primary); font-weight: 500;">
+            <span style="color: var(--primary); font-weight: bold;">✓</span> 3.500+ Farklı Egzoz Parça Modeli
+          </li>
+          <li style="display: flex; align-items: center; gap: 10px; font-size: 0.98rem; color: var(--text-primary); font-weight: 500;">
+            <span style="color: var(--primary); font-weight: bold;">✓</span> Yüksek Dayanımlı Malzeme Kalitesi
+          </li>
+          <li style="display: flex; align-items: center; gap: 10px; font-size: 0.98rem; color: var(--text-primary); font-weight: 500;">
+            <span style="color: var(--primary); font-weight: bold;">✓</span> Çevre Standartlarına Tam Uyum
+          </li>
+        </ul>
+        
+        <a href="/about.html" class="btn btn-primary" style="padding: 12px 28px; font-size: 0.95rem;">
+          Daha Fazla Bilgi İçin <span style="margin-left: 8px;">→</span>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ── Stats Banner ── -->
-<div class="stats-banner">
+<!-- ── Exhaust Components Section (Görseldeki Birebir Tasarım) ── -->
+<section class="section exhaust-anatomy-section" style="background: #ffffff; padding: 60px 0 80px; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
-    <div class="stats-banner-grid">
-      <div class="stat-item"><div class="num">15+</div><div class="label">Yıl Tecrübe</div></div>
-      <div class="stat-item"><div class="num">5000+</div><div class="label">Ürün Çeşidi</div></div>
-      <div class="stat-item"><div class="num">50+</div><div class="label">Araç Markası</div></div>
-      <div class="stat-item"><div class="num">%100</div><div class="label">Müşteri Memnuniyeti</div></div>
+    <div class="anatomy-grid">
+      <!-- Left Column (01, 02, 03) -->
+      <div class="anatomy-col anatomy-left">
+        <div class="anatomy-item">
+          <div class="anatomy-header">
+            <h3 class="anatomy-title">MANİFOLD</h3>
+            <span class="anatomy-num">01</span>
+          </div>
+          <p class="anatomy-desc">Motor silindirlerinden çıkan yüksek sıcaklıktaki gazları toplayarak tek bir hatta birleştirir. Motorun nefes almasını kolaylaştırarak performansı doğrudan artırır.</p>
+        </div>
+        
+        <div class="anatomy-item">
+          <div class="anatomy-header">
+            <h3 class="anatomy-title">SPİRAL (FLEX)</h3>
+            <span class="anatomy-num">02</span>
+          </div>
+          <p class="anatomy-desc">Motorun ürettiği titreşimleri ve esnemeleri emerek egzoz hattının kırılmasını önler. Egzoz sisteminin ömrünü uzatan en kritik esnek bağlantı elemanıdır.</p>
+        </div>
+        
+        <div class="anatomy-item">
+          <div class="anatomy-header">
+            <h3 class="anatomy-title">KATALİZÖR</h3>
+            <span class="anatomy-num">03</span>
+          </div>
+          <p class="anatomy-desc">Egzoz gazındaki çevreye ve insan sağlığına zararlı zehirli gazları kimyasal reaksiyonla zararsız karbondioksit ve su buharına dönüştürür.</p>
+        </div>
+      </div>
+      
+      <!-- Center Column (Exhaust Image) -->
+      <div class="anatomy-center-col">
+        <div class="brackets-container" style="padding: 0;">
+          <img src="https://agaregzoz.com/wp-content/uploads/2025/01/egzoz-gorseli-agar-egzoz-ana-sayfa-v2.webp" alt="Şahanlar Egzoz Yapısı" class="anatomy-exhaust-img">
+        </div>
+      </div>
+      
+      <!-- Right Column (04, 05, 06) -->
+      <div class="anatomy-col anatomy-right">
+        <div class="anatomy-item">
+          <div class="anatomy-header">
+            <span class="anatomy-num">04</span>
+            <h3 class="anatomy-title">SUSTURUCU</h3>
+          </div>
+          <p class="anatomy-desc">Yüksek basınçla çıkan egzoz gazlarının oluşturduğu gürültüyü sönümleyerek aracın yasal sınırlar içinde, sessiz ve konforlu çalışmasını sağlar.</p>
+        </div>
+        
+        <div class="anatomy-item">
+          <div class="anatomy-header">
+            <span class="anatomy-num">05</span>
+            <h3 class="anatomy-title">EGZOZ BORUSU</h3>
+          </div>
+          <p class="anatomy-desc">Motor çıkışından aracın arkasına kadar gazların güvenle yönlendirilmesini sağlar. Yüksek sıcaklığa ve korozyona dayanıklı özel alaşımlı borulardır.</p>
+        </div>
+        
+        <div class="anatomy-item">
+          <div class="anatomy-header">
+            <span class="anatomy-num">06</span>
+            <h3 class="anatomy-title">KELEPÇE & CONTA</h3>
+          </div>
+          <p class="anatomy-desc">Parçalar arasındaki bağlantı noktalarını sızdırmaz hale getirir. Gaz kaçaklarını önleyerek egzoz sisteminin tam verimlilikle çalışmasını garanti eder.</p>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ── Product Catalog Section (Görseldeki Gibi) ── -->
-<section class="section catalog-banner-section" style="background: var(--bg-deep); padding: 80px 0;">
+<!-- ── Automotive Value Pillars (Neden Şahanlar Egzoz?) ── -->
+<section class="section value-pillars-section">
   <div class="container">
-    <div class="catalog-banner-grid">
-      <div class="catalog-banner-content">
-        <h2 class="catalog-banner-title">ÜRÜN KATALOĞU</h2>
-        <p class="catalog-banner-desc">3.500 adet farklı modele kolayca ulaşabilirsiniz.</p>
-        <a href="/products.html" class="btn btn-primary catalog-banner-btn">
-          <span>ÜRÜNLERİMİZ</span>
-          <span style="font-size: 1.1rem; margin-left: 8px;">→</span>
-        </a>
+    <div class="section-header centered reveal-on-scroll">
+      <div class="section-label">Güven & Kalite</div>
+      <h2 class="section-title">Neden <span>Şahanlar Egzoz?</span></h2>
+      <p class="section-desc" style="margin:16px auto 0">Ağır vasıta, kamyon ve binek grubu için profesyonel tedarik ve uzman mühendislik standartları.</p>
+    </div>
+
+    <div class="value-pillars-grid reveal-on-scroll">
+      <div class="value-card">
+        <div class="value-icon-box">🛡️</div>
+        <h3 class="value-title">OEM Uyumlu Kalite</h3>
+        <p class="value-desc">Orijinal fabrika standartlarında üretim toleransları ile %100 birebir montaj ve sızdırmazlık garantisi.</p>
       </div>
-      <div class="catalog-banner-image-container">
-        <div class="catalog-banner-image-crop">
-          <img src="/exhaust_catalog.png" alt="Şahanlar Egzoz Ürün Kataloğu" class="catalog-banner-img">
-        </div>
+
+      <div class="value-card">
+        <div class="value-icon-box">🚀</div>
+        <h3 class="value-title">Aynı Gün Hızlı Sevk</h3>
+        <p class="value-desc">Geniş merkez depo stokları sayesinde siparişleriniz gün içinde kargoya ve lojistiğe teslim edilir.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon-box">🔩</div>
+        <h3 class="value-title">3.500+ Model Çeşidi</h3>
+        <p class="value-desc">Mercedes, Scania, Volvo, DAF, MAN, Ford ve tüm binek markaları kapsayan dev parça yelpazesi.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon-box">👨‍🔧</div>
+        <h3 class="value-title">Uzman Parça Desteği</h3>
+        <p class="value-desc">ŞHN ve OEM parça kodları üzerinden teknik ekibimizle aracınıza en doğru parçayı tespit edin.</p>
       </div>
     </div>
   </div>
@@ -220,7 +338,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-logo">
-          <img src="/logo.png" alt="Şahanlar Egzoz Logo" class="logo-img-footer">
+          <img src="/logo-white.png?v=5" alt="Şahanlar Egzoz Logo" class="logo-img-footer">
         </div>
         <p class="footer-desc">Manifolddan susturucuya, kelepçeden spirale A'dan Z'ye tüm egzoz ekipmanları. Kamyon, tır ve binek araç için güvenilir tedarikçiniz.</p>
         <div class="footer-socials">
@@ -256,7 +374,7 @@
         <div class="footer-links">
           <span class="footer-link">📍 Aydınlar, 94077. sok no:10/2, 42320 Ereğli/Konya</span>
           <a href="tel:+905444394560" class="footer-link">📞 +90 544 439 45 60</a>
-          <a href="mailto:info@sahanlaregzoz.com" class="footer-link">✉️ info@sahanlaregzoz.com</a>
+          <a href="/cdn-cgi/l/email-protection#adc4c3cbc2eddeccc5ccc3c1ccdfc8cad7c2d783cec2c0" class="footer-link">✉️ <span class="__cf_email__" data-cfemail="e28b8c848da291838a838c8e83908785988d98cc818d8f">[email&#160;protected]</span></a>
           <span class="footer-link">🕐 Hft-Cts: 08:00-18:00</span>
         </div>
       </div>
@@ -270,7 +388,7 @@
 
 <div id="toast-container" class="toast-container"></div>
 
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { api, categoryList } from '/js/api.js';
 import { renderProductCard, animateCounter } from '/js/main.js';
 
@@ -314,7 +432,7 @@ async function loadPage() {
   try {
     const [catData, prodData] = await Promise.all([
       api.getCategories(),
-      api.getProducts({ limit: 6, sort: 'created_at_desc' }),
+      api.getProducts({ limit: 8, sort: 'created_at_desc' }),
     ]);
 
     // Stats
@@ -327,20 +445,21 @@ async function loadPage() {
     // Categories
     const catGrid = document.getElementById('categories-grid');
     const catImages = { 
-      'Manifold': 'https://images.unsplash.com/photo-1615906655593-ad098c44c16c?auto=format&fit=crop&q=80&w=400', 
-      'Katalizor': 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&q=80&w=400', 
-      'Susturucu': 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&q=80&w=400', 
-      'Boru': 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=400', 
-      'Spiral': 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=400', 
-      'Kelepce': 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=400', 
-      'Conta': 'https://images.unsplash.com/photo-1581092162384-8987c1796715?auto=format&fit=crop&q=80&w=400', 
-      'Filtre': 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=400', 
-      'Flexboru': 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=400', 
-      'Aksesuar': 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=400' 
+      'Manifold': 'https://image.made-in-china.com/202f0j00AonqSMTsijbc/Auto-Exhaust-Manifold-Stainless-Steel-Muffler-Motorcycle-Exhaust-System-Customized-Exhaust-Header.webp', 
+      'Katalizor': 'https://agaregzoz.com/wp-content/uploads/2024/10/katalitik-konvertor-yerine-agar-egzoz-150x150.png', 
+      'Susturucu': 'https://agaregzoz.com/wp-content/uploads/2024/10/universal-susturucu-agar-egzoz-150x150.png', 
+      'Boru': 'https://agaregzoz.com/wp-content/uploads/2024/10/boru-agar-egzoz-150x150.png', 
+      'Spiral': 'https://agaregzoz.com/wp-content/uploads/2024/10/spiral-agar-egzoz-150x150.png', 
+      'Kelepce': 'https://tut.com.tr/tr/images/products/s6a9b-a2.jpg', 
+      'Kelepçe': 'https://tut.com.tr/tr/images/products/s6a9b-a2.jpg', 
+      'Conta': 'https://agaregzoz.com/wp-content/uploads/2024/10/egzoz-agar-egzoz-150x150.png', 
+      'Filtre': 'https://agaregzoz.com/wp-content/uploads/2024/10/partikul-filtre-agar-egzoz-150x150.png', 
+      'Flexboru': 'https://agaregzoz.com/wp-content/uploads/2024/10/spiral-agar-egzoz-150x150.png' 
     };
 
     if (catData.categories && catData.categories.length > 0) {
-      catGrid.innerHTML = catData.categories.map(c => `
+      const filtered = catData.categories.filter(c => c.category !== 'Aksesuar');
+      catGrid.innerHTML = filtered.map(c => `
         <div class="category-card" onclick="window.location.href='/products.html?category=${encodeURIComponent(c.category)}'">
           <div class="category-img-wrapper">
             <img src="${catImages[c.category] || 'https://images.unsplash.com/photo-1615906655593-ad098c44c16c?auto=format&fit=crop&q=80&w=400'}" alt="${c.category}" class="category-img">
@@ -350,7 +469,8 @@ async function loadPage() {
         </div>
       `).join('');
     } else {
-      catGrid.innerHTML = categoryList.map(c => `
+      const filtered = categoryList.filter(c => c.name !== 'Aksesuar' && c.id !== 'Aksesuar');
+      catGrid.innerHTML = filtered.map(c => `
         <div class="category-card" onclick="window.location.href='/products.html?category=${encodeURIComponent(c.id)}'">
           <div class="category-img-wrapper">
             <img src="${catImages[c.name] || 'https://images.unsplash.com/photo-1615906655593-ad098c44c16c?auto=format&fit=crop&q=80&w=400'}" alt="${c.name}" class="category-img">
@@ -374,6 +494,23 @@ async function loadPage() {
 }
 
 loadPage();
+
+// ── Viewport Scroll Reveal Observer for first 3 sections ──
+const animateTargets = document.querySelectorAll('.hero, .exhaust-anatomy-section, .catalog-banner-section, .about-premium-section');
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      } else {
+        entry.target.classList.remove('active');
+      }
+    });
+  }, { threshold: 0.1 });
+  animateTargets.forEach(target => observer.observe(target));
+} else {
+  animateTargets.forEach(target => target.classList.add('active'));
+}
 </script>
 
 <!-- WhatsApp Widget -->
