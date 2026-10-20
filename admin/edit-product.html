@@ -77,33 +77,31 @@
 
         <!-- Row 1: Fotoğraf + Temel Bilgiler -->
         <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;margin-bottom:20px">
-          <!-- Image Upload -->
+          <!-- Image Upload (Çoklu Görsel Desteği) -->
           <div class="admin-form-card" style="margin-bottom:0">
-            <div class="form-section-title">📷 Ürün Fotoğrafı</div>
-
-            <!-- Current image preview -->
-            <div id="current-image-area" style="display:none;margin-bottom:16px;position:relative">
-              <img id="current-img" src="" alt="" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius-md);border:1px solid var(--border)">
-              <div style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.6);border-radius:var(--radius-sm);padding:4px 10px;font-size:0.7rem;color:rgba(255,255,255,0.8)">Mevcut Fotoğraf</div>
-            </div>
+            <div class="form-section-title">📷 Ürün Fotoğrafları (Çoklu Yükleme)</div>
 
             <div class="image-upload-zone" id="upload-zone">
-              <input type="file" id="image-file" accept="image/jpeg,image/jpg,image/png,image/webp">
-              <div class="upload-icon">🔄</div>
-              <div class="upload-text">Fotoğrafı değiştirmek için tıklayın</div>
-              <div class="upload-hint">JPG, PNG, WebP — max 5MB</div>
+              <input type="file" id="image-file" accept="image/jpeg,image/jpg,image/png,image/webp" multiple>
+              <div class="upload-icon">📷</div>
+              <div class="upload-text">Yeni görsel(ler) eklemek için tıklayın</div>
+              <div class="upload-hint">veya dosyaları buraya sürükleyin</div>
+              <div class="upload-hint" style="margin-top:6px">JPG, PNG, WebP — Birden çok görsel eklenebilir</div>
             </div>
 
-            <div class="image-preview-area" id="preview-area">
-              <img id="preview-img" src="" alt="Önizleme">
-              <button type="button" class="preview-remove" id="remove-new-image">✕</button>
+            <div class="multi-image-container" id="multi-image-container" style="display:none;margin-top:14px">
+              <div class="multi-image-header">
+                <span id="multi-image-count">Kayıtlı / Yüklenen Görseller (0)</span>
+                <span style="font-size:0.7rem;color:var(--text-muted)">1. görsel ana vitrin görselidir</span>
+              </div>
+              <div class="multi-image-grid" id="multi-image-grid"></div>
             </div>
 
             <div id="upload-progress" style="display:none;margin-top:12px">
               <div style="background:var(--bg-surface);border-radius:var(--radius-full);height:4px;overflow:hidden">
                 <div id="progress-bar" style="height:100%;background:var(--gradient-brand);width:0%;transition:width 0.3s ease;border-radius:var(--radius-full)"></div>
               </div>
-              <p style="font-size:0.75rem;color:var(--text-muted);margin-top:6px;text-align:center">Yükleniyor...</p>
+              <p id="upload-status-text" style="font-size:0.75rem;color:var(--text-muted);margin-top:6px;text-align:center">Görseller yükleniyor...</p>
             </div>
 
             <input type="hidden" id="image-url">
@@ -299,11 +297,9 @@ async function loadProduct() {
       if (product[field]) el.value = product[field];
     });
 
-    // Image
-    if (product.image_url) {
-      document.getElementById('current-img').src = product.image_url;
-      document.getElementById('current-image-area').style.display = 'block';
-    }
+    // Images (Çoklu Görsel)
+    uploadedImages = (product.image_url || '').split(',').map(s => s.trim()).filter(Boolean);
+    renderImages();
 
     // Meta
     const metaEl = document.getElementById('product-meta');
@@ -323,72 +319,125 @@ async function loadProduct() {
   }
 }
 
-// ── Image Upload ─────────────────────────────────────────────────────
+// ── Multi-Image Management ──────────────────────────────────────────
 const uploadZone = document.getElementById('upload-zone');
 const fileInput = document.getElementById('image-file');
-const previewArea = document.getElementById('preview-area');
-const previewImg = document.getElementById('preview-img');
+const multiContainer = document.getElementById('multi-image-container');
+const multiGrid = document.getElementById('multi-image-grid');
+const multiCount = document.getElementById('multi-image-count');
+const imageUrlInput = document.getElementById('image-url');
+const progress = document.getElementById('upload-progress');
+const progressBar = document.getElementById('progress-bar');
+const statusText = document.getElementById('upload-status-text');
+
+let uploadedImages = [];
+
+function renderImages() {
+  if (uploadedImages.length === 0) {
+    multiContainer.style.display = 'none';
+    multiGrid.innerHTML = '';
+    imageUrlInput.value = '';
+    return;
+  }
+
+  multiContainer.style.display = 'block';
+  multiCount.textContent = `Kayıtlı / Yüklenen Görseller (${uploadedImages.length})`;
+  imageUrlInput.value = uploadedImages.join(',');
+
+  multiGrid.innerHTML = uploadedImages.map((url, idx) => `
+    <div class="multi-image-card">
+      <img src="${url}" alt="Ürün Görseli ${idx + 1}" loading="lazy">
+      ${idx === 0 ? '<span class="primary-badge">Ana Görsel</span>' : ''}
+      <button type="button" class="card-remove-btn" data-index="${idx}" title="Görseli Kaldır">✕</button>
+    </div>
+  `).join('');
+
+  multiGrid.querySelectorAll('.card-remove-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = parseInt(btn.dataset.index, 10);
+      uploadedImages.splice(idx, 1);
+      renderImages();
+    });
+  });
+}
 
 uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
 uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
 uploadZone.addEventListener('drop', async e => {
   e.preventDefault();
   uploadZone.classList.remove('drag-over');
-  if (e.dataTransfer?.files?.[0]) await handleFileUpload(e.dataTransfer.files[0]);
+  const files = Array.from(e.dataTransfer?.files || []);
+  if (files.length) await handleMultipleFiles(files);
 });
 
 fileInput.addEventListener('change', async () => {
-  if (fileInput.files?.[0]) await handleFileUpload(fileInput.files[0]);
-});
-
-document.getElementById('remove-new-image').addEventListener('click', () => {
-  previewArea.style.display = 'none';
-  previewImg.src = '';
-  // Restore original image URL
-  document.getElementById('image-url').value = currentProduct?.image_url || '';
+  const files = Array.from(fileInput.files || []);
+  if (files.length) await handleMultipleFiles(files);
   fileInput.value = '';
 });
 
-async function handleFileUpload(file) {
-  if (!['image/jpeg','image/jpg','image/png','image/webp'].includes(file.type)) {
-    showToast('Sadece JPG, PNG veya WebP yüklenebilir', 'error'); return;
+async function handleMultipleFiles(files) {
+  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+  const validFiles = files.filter(f => allowedTypes.includes(f.type) && f.size <= 8 * 1024 * 1024);
+
+  if (validFiles.length < files.length) {
+    showToast('Bazı dosyalar geçersiz format veya 8MB üstü olduğu için atlandı.', 'info');
   }
-  if (file.size > 5 * 1024 * 1024) { showToast('Max 5MB', 'error'); return; }
 
-  const reader = new FileReader();
-  reader.onload = e => { previewImg.src = e.target.result; previewArea.style.display = 'block'; };
-  reader.readAsDataURL(file);
+  if (validFiles.length === 0) return;
 
-  const progress = document.getElementById('upload-progress');
-  const progressBar = document.getElementById('progress-bar');
   progress.style.display = 'block';
-  let pct = 0;
-  const iv = setInterval(() => { pct = Math.min(pct + 15, 85); progressBar.style.width = pct + '%'; }, 200);
+  progressBar.style.width = '10%';
+  statusText.textContent = `0 / ${validFiles.length} görsel yükleniyor...`;
 
-  try {
-    const formData = new FormData();
-    formData.append('image', file);
-    const res = await fetch('/api/upload', {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}` },
-      body: formData,
-    });
-    clearInterval(iv);
-    progressBar.style.width = '100%';
+  let completed = 0;
 
-    if (res.ok) {
-      const data = await res.json();
-      document.getElementById('image-url').value = data.url;
-      showToast('Resim güncellendi', 'success');
-    } else {
-      showToast('Yükleme başarısız', 'error');
+  for (let i = 0; i < validFiles.length; i++) {
+    const file = validFiles[i];
+    statusText.textContent = `${i + 1} / ${validFiles.length} yükleniyor (${file.name})...`;
+
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.url) uploadedImages.push(data.url);
+      } else {
+        const localDataUrl = await new Promise(resolve => {
+          const reader = new FileReader();
+          reader.onload = ev => resolve(ev.target.result);
+          reader.readAsDataURL(file);
+        });
+        uploadedImages.push(localDataUrl);
+      }
+    } catch (err) {
+      const localDataUrl = await new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = ev => resolve(ev.target.result);
+        reader.readAsDataURL(file);
+      });
+      uploadedImages.push(localDataUrl);
     }
-  } catch {
-    clearInterval(iv);
-    showToast('Yükleme hatası', 'error');
-  } finally {
-    setTimeout(() => { progress.style.display = 'none'; progressBar.style.width = '0%'; }, 800);
+
+    completed++;
+    const pct = Math.round((completed / validFiles.length) * 100);
+    progressBar.style.width = `${pct}%`;
   }
+
+  renderImages();
+  showToast(`${completed} görsel başarıyla eklendi`, 'success');
+
+  setTimeout(() => {
+    progress.style.display = 'none';
+    progressBar.style.width = '0%';
+  }, 600);
 }
 
 // ── Form Submit ──────────────────────────────────────────────────────

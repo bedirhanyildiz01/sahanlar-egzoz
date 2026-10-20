@@ -8,24 +8,545 @@
   <link rel="icon" href="/logo.png" type="image/png">
   <link rel="stylesheet" href="/css/style.css?v=29">
   <style>
-    .share-btns { display:flex; gap:8px; flex-wrap:wrap; }
-    .share-btn { padding:8px 14px; border-radius:var(--radius-sm); font-size:0.78rem; font-weight:600; background:var(--glass-bg); border:1px solid var(--border); color:var(--text-secondary); cursor:pointer; transition:var(--transition); display:flex; align-items:center; gap:6px; }
-    .share-btn:hover { border-color:var(--border-active); color:var(--primary); }
-    .related-section { padding:60px 0; background:var(--bg-surface); }
-    .product-image-viewer { position: relative; }
-    .product-image-viewer::after {
-      content: '';
+    /* ── Product Detail Page Redesign ─────────────── */
+    .pd-page {
+      min-height: 100vh;
+      background: var(--bg-base);
+      padding-top: 80px;
+    }
+
+    .pd-breadcrumb {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+    }
+    .pd-breadcrumb .inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .pd-breadcrumb a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .pd-breadcrumb a:hover { color: var(--primary); }
+    .pd-breadcrumb .sep { color: var(--border-active); }
+    .pd-breadcrumb .current { color: var(--text-secondary); font-weight: 500; }
+
+    /* ── Main Layout ─────────────────────────────── */
+    .pd-main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── Gallery Panel ───────────────────────────── */
+    .pd-gallery {
+      position: sticky;
+      top: 96px;
+    }
+    .pd-main-img-wrap {
+      position: relative;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: zoom-in;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pd-main-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.4s ease;
+      display: none;
+    }
+    .pd-main-img-wrap:hover img {
+      transform: scale(1.04);
+    }
+    .pd-main-img-wrap .pd-watermark {
       position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 50%; height: 50%;
+      inset: 0;
       background-image: url('/logo.png');
-      background-size: contain;
+      background-size: 40% auto;
       background-repeat: no-repeat;
       background-position: center;
-      opacity: 0.15;
+      opacity: 0.07;
       pointer-events: none;
-      z-index: 1;
+    }
+    .pd-no-photo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 3rem;
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+    }
+    .pd-no-photo span {
+      font-size: 0.875rem;
+      font-family: Inter, sans-serif;
+    }
+    .pd-status-overlay {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 5;
+    }
+    .pd-status-badge {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .pd-status-badge.in-stock {
+      background: rgba(34, 197, 94, 0.12);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    .pd-status-badge.out-stock {
+      background: rgba(239, 68, 68, 0.12);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .pd-img-count {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 50px;
+      backdrop-filter: blur(8px);
+      z-index: 5;
+    }
+
+    /* Thumbnails */
+    .pd-thumbs {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scroll-snap-type: x mandatory;
+    }
+    .pd-thumbs::-webkit-scrollbar { height: 4px; }
+    .pd-thumbs::-webkit-scrollbar-track { background: var(--bg-surface); border-radius: 2px; }
+    .pd-thumbs::-webkit-scrollbar-thumb { background: var(--border-active); border-radius: 2px; }
+
+    .pd-thumb {
+      flex-shrink: 0;
+      width: 76px;
+      height: 76px;
+      border-radius: 10px;
+      border: 2px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      scroll-snap-align: start;
+      transition: all 0.2s ease;
+      background: var(--bg-surface);
+      padding: 0;
+    }
+    .pd-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .pd-thumb:hover {
+      border-color: rgba(220, 38, 38, 0.5);
+      transform: translateY(-2px);
+    }
+    .pd-thumb.active {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+    }
+
+    /* ── Info Panel ─────────────────────────────── */
+    .pd-info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Header Box */
+    .pd-header-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .pd-cat-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(220, 38, 38, 0.08);
+      color: var(--primary);
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      border-radius: 50px;
+      padding: 4px 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .pd-title {
+      font-family: Oswald, sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.25;
+      margin: 0 0 16px;
+    }
+    .pd-ref-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pd-ref-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.72rem;
+    }
+    .pd-ref-chip .lbl {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .pd-ref-chip .val {
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
+
+    /* Specs Table */
+    .pd-specs-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .pd-specs-title {
+      padding: 14px 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+    .pd-spec-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.82rem;
+      align-items: center;
+    }
+    .pd-spec-row:last-child { border-bottom: none; }
+    .pd-spec-row:hover { background: rgba(255,255,255,0.02); }
+    .pd-spec-lbl { color: var(--text-muted); font-weight: 500; }
+    .pd-spec-val { color: var(--text-secondary); font-weight: 600; text-align: right; }
+    .pd-spec-val.mono { font-family: 'Courier New', monospace; font-size: 0.78rem; }
+
+    /* Description */
+    .pd-desc-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .pd-desc-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+    }
+    .pd-desc-text {
+      font-size: 0.875rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+    }
+
+    /* Contact CTA Box (sticky right side) */
+    .pd-cta-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pd-cta-title {
+      font-family: Oswald, sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .pd-cta-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .pd-cta-wa {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.25);
+    }
+    .pd-cta-wa:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(37, 211, 102, 0.35);
+    }
+    .pd-cta-call {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px 20px;
+      background: transparent;
+      border: 1px solid var(--border-active);
+      border-radius: 12px;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .pd-cta-call:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(220, 38, 38, 0.05);
+    }
+    .pd-share-row {
+      display: flex;
+      gap: 8px;
+      padding-top: 4px;
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+    }
+    .pd-share-btn {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .pd-share-btn:hover {
+      border-color: var(--border-active);
+      color: var(--text-secondary);
+      background: var(--bg-card);
+    }
+
+    /* Company Card */
+    .pd-company-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .pd-company-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .pd-company-logo img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+    .pd-company-info .name {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    .pd-company-info .meta {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .pd-company-info .trust {
+      font-size: 0.7rem;
+      color: #f59e0b;
+      margin-top: 4px;
+    }
+
+    /* ── Safety Chips ────────────────────────────── */
+    .pd-trust-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pd-trust-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-weight: 500;
+    }
+
+    /* ── Related Section ─────────────────────────── */
+    .pd-related {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      padding: 56px 0;
+    }
+    .pd-related .inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .pd-related-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .pd-related-title {
+      font-family: Oswald, sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .pd-related-title span { color: var(--primary); }
+    .pd-related-link {
+      font-size: 0.82rem;
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .pd-related-link:hover { border-color: var(--primary); }
+
+    /* ── Skeleton ────────────────────────────────── */
+    .pd-skeleton {
+      max-width: 1280px;
+      margin: 32px auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+    }
+    .pd-skel-gallery { display: flex; flex-direction: column; gap: 10px; }
+    .pd-skel-info { display: flex; flex-direction: column; gap: 16px; }
+
+    /* ── Lightbox ────────────────────────────────── */
+    .pd-lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+    .pd-lightbox.open { display: flex; }
+    .pd-lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 0 80px rgba(0,0,0,0.8);
+    }
+    .pd-lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-size: 1.5rem;
+      color: #fff;
+      cursor: pointer;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .pd-lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── Responsive ──────────────────────────────── */
+    @media (max-width: 900px) {
+      .pd-main { grid-template-columns: 1fr; gap: 20px; }
+      .pd-gallery { position: static; }
+      .pd-skeleton { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .pd-title { font-size: 1.3rem; }
+      .pd-main { padding: 16px; }
     }
   </style>
 </head>
@@ -47,9 +568,7 @@
     <div class="header-socials-desktop">
       <a href="https://wa.me/905444394560" target="_blank" title="WhatsApp" class="social-icon-header whatsapp-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.503-5.724-1.46L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.579 1.951 14.108.922 11.5.919c-5.44 0-9.866 4.372-9.87 9.802 0 1.714.47 3.393 1.357 4.869L2.025 21.6l6.22-1.616-.598-.38a9.837 9.837 0 0 1-1.002-.85zm11.233-6.046c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.15-.173.2-.296.3-.495.099-.198.05-.371-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/></svg></a>
       <a href="https://www.instagram.com/sahanlaregzozz/" target="_blank" title="Instagram" class="social-icon-header instagram-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
-      <a href="https://www.facebook.com/durmus.sahan.58/" target="_blank" title="Facebook" class="social-icon-header facebook-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
       <a href="https://www.tiktok.com/@sahanlaregzozz" target="_blank" title="TikTok" class="social-icon-header tiktok-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.89-.52-4.06-1.39v7.41c.01 4.54-3.4 8.79-8.01 9.34-4.83.6-9.52-2.61-10.24-7.42-.81-4.73 2.19-9.57 6.89-10.51 1.1-.24 2.24-.24 3.37-.04v4.05c-.88-.26-1.84-.28-2.72.03-2.07.64-3.42 2.85-3.05 5.02.39 2.37 2.69 4.09 5.09 3.79 2.14-.23 3.86-2.08 3.87-4.24V0h-.01z"/></svg></a>
-      <a href="https://sahanlaregzozveoto.sahibinden.com/" target="_blank" title="Sahibinden" class="social-icon-header sahibinden-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="12" fill="#FFE600"/><path d="M12 5.5c-2.3 0-4.1 1.6-4.1 3.8 0 1.9 1.2 3.1 3.1 3.8l1.4.5c1 .4 1.5.8 1.5 1.4s-.6 1.1-1.5 1.1c-1.1 0-1.8-.5-1.9-1.4H8.3c.1 2.1 1.6 3.6 4.1 3.6 2.4 0 4.2-1.5 4.2-3.7 0-1.9-1.2-3.1-3.2-3.8l-1.4-.5c-1-.4-1.4-.8-1.4-1.4 0-.6.5-1.1 1.4-1.1 1 0 1.6.4 1.8 1.3h2.1c-.2-2.1-1.6-3.4-3.9-3.4z" fill="#000000"/></svg></a>
     </div>
     <button class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
   </div>
@@ -64,96 +583,150 @@
     <a href="/search.html" class="mobile-nav-link">🔍 Arama</a>
     <a href="/about.html" class="mobile-nav-link">🏢 Kurumsal</a>
     <a href="/contact.html" class="mobile-nav-link">📞 İletişim</a>
-
-    <div style="margin-top:auto; padding-top:24px; border-top:1px solid var(--border)">
-      <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:12px">Bizi Takip Edin</div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap">
-        <a href="https://wa.me/905444394560" target="_blank" class="social-btn whatsapp" title="WhatsApp"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.503-5.724-1.46L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.579 1.951 14.108.922 11.5.919c-5.44 0-9.866 4.372-9.87 9.802 0 1.714.47 3.393 1.357 4.869L2.025 21.6l6.22-1.616-.598-.38a9.837 9.837 0 0 1-1.002-.85zm11.233-6.046c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.15-.173.2-.296.3-.495.099-.198.05-.371-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/></svg></a>
-        <a href="https://www.instagram.com/sahanlaregzozz/" target="_blank" class="social-btn instagram" title="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
-        <a href="https://www.facebook.com/durmus.sahan.58/" target="_blank" class="social-btn facebook" title="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-        <a href="https://www.tiktok.com/@sahanlaregzozz" target="_blank" class="social-btn tiktok" title="TikTok"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.89-.52-4.06-1.39v7.41c.01 4.54-3.4 8.79-8.01 9.34-4.83.6-9.52-2.61-10.24-7.42-.81-4.73 2.19-9.57 6.89-10.51 1.1-.24 2.24-.24 3.37-.04v4.05c-.88-.26-1.84-.28-2.72.03-2.07.64-3.42 2.85-3.05 5.02.39 2.37 2.69 4.09 5.09 3.79 2.14-.23 3.86-2.08 3.87-4.24V0h-.01z"/></svg></a>
-        <a href="https://sahanlaregzozveoto.sahibinden.com/" target="_blank" class="social-btn sahibinden" title="Sahibinden"><svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="12" fill="#FFE600"/><path d="M12 5.5c-2.3 0-4.1 1.6-4.1 3.8 0 1.9 1.2 3.1 3.1 3.8l1.4.5c1 .4 1.5.8 1.5 1.4s-.6 1.1-1.5 1.1c-1.1 0-1.8-.5-1.9-1.4H8.3c.1 2.1 1.6 3.6 4.1 3.6 2.4 0 4.2-1.5 4.2-3.7 0-1.9-1.2-3.1-3.2-3.8l-1.4-.5c-1-.4-1.4-.8-1.4-1.4 0-.6.5-1.1 1.4-1.1 1 0 1.6.4 1.8 1.3h2.1c-.2-2.1-1.6-3.4-3.9-3.4z" fill="#000000"/></svg></a>
-      </div>
-    </div>
   </div>
 </div>
 
-<!-- Product Detail Hero -->
-<div class="product-detail-hero">
-  <div class="container">
-    <div class="breadcrumb" id="breadcrumb">
-      <a href="/">Ana Sayfa</a><span class="separator">›</span>
-      <a href="/products.html">Ürünler</a><span class="separator">›</span>
-      <span class="current" id="bc-title">Yükleniyor...</span>
-    </div>
+<!-- Breadcrumb -->
+<div class="pd-breadcrumb">
+  <div class="inner">
+    <a href="/">Ana Sayfa</a>
+    <span class="sep">›</span>
+    <a href="/products.html">Ürünler</a>
+    <span class="sep">›</span>
+    <span class="current" id="bc-title">Yükleniyor...</span>
+  </div>
+</div>
 
-    <!-- Loading skeleton -->
-    <div id="product-skeleton" class="product-detail-grid">
-      <div class="skeleton" style="border-radius:var(--radius-xl);aspect-ratio:4/3;width:100%"></div>
-      <div style="padding-top:8px">
-        <div class="skeleton skeleton-line short" style="margin-bottom:16px;height:18px"></div>
-        <div class="skeleton skeleton-line" style="margin-bottom:10px;height:32px"></div>
-        <div class="skeleton skeleton-line medium" style="margin-bottom:10px;height:32px"></div>
-        <div class="skeleton" style="height:180px;border-radius:var(--radius-lg);margin:24px 0"></div>
-        <div class="skeleton skeleton-line" style="height:48px;border-radius:var(--radius-md)"></div>
-      </div>
-    </div>
-
-    <!-- Product Content -->
-    <div id="product-content" class="product-detail-grid" style="display:none">
-      <div>
-        <div class="product-image-viewer" id="product-image-viewer">
-          <div class="product-no-image" id="product-no-image">
-            ⚙️
-            <span style="font-size:0.875rem;font-family:Inter;color:var(--text-muted)">Fotoğraf mevcut değil</span>
-          </div>
-          <img id="product-image" src="" alt="" style="display:none">
-        </div>
-      </div>
-
-      <div class="product-detail-info">
-        <div class="product-detail-category" id="product-category"></div>
-        <h1 class="product-detail-title" id="product-name"></h1>
-
-        <div class="product-detail-specs" id="product-specs">
-          <!-- JS ile doldurulacak -->
-        </div>
-
-        <p class="product-detail-desc" id="product-desc"></p>
-
-        <div class="product-detail-actions" style="margin-bottom:24px">
-          <button class="btn btn-primary btn-lg" id="btn-ask-price">💬 Fiyat Sor</button>
-          <button class="btn btn-ghost" onclick="history.back()">← Geri</button>
-        </div>
-
-        <div class="share-btns">
-          <button class="share-btn" onclick="copyLink()">🔗 Linki Kopyala</button>
-          <button class="share-btn" onclick="shareWhatsApp()">💬 WhatsApp</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Not found -->
-    <div id="product-notfound" style="display:none" class="empty-state">
-      <div class="empty-state-icon">😕</div>
-      <h2 class="empty-state-title">Ürün bulunamadı</h2>
-      <p class="empty-state-desc">Bu ürün mevcut değil ya da kaldırılmış olabilir.</p>
-      <a href="/products.html" class="btn btn-primary" style="margin-top:16px">Ürünlere Dön</a>
+<!-- Skeleton Loading -->
+<div class="pd-skeleton" id="pd-skeleton">
+  <div class="pd-skel-gallery">
+    <div class="skeleton" style="border-radius:16px;aspect-ratio:4/3;width:100%"></div>
+    <div style="display:flex;gap:8px">
+      <div class="skeleton" style="width:76px;height:76px;border-radius:10px;flex-shrink:0"></div>
+      <div class="skeleton" style="width:76px;height:76px;border-radius:10px;flex-shrink:0"></div>
+      <div class="skeleton" style="width:76px;height:76px;border-radius:10px;flex-shrink:0"></div>
     </div>
   </div>
+  <div class="pd-skel-info">
+    <div class="skeleton skeleton-line short" style="height:18px;width:120px;border-radius:50px"></div>
+    <div class="skeleton skeleton-line" style="height:36px;border-radius:8px"></div>
+    <div style="display:flex;gap:8px">
+      <div class="skeleton" style="height:36px;flex:1;border-radius:8px"></div>
+      <div class="skeleton" style="height:36px;flex:1;border-radius:8px"></div>
+    </div>
+    <div class="skeleton" style="height:200px;border-radius:16px"></div>
+    <div class="skeleton" style="height:120px;border-radius:16px"></div>
+  </div>
+</div>
+
+<!-- Product Content -->
+<div class="pd-main" id="pd-content" style="display:none">
+
+  <!-- LEFT: Gallery -->
+  <div class="pd-gallery">
+    <div class="pd-main-img-wrap" id="pd-img-wrap">
+      <div class="pd-watermark"></div>
+      <div class="pd-no-photo" id="pd-no-photo">
+        ⚙️
+        <span>Fotoğraf mevcut değil</span>
+      </div>
+      <img id="pd-main-img" src="" alt="" loading="eager">
+      <div class="pd-status-overlay">
+        <span class="pd-status-badge" id="pd-status-badge"></span>
+      </div>
+      <div class="pd-img-count" id="pd-img-count" style="display:none"></div>
+    </div>
+    <div class="pd-thumbs" id="pd-thumbs" style="display:none"></div>
+  </div>
+
+  <!-- RIGHT: Info Panel -->
+  <div class="pd-info-panel">
+
+    <!-- Header -->
+    <div class="pd-header-box">
+      <div class="pd-cat-tag" id="pd-cat-tag">🔧 Kategori</div>
+      <h1 class="pd-title" id="pd-name">—</h1>
+      <div class="pd-ref-row" id="pd-refs"></div>
+    </div>
+
+    <!-- Contact CTA -->
+    <div class="pd-cta-box">
+      <div>
+        <div class="pd-cta-title">Fiyat & Bilgi Al</div>
+        <div class="pd-cta-subtitle">Ürünle ilgili fiyat teklifi, stok durumu ve teknik bilgi için bize ulaşın.</div>
+      </div>
+      <button class="pd-cta-wa" id="pd-wa-btn">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.503-5.724-1.46L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.579 1.951 14.108.922 11.5.919c-5.44 0-9.866 4.372-9.87 9.802 0 1.714.47 3.393 1.357 4.869L2.025 21.6l6.22-1.616-.598-.38a9.837 9.837 0 0 1-1.002-.85zm11.233-6.046c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.15-.173.2-.296.3-.495.099-.198.05-.371-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/></svg>
+        WhatsApp ile Fiyat Sor
+      </button>
+      <a href="tel:+905444394560" class="pd-cta-call">
+        📞 +90 544 439 45 60 — Ara
+      </a>
+      <div class="pd-share-row">
+        <button class="pd-share-btn" id="pd-copy-btn">🔗 Linki Kopyala</button>
+        <button class="pd-share-btn" id="pd-wa-share-btn">💬 WhatsApp Paylaş</button>
+        <button class="pd-share-btn" onclick="history.back()">← Geri Dön</button>
+      </div>
+    </div>
+
+    <!-- Specs Table -->
+    <div class="pd-specs-box">
+      <div class="pd-specs-title">🔬 Teknik Özellikler</div>
+      <div id="pd-specs"></div>
+    </div>
+
+    <!-- Description -->
+    <div class="pd-desc-box" id="pd-desc-box" style="display:none">
+      <div class="pd-desc-title">📄 Ürün Açıklaması</div>
+      <p class="pd-desc-text" id="pd-desc"></p>
+    </div>
+
+    <!-- Company Card -->
+    <div class="pd-company-box">
+      <div class="pd-company-logo">
+        <img src="/logo.png" alt="Şahanlar Egzoz">
+      </div>
+      <div class="pd-company-info">
+        <div class="name">Şahanlar Egzoz ve Oto Yedek Parça</div>
+        <div class="meta">📍 Ereğli / Konya &nbsp;|&nbsp; Sektör: Ağır Vasıta &amp; Egzoz Sistemleri</div>
+        <div class="trust">⭐⭐⭐⭐⭐ &nbsp; Güvenilir Tedarikçi</div>
+      </div>
+    </div>
+
+    <!-- Trust Chips -->
+    <div class="pd-trust-chips">
+      <span class="pd-trust-chip">✅ Orijinal Parça</span>
+      <span class="pd-trust-chip">🚚 Hızlı Teslimat</span>
+      <span class="pd-trust-chip">🔩 3.500+ Model</span>
+      <span class="pd-trust-chip">🛡️ Kalite Garantili</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- Not Found -->
+<div id="pd-notfound" style="display:none;text-align:center;padding:100px 24px">
+  <div style="font-size:4rem;margin-bottom:16px">😕</div>
+  <h2 style="font-family:Oswald,sans-serif;font-size:1.5rem;color:var(--text-secondary);margin-bottom:8px">Ürün bulunamadı</h2>
+  <p style="color:var(--text-muted);margin-bottom:24px">Bu ürün mevcut değil ya da kaldırılmış olabilir.</p>
+  <a href="/products.html" class="btn btn-primary">← Tüm Ürünlere Dön</a>
 </div>
 
 <!-- Related Products -->
-<div class="related-section" id="related-section" style="display:none">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">Benzer Ürünler</div>
-      <h2 class="section-title">İlgili <span>Ürünler</span></h2>
+<div class="pd-related" id="pd-related" style="display:none">
+  <div class="inner">
+    <div class="pd-related-header">
+      <div>
+        <div style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:6px">Benzer Ürünler</div>
+        <div class="pd-related-title">İlgili <span>Parçalar</span></div>
+      </div>
+      <a href="/products.html" class="pd-related-link">Tüm ürünleri gör →</a>
     </div>
-    <div class="products-grid" id="related-products"></div>
+    <div class="products-grid" id="pd-related-grid"></div>
   </div>
 </div>
 
+<!-- Footer -->
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
@@ -166,8 +739,6 @@
           <a href="https://www.facebook.com/durmus.sahan.58/" target="_blank" class="social-btn facebook" title="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
           <a href="https://www.instagram.com/sahanlaregzozz/" target="_blank" class="social-btn instagram" title="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
           <a href="https://wa.me/905444394560" target="_blank" class="social-btn whatsapp" title="WhatsApp"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.503-5.724-1.46L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.579 1.951 14.108.922 11.5.919c-5.44 0-9.866 4.372-9.87 9.802 0 1.714.47 3.393 1.357 4.869L2.025 21.6l6.22-1.616-.598-.38a9.837 9.837 0 0 1-1.002-.85zm11.233-6.046c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.15-.173.2-.296.3-.495.099-.198.05-.371-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/></svg></a>
-          <a href="https://www.tiktok.com/@sahanlaregzozz" target="_blank" class="social-btn tiktok" title="TikTok"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.89-.52-4.06-1.39v7.41c.01 4.54-3.4 8.79-8.01 9.34-4.83.6-9.52-2.61-10.24-7.42-.81-4.73 2.19-9.57 6.89-10.51 1.1-.24 2.24-.24 3.37-.04v4.05c-.88-.26-1.84-.28-2.72.03-2.07.64-3.42 2.85-3.05 5.02.39 2.37 2.69 4.09 5.09 3.79 2.14-.23 3.86-2.08 3.87-4.24V0h-.01z"/></svg></a>
-          <a href="https://sahanlaregzozveoto.sahibinden.com/" target="_blank" class="social-btn sahibinden" title="Sahibinden"><svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="12" fill="#FFE600"/><path d="M12 5.5c-2.3 0-4.1 1.6-4.1 3.8 0 1.9 1.2 3.1 3.1 3.8l1.4.5c1 .4 1.5.8 1.5 1.4s-.6 1.1-1.5 1.1c-1.1 0-1.8-.5-1.9-1.4H8.3c.1 2.1 1.6 3.6 4.1 3.6 2.4 0 4.2-1.5 4.2-3.7 0-1.9-1.2-3.1-3.2-3.8l-1.4-.5c-1-.4-1.4-.8-1.4-1.4 0-.6.5-1.1 1.4-1.1 1 0 1.6.4 1.8 1.3h2.1c-.2-2.1-1.6-3.4-3.9-3.4z" fill="#000000"/></svg></a>
         </div>
       </div>
       <div>
@@ -187,7 +758,7 @@
           <a href="/products.html?category=Katalizor" class="footer-link">→ Katalizör</a>
           <a href="/products.html?category=Susturucu" class="footer-link">→ Susturucu</a>
           <a href="/products.html?category=Kelepce" class="footer-link">→ Kelepçe</a>
-          <a href="/products.html?category=Spiral" class="footer-link">→ Spiral & Conta</a>
+          <a href="/products.html?category=Spiral" class="footer-link">→ Spiral &amp; Conta</a>
         </div>
       </div>
       <div>
@@ -195,7 +766,6 @@
         <div class="footer-links">
           <span class="footer-link">📍 Aydınlar, 94077. sok no:10/2, 42320 Ereğli/Konya</span>
           <a href="tel:+905444394560" class="footer-link">📞 +90 544 439 45 60</a>
-          <a href="/cdn-cgi/l/email-protection#9df4f3fbf2ddeefcf5fcf3f1fceff8fae7f2e7b3fef2f0" class="footer-link">✉️ <span class="__cf_email__" data-cfemail="573e3931381724363f36393b362532302d382d7934383a">[email&#160;protected]</span></a>
           <span class="footer-link">🕐 Hft-Cts: 08:00-18:00</span>
         </div>
       </div>
@@ -220,9 +790,7 @@
       <button class="whatsapp-popup-close" id="whatsapp-popup-close">&times;</button>
     </div>
     <div class="whatsapp-popup-body">
-      <div class="whatsapp-bubble">
-        Merhabalar
-      </div>
+      <div class="whatsapp-bubble">Merhabalar</div>
       <a href="https://wa.me/905444394560" target="_blank" class="whatsapp-send-btn">
         <span>WhatsApp</span>
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
@@ -234,104 +802,190 @@
   </button>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+<!-- Lightbox -->
+<div class="pd-lightbox" id="pd-lightbox">
+  <button class="pd-lightbox-close" id="pd-lb-close">✕</button>
+  <img id="pd-lb-img" src="" alt="Büyük Görsel">
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script type="module">
 import { api } from '/js/api.js';
 import { renderProductCard, showToast } from '/js/main.js';
 
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('id');
 
-const statusLabels = { active:'Aktif', inactive:'Pasif', in_stock:'Stokta ✓', out_of_stock:'Stok Yok' };
-const statusColors = { active:'var(--text-secondary)', inactive:'#9ca3af', in_stock:'#4ade80', out_of_stock:'#f87171' };
+const statusLabels = {
+  active: 'Aktif', inactive: 'Pasif',
+  in_stock: 'Stokta', out_of_stock: 'Stok Yok'
+};
+const catIcons = {
+  Manifold: '🔥', Katalizor: '♻️', Susturucu: '🔇', Boru: '🔧',
+  Spiral: '🌀', Kelepce: '🔩', Conta: '⭕', Filtre: '🛡️',
+  Flexboru: '〰️', Aksesuar: '⚙️'
+};
 
 async function loadProduct() {
   if (!productId) {
-    document.getElementById('product-skeleton').style.display = 'none';
-    document.getElementById('product-notfound').style.display = 'block';
+    document.getElementById('pd-skeleton').style.display = 'none';
+    document.getElementById('pd-notfound').style.display = 'block';
     return;
   }
 
   try {
     const { product, related } = await api.getProduct(productId);
 
-    // Update page title + breadcrumb
     document.getElementById('page-title').textContent = `${product.name} — Şahanlar Egzoz`;
     document.getElementById('bc-title').textContent = product.name;
 
-    // Image
-    if (product.image_url) {
-      const img = document.getElementById('product-image');
-      img.src = product.image_url;
-      img.alt = product.name;
-      img.style.display = 'block';
-      document.getElementById('product-no-image').style.display = 'none';
-    }
+    // ── Gallery ──────────────────────────────────────────────────
+    const rawImages = (product.image_url || '').split(',').map(s => s.trim()).filter(Boolean);
+    const mainImg = document.getElementById('pd-main-img');
+    const noPhoto = document.getElementById('pd-no-photo');
+    const thumbsEl = document.getElementById('pd-thumbs');
+    const imgCount = document.getElementById('pd-img-count');
+    const imgWrap = document.getElementById('pd-img-wrap');
 
-    // Category & title
-    document.getElementById('product-category').textContent = product.category || 'Genel';
-    document.getElementById('product-name').textContent = product.name;
+    if (rawImages.length > 0) {
+      mainImg.src = rawImages[0];
+      mainImg.alt = product.name;
+      mainImg.style.display = 'block';
+      noPhoto.style.display = 'none';
 
-    // Specs
-    const specs = [];
-    if (product.shn_no) specs.push({ label: 'ŞHN Numarası', value: product.shn_no, mono: true });
-    if (product.oem_no) specs.push({ label: 'OEM Numarası', value: product.oem_no, mono: true });
-    if (product.brand) specs.push({ label: 'Araç Markası', value: product.brand });
-    if (product.model) specs.push({ label: 'Araç Modeli', value: product.model });
-    specs.push({ label: 'Kategori', value: product.category || 'Genel' });
-    specs.push({ label: 'Durum', value: statusLabels[product.status] || product.status, color: statusColors[product.status] });
+      if (rawImages.length > 1) {
+        imgCount.textContent = `1 / ${rawImages.length}`;
+        imgCount.style.display = 'block';
 
-    document.getElementById('product-specs').innerHTML = specs.map(s => `
-      <div class="spec-card">
-        <span class="spec-label">${s.label}</span>
-        <span class="spec-value ${s.mono ? 'mono' : ''}" ${s.color ? `style="color:${s.color}"` : ''}>${s.value}</span>
-      </div>`).join('');
+        thumbsEl.style.display = 'flex';
+        thumbsEl.innerHTML = rawImages.map((url, idx) => `
+          <button type="button" class="pd-thumb ${idx === 0 ? 'active' : ''}" data-idx="${idx}" data-src="${url}" title="Görsel ${idx + 1}">
+            <img src="${url}" alt="${product.name} görseli ${idx + 1}" loading="lazy">
+          </button>
+        `).join('');
 
-    // Dynamic WhatsApp Inquiry
-    const askPriceBtn = document.getElementById('btn-ask-price');
-    if (askPriceBtn) {
-      askPriceBtn.addEventListener('click', () => {
-        const name = product.name;
-        const shn = product.shn_no || '-';
-        const oem = product.oem_no || '-';
-        const msg = `Merhaba, ${name} (ŞHN: ${shn}, OEM: ${oem}) ürününüz hakkında fiyat bilgisi alabilir miyim?`;
-        window.open(`https://wa.me/905444394560?text=${encodeURIComponent(msg)}`, '_blank');
+        thumbsEl.querySelectorAll('.pd-thumb').forEach(btn => {
+          btn.addEventListener('click', () => {
+            thumbsEl.querySelectorAll('.pd-thumb').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            mainImg.src = btn.dataset.src;
+            imgCount.textContent = `${parseInt(btn.dataset.idx) + 1} / ${rawImages.length}`;
+          });
+        });
+      }
+
+      // Lightbox on main image click
+      imgWrap.style.cursor = 'zoom-in';
+      imgWrap.addEventListener('click', () => {
+        document.getElementById('pd-lb-img').src = mainImg.src;
+        document.getElementById('pd-lightbox').classList.add('open');
       });
-    }
-
-    // Description
-    const descEl = document.getElementById('product-desc');
-    if (product.description) {
-      descEl.textContent = product.description;
     } else {
-      descEl.style.display = 'none';
+      mainImg.style.display = 'none';
+      noPhoto.style.display = 'flex';
+      imgWrap.style.cursor = 'default';
     }
 
-    // Show content
-    document.getElementById('product-skeleton').style.display = 'none';
-    document.getElementById('product-content').style.display = 'grid';
+    // ── Status Badge ─────────────────────────────────────────────
+    const badge = document.getElementById('pd-status-badge');
+    if (product.status === 'in_stock' || product.status === 'active') {
+      badge.textContent = statusLabels[product.status] || 'Aktif';
+      badge.className = 'pd-status-badge in-stock';
+    } else if (product.status === 'out_of_stock') {
+      badge.textContent = 'Stok Yok';
+      badge.className = 'pd-status-badge out-stock';
+    } else {
+      badge.style.display = 'none';
+    }
 
-    // Related
+    // ── Category Tag ─────────────────────────────────────────────
+    const catTag = document.getElementById('pd-cat-tag');
+    const icon = catIcons[product.category] || '🔩';
+    catTag.textContent = `${icon} ${product.category || 'Genel'}`;
+
+    // ── Title ─────────────────────────────────────────────────────
+    document.getElementById('pd-name').textContent = product.name;
+
+    // ── Ref Chips (ŞHN, OEM, Marka, Model) ───────────────────────
+    const refs = [];
+    if (product.shn_no) refs.push({ lbl: 'ŞHN No', val: product.shn_no });
+    if (product.oem_no) refs.push({ lbl: 'OEM No', val: product.oem_no });
+    if (product.brand) refs.push({ lbl: 'Marka', val: product.brand });
+    if (product.model) refs.push({ lbl: 'Model', val: product.model });
+
+    document.getElementById('pd-refs').innerHTML = refs.map(r => `
+      <div class="pd-ref-chip">
+        <span class="lbl">${r.lbl}</span>
+        <span class="val">${r.val}</span>
+      </div>
+    `).join('');
+
+    // ── Specs Table ───────────────────────────────────────────────
+    const specs = [];
+    if (product.shn_no) specs.push({ l: 'ŞHN Numarası', v: product.shn_no, mono: true });
+    if (product.oem_no) specs.push({ l: 'OEM Numarası', v: product.oem_no, mono: true });
+    if (product.brand) specs.push({ l: 'Araç Markası', v: product.brand });
+    if (product.model) specs.push({ l: 'Araç Modeli', v: product.model });
+    specs.push({ l: 'Kategori', v: product.category || 'Genel' });
+    const sColor = { in_stock: '#4ade80', out_of_stock: '#f87171', active: 'var(--text-secondary)' };
+    specs.push({ l: 'Stok Durumu', v: statusLabels[product.status] || product.status, color: sColor[product.status] || 'var(--text-muted)' });
+
+    document.getElementById('pd-specs').innerHTML = specs.map(s => `
+      <div class="pd-spec-row">
+        <span class="pd-spec-lbl">${s.l}</span>
+        <span class="pd-spec-val${s.mono ? ' mono' : ''}" ${s.color ? `style="color:${s.color}"` : ''}>${s.v}</span>
+      </div>
+    `).join('');
+
+    // ── Description ───────────────────────────────────────────────
+    if (product.description) {
+      document.getElementById('pd-desc').textContent = product.description;
+      document.getElementById('pd-desc-box').style.display = 'block';
+    }
+
+    // ── CTA Buttons ───────────────────────────────────────────────
+    document.getElementById('pd-wa-btn').addEventListener('click', () => {
+      const shn = product.shn_no || '-';
+      const oem = product.oem_no || '-';
+      const msg = `Merhaba, *${product.name}* (ŞHN: ${shn} | OEM: ${oem}) ürününüz için fiyat teklifi alabilir miyim?`;
+      window.open(`https://wa.me/905444394560?text=${encodeURIComponent(msg)}`, '_blank');
+    });
+
+    document.getElementById('pd-copy-btn').addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href).then(() => showToast('Link kopyalandı! 🔗', 'success'));
+    });
+
+    document.getElementById('pd-wa-share-btn').addEventListener('click', () => {
+      const text = `Şahanlar Egzoz — ${product.name}\n${window.location.href}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    });
+
+    // ── Show content ──────────────────────────────────────────────
+    document.getElementById('pd-skeleton').style.display = 'none';
+    document.getElementById('pd-content').style.display = 'grid';
+
+    // ── Related Products ──────────────────────────────────────────
     if (related && related.length > 0) {
-      document.getElementById('related-section').style.display = 'block';
-      document.getElementById('related-products').innerHTML = related.map(renderProductCard).join('');
+      document.getElementById('pd-related').style.display = 'block';
+      document.getElementById('pd-related-grid').innerHTML = related.map(renderProductCard).join('');
     }
+
   } catch (err) {
-    document.getElementById('product-skeleton').style.display = 'none';
-    document.getElementById('product-notfound').style.display = 'block';
+    document.getElementById('pd-skeleton').style.display = 'none';
+    document.getElementById('pd-notfound').style.display = 'block';
   }
 }
 
-function copyLink() {
-  navigator.clipboard.writeText(window.location.href).then(() => showToast('Link kopyalandı!', 'success'));
-}
-
-function shareWhatsApp() {
-  const text = `Şahanlar Egzoz — ${document.getElementById('product-name').textContent}\n${window.location.href}`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-}
-
-window.copyLink = copyLink;
-window.shareWhatsApp = shareWhatsApp;
+// Lightbox close
+document.getElementById('pd-lb-close').addEventListener('click', () => {
+  document.getElementById('pd-lightbox').classList.remove('open');
+});
+document.getElementById('pd-lightbox').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') document.getElementById('pd-lightbox').classList.remove('open');
+});
 
 loadProduct();
 </script>

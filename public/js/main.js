@@ -103,10 +103,12 @@ export function setupLiveSearch(inputEl) {
             <span>${total} Eşleşme</span>
           </div>
           <div class="live-search-results">
-            ${products.map((p, idx) => `
+            ${products.map((p, idx) => {
+              const thumb = (p.image_url || '').split(',')[0].trim();
+              return `
               <a href="/product-detail.html?id=${p.id}" class="live-search-item" data-index="${idx}">
-                ${p.image_url 
-                  ? `<img src="${p.image_url}" alt="${p.name}" class="live-search-thumb" loading="lazy">`
+                ${thumb 
+                  ? `<img src="${thumb}" alt="${p.name}" class="live-search-thumb" loading="lazy">`
                   : `<div class="live-search-thumb-placeholder">🔩</div>`
                 }
                 <div class="live-search-info">
@@ -118,7 +120,8 @@ export function setupLiveSearch(inputEl) {
                   </div>
                 </div>
               </a>
-            `).join('')}
+            `;
+            }).join('')}
           </div>
           <div class="live-search-footer">
             <span>Tüm ${total} sonucu gör</span>
@@ -322,10 +325,10 @@ export function renderProductCard(product) {
   return `
     <div class="product-card" onclick="window.location.href='/product-detail.html?id=${product.id}'">
       <div class="product-card-image">
-        ${product.image_url
-          ? `<img src="${product.image_url}" alt="${product.name}" loading="lazy">`
-          : `<div class="placeholder-img">⚙️<span>Fotoğraf yok</span></div>`
-        }
+        ${(() => { const thumb = (product.image_url || '').split(',')[0].trim(); return thumb
+          ? `<img src="${thumb}" alt="${product.name}" loading="lazy">`
+          : `<div class="placeholder-img">⚙️<span>Fotoğraf yok</span></div>`;
+        })()}
         <span class="product-status-badge ${statusClass}">${statusText}</span>
       </div>
       <div class="product-card-body">
