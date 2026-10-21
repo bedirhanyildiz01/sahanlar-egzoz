@@ -779,15 +779,79 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.7;
 }
 
-/* ── Category Cards (Statü & Prestij Otomotiv Tasarımı) ── */
+/* ── Category Cards (Tek Satır & Yatay Kaydırmalı Carousel) ── */
+.categories-carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 24px;
+}
+
 .categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 20px;
-  padding: 10px 0 24px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 12px 4px 20px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(211, 47, 47, 0.35) transparent;
+  width: 100%;
+}
+
+.categories-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.categories-grid::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 999px;
+}
+
+.categories-grid::-webkit-scrollbar-thumb {
+  background: rgba(211, 47, 47, 0.35);
+  border-radius: 999px;
+}
+
+.categories-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--primary, #d32f2f);
+}
+
+.cat-nav-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: var(--text-primary);
+  font-size: 1.7rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  user-select: none;
+  z-index: 5;
+}
+
+.cat-nav-btn:hover {
+  background: var(--primary, #d32f2f);
+  color: #ffffff;
+  border-color: var(--primary, #d32f2f);
+  transform: scale(1.08);
 }
 
 .category-card {
+  flex: 0 0 260px;
+  min-width: 260px;
+  max-width: 260px;
+  scroll-snap-align: start;
   background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%);
   border: 1px solid rgba(15, 23, 42, 0.09);
   border-radius: 18px;
@@ -934,15 +998,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 991px) {
-  .categories-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
+  .category-card {
+    flex: 0 0 230px;
+    min-width: 230px;
+    max-width: 230px;
   }
 }
 
 @media (max-width: 480px) {
-  .categories-grid {
-    grid-template-columns: 1fr;
+  .cat-nav-btn {
+    display: none;
+  }
+  .category-card {
+    flex: 0 0 215px;
+    min-width: 215px;
+    max-width: 215px;
   }
 }
 
@@ -2011,7 +2081,6 @@ h1, h2, h3, h4, h5, h6 {
   .hero-search-tabs { width: 100%; overflow-x: auto; }
 
   .section { padding: 60px 0; }
-  .categories-grid { grid-template-columns: repeat(2, 1fr); }
   .features-grid { grid-template-columns: 1fr; }
 
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -2021,7 +2090,6 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
-  .categories-grid { grid-template-columns: 1fr 1fr; }
   .products-grid { grid-template-columns: 1fr; }
   .hero-stats { flex-direction: column; gap: 16px; }
   .stats-banner-grid { grid-template-columns: repeat(2, 1fr); }
@@ -2968,20 +3036,25 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 8px 24px -6px rgba(211, 47, 47, 0.18), 0 0 0 1px rgba(211, 47, 47, 0.15);
 }
 
-.feature-card-icon-wrap {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  border-radius: 11px;
-  background: rgba(211, 47, 47, 0.08);
+.feature-card-num {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.12rem;
+  font-weight: 700;
   color: var(--primary);
+  background: rgba(211, 47, 47, 0.08);
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  letter-spacing: 0.02em;
   transition: all 0.25s ease;
 }
 
-.about-feature-card.active .feature-card-icon-wrap {
+.about-feature-card:hover .feature-card-num,
+.about-feature-card.active .feature-card-num {
   background: var(--gradient-brand, #d32f2f);
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(211, 47, 47, 0.35);
@@ -2991,31 +3064,125 @@ h1, h2, h3, h4, h5, h6 {
   flex: 1;
 }
 
-.feature-card-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 3px;
-}
-
-.feature-check {
-  width: 18px;
-  height: 18px;
-  min-width: 18px;
-  border-radius: 50%;
-  background: rgba(211, 47, 47, 0.1);
-  color: var(--primary);
-  font-size: 0.72rem;
-  font-weight: 800;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.25s ease;
-}
-
-.about-feature-card.active .feature-check {
-  background: var(--primary);
+/* Realistic photo caption overlay - NO icons, authentic look */
+.showcase-real-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px 20px 20px;
+  background: linear-gradient(0deg, rgba(15, 23, 42, 0.94) 0%, rgba(15, 23, 42, 0.7) 65%, transparent 100%);
   color: #ffffff;
+  z-index: 5;
+}
+
+.real-caption-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #fca5a5;
+  margin-bottom: 6px;
+  background: rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.real-caption-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px;
+  letter-spacing: 0.02em;
+}
+
+.real-caption-desc {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* ── About Gallery Grid (Kurumsal Sayfa Görsel Vitrini) ── */
+.about-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 36px;
+}
+
+.about-gallery-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.about-gallery-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(211, 47, 47, 0.35);
+  box-shadow: 0 16px 36px -8px rgba(211, 47, 47, 0.16);
+}
+
+.about-gallery-img-box {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #0f172a;
+  position: relative;
+}
+
+.about-gallery-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+}
+
+.about-gallery-card:hover .about-gallery-img-box img {
+  transform: scale(1.08);
+}
+
+.about-gallery-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.about-gallery-info h4 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+}
+
+.about-gallery-info p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin: 0;
+}
+
+@media (max-width: 991px) {
+  .about-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .about-gallery-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .feature-card-title {

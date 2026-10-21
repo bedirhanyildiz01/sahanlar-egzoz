@@ -153,149 +153,74 @@
       <h2 class="section-title">Egzoz Parça Türüne Göre <span>Göz At</span></h2>
       <p class="section-desc" style="margin:16px auto 0">Manifold, katalizör, susturucu, kelepçe, spiral, conta ve daha fazlası. İhtiyacınız olan parça türünü seçin.</p>
     </div>
-    <div class="categories-grid" id="categories-grid">
-      <!-- JS ile doldurulacak -->
-      <div class="category-card skeleton" style="min-height:160px"></div>
-      <div class="category-card skeleton" style="min-height:160px"></div>
-      <div class="category-card skeleton" style="min-height:160px"></div>
-      <div class="category-card skeleton" style="min-height:160px"></div>
-      <div class="category-card skeleton" style="min-height:160px"></div>
-      <div class="category-card skeleton" style="min-height:160px"></div>
+    <div class="categories-carousel-container">
+      <button type="button" class="cat-nav-btn cat-nav-prev" id="cat-btn-prev" aria-label="Önceki Kategoriler">‹</button>
+      <div class="categories-grid" id="categories-grid">
+        <!-- JS ile doldurulacak -->
+        <div class="category-card skeleton" style="min-height:160px"></div>
+        <div class="category-card skeleton" style="min-height:160px"></div>
+        <div class="category-card skeleton" style="min-height:160px"></div>
+        <div class="category-card skeleton" style="min-height:160px"></div>
+        <div class="category-card skeleton" style="min-height:160px"></div>
+        <div class="category-card skeleton" style="min-height:160px"></div>
+      </div>
+      <button type="button" class="cat-nav-btn cat-nav-next" id="cat-btn-next" aria-label="Sonraki Kategoriler">›</button>
     </div>
   </div>
 </section>
 
-<!-- ── Biz Kimiz (Kurumsal Panel — İnteraktif Kapasite & Egzoz Vitrini) ── -->
+<!-- ── Biz Kimiz (Kurumsal Panel — Gerçek Tesis, Stok ve Sevkiyat Vitrini) ── -->
 <section class="section about-premium-section" style="background: var(--bg-surface); padding: 80px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
     <div class="about-premium-grid">
       
-      <!-- Sol: İnteraktif Görsel & Mühendislik Vitrini (Showcase Hub) -->
+      <!-- Sol: Gerçek Tesis & Sevkiyat Vitrini (Showcase Hub) -->
       <div class="about-premium-image-side">
         <div class="showcase-hub-card">
           
-          <!-- Segment Kontrolleri (Mantık Sekmeleri — Hover ile Değişir) -->
+          <!-- Segment Kontrolleri (İkon Olmadan Sade & Profesyonel Sekmeler) -->
           <div class="showcase-nav-pills" role="tablist">
-            <button class="showcase-pill-btn active" data-showcase="fleet" role="tab" aria-selected="true" type="button">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 17h4V5H2v12h3m11 0h2l3-3v-4h-5v7m-7 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0m10 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0"/></svg>
-              <span>Ağır Vasıta & Tır</span>
+            <button class="showcase-pill-btn active" data-showcase="warehouse" role="tab" aria-selected="true" type="button">
+              <span>Merkez Stok Depomuz</span>
             </button>
-            <button class="showcase-pill-btn" data-showcase="parts" role="tab" aria-selected="false" type="button">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-              <span>Tır Susturucu & Boru</span>
+            <button class="showcase-pill-btn" data-showcase="truck" role="tab" aria-selected="false" type="button">
+              <span>Sevkiyat Aracımız</span>
             </button>
-            <button class="showcase-pill-btn" data-showcase="tech" role="tab" aria-selected="false" type="button">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-              <span>Spiral, Kelepçe & Parça</span>
+            <button class="showcase-pill-btn" data-showcase="depot" role="tab" aria-selected="false" type="button">
+              <span>Geniş Ürün Çeşitliliği</span>
             </button>
           </div>
 
-          <!-- Görsel Sahnesi & Slaytlar -->
+          <!-- Görsel Sahnesi & Slaytlar (Gerçekçi & Mantıklı Görseller) -->
           <div class="showcase-stage">
             
-            <!-- Slide 1: Ağır Vasıta & Tır Filosu -->
-            <div class="showcase-slide active" data-slide="fleet">
-              <img src="/about_fleet.jpg" alt="Şahanlar Egzoz Ağır Vasıta ve Tır Çözümleri" class="showcase-img">
-              <div class="showcase-gradient-overlay"></div>
-              
-              <!-- Floating HUD Badge: Live Stock -->
-              <div class="showcase-hud-badge">
-                <span class="hud-pulse-dot"></span>
-                <div class="hud-badge-content">
-                  <span class="hud-badge-title">3.500+ Hazır Model</span>
-                  <span class="hud-badge-sub">Tüm Tır & Kamyon Grupları</span>
-                </div>
-              </div>
-
-              <!-- Floating HUD Card: Vehicle Compatibility -->
-              <div class="showcase-hud-card">
-                <div class="hud-card-header">
-                  <span class="hud-tag">AĞIR VASITA UYUMLULUK</span>
-                  <span class="hud-accent-text">OEM Standart</span>
-                </div>
-                <div class="hud-brand-chips">
-                  <span>Mercedes</span>
-                  <span>Scania</span>
-                  <span>Volvo</span>
-                  <span>MAN</span>
-                  <span>DAF</span>
-                  <span>Ford Cargo</span>
-                  <span>BMC</span>
-                </div>
+            <!-- Slide 1: Gerçek Depo & Hazır Stoklar -->
+            <div class="showcase-slide active" data-slide="warehouse">
+              <img src="/about_warehouse.png" alt="Şahanlar Egzoz Merkez Depo Stokları" class="showcase-img">
+              <div class="showcase-real-caption">
+                <span class="real-caption-badge">MERKEZ DEPO</span>
+                <h3 class="real-caption-title">Hazır Ağır Vasıta & Tır Egzoz Deposu</h3>
+                <p class="real-caption-desc">Konya Ereğli depomuzda tır, kamyon ve iş makineleri için binlerce hazır susturucu ve egzoz parçası.</p>
               </div>
             </div>
 
-            <!-- Slide 2: Tır Susturucu & Borular -->
-            <div class="showcase-slide" data-slide="parts">
-              <img src="/about_parts.jpg" alt="Şahanlar Egzoz Tır Susturucu ve Egzoz Boruları" class="showcase-img">
-              <div class="showcase-gradient-overlay"></div>
-              
-              <!-- Floating HUD Badge: Material Quality -->
-              <div class="showcase-hud-badge">
-                <span class="hud-icon-badge">🛡️</span>
-                <div class="hud-badge-content">
-                  <span class="hud-badge-title">Ağır Hizmet Susturucuları</span>
-                  <span class="hud-badge-sub">Yüksek Isı & Basınç Mukavemeti</span>
-                </div>
-              </div>
-
-              <!-- Floating HUD Card: Precision Components -->
-              <div class="showcase-hud-card">
-                <div class="hud-card-header">
-                  <span class="hud-tag">TIR EGZOZ DONANIMI</span>
-                  <span class="hud-accent-text">Orijinal Ölçü Toleransı</span>
-                </div>
-                <div class="hud-spec-row">
-                  <div class="hud-spec-item">
-                    <strong>Mukavemet</strong>
-                    <span>Kalın Etli Çelik</span>
-                  </div>
-                  <div class="hud-spec-item">
-                    <strong>Sızdırmazlık</strong>
-                    <span>%100 Gaz Kaçak Testli</span>
-                  </div>
-                  <div class="hud-spec-item">
-                    <strong>Tır Grubu</strong>
-                    <span>Birebir Flanş Oturumu</span>
-                  </div>
-                </div>
+            <!-- Slide 2: Gerçek Şahanlar Egzoz Sevkiyat Aracı -->
+            <div class="showcase-slide" data-slide="truck">
+              <img src="/sahanlar_truck.png" alt="Şahanlar Egzoz Sevkiyat ve Dağıtım Aracı" class="showcase-img">
+              <div class="showcase-real-caption">
+                <span class="real-caption-badge">HIZLI SEVKİYAT</span>
+                <h3 class="real-caption-title">81 İle Güvenilir Parça Dağıtımı</h3>
+                <p class="real-caption-desc">Lojistik filolarına, oto sanayi servislerine ve bayilere doğrudan adrese teslimat güvencesi.</p>
               </div>
             </div>
 
-            <!-- Slide 3: Spiral, Kelepçe & Bağlantı Elemanları -->
-            <div class="showcase-slide" data-slide="tech">
-              <img src="/about_tech.jpg" alt="Şahanlar Egzoz Tır Spiral ve Kelepçe Donanımları" class="showcase-img">
-              <div class="showcase-gradient-overlay"></div>
-              
-              <!-- Floating HUD Badge: Fast Supply -->
-              <div class="showcase-hud-badge">
-                <span class="hud-icon-badge">⚡</span>
-                <div class="hud-badge-content">
-                  <span class="hud-badge-title">81 İl Aynı Gün Sevkiyat</span>
-                  <span class="hud-badge-sub">Toptan & Perakende Stok</span>
-                </div>
-              </div>
-
-              <!-- Floating HUD Card: Quality Assurance -->
-              <div class="showcase-hud-card">
-                <div class="hud-card-header">
-                  <span class="hud-tag">AĞIR VASITA EKİPMANI</span>
-                  <span class="hud-accent-text">Titreşim & Esneme Önleyici</span>
-                </div>
-                <div class="hud-spec-row">
-                  <div class="hud-spec-item">
-                    <strong>Flex Spiral</strong>
-                    <span>Çift Kat Kilitli Örgü</span>
-                  </div>
-                  <div class="hud-spec-item">
-                    <strong>T-Bolt Kelepçe</strong>
-                    <span>Yüksek Tork Sıkma</span>
-                  </div>
-                  <div class="hud-spec-item">
-                    <strong>Tedarik</strong>
-                    <span>Filo & Servis Desteği</span>
-                  </div>
-                </div>
+            <!-- Slide 3: Geniş Yedek Parça Envanteri -->
+            <div class="showcase-slide" data-slide="depot">
+              <img src="/warehouse_stock.jpg" alt="Şahanlar Egzoz Yedek Parça Envanteri" class="showcase-img">
+              <div class="showcase-real-caption">
+                <span class="real-caption-badge">3.500+ MODEL</span>
+                <h3 class="real-caption-title">Eksiksiz Egzoz Donanım Tedariği</h3>
+                <p class="real-caption-desc">Susturucu, boru, flex spiral, ağır hizmet kelepçesi, manifold ve contalar tek çatı altında.</p>
               </div>
             </div>
 
@@ -306,9 +231,9 @@
 
             <!-- Quick Dots Indicator -->
             <div class="showcase-dots">
-              <span class="showcase-dot active" data-index="0" title="Ağır Vasıta & Tır"></span>
-              <span class="showcase-dot" data-index="1" title="Tır Susturucu & Boru"></span>
-              <span class="showcase-dot" data-index="2" title="Spiral, Kelepçe & Parça"></span>
+              <span class="showcase-dot active" data-index="0" title="Merkez Depo"></span>
+              <span class="showcase-dot" data-index="1" title="Sevkiyat"></span>
+              <span class="showcase-dot" data-index="2" title="Parça Çeşitliliği"></span>
             </div>
 
           </div>
@@ -316,7 +241,7 @@
         </div>
       </div>
 
-      <!-- Sağ: Kurumsal İçerik & İnteraktif Mantık Kartları -->
+      <!-- Sağ: Kurumsal İçerik & Özellik Kartları (İkon Yok, Sade ve Gerçekçi) -->
       <div class="about-premium-content-side">
         <div class="section-label">AĞIR VASITA & TIR EGZOZ TEDARİKÇİSİ</div>
         <h2 class="about-premium-title">Şahanlar Egzoz <span>Kimdir?</span></h2>
@@ -324,58 +249,43 @@
           Şahanlar Egzoz olarak, otomotiv ve ağır vasıta sektöründe uzun yıllara dayanan tecrübemizle binek araç, tır, kamyon ve iş makinesi gruplarına yönelik yüksek kaliteli egzoz sistemleri tedarik ediyoruz. Geniş ürün kataloğumuz ve müşteri odaklı çözümlerimizle sektörde güvenilir iş ortağınız olmaya devam ediyoruz.
         </p>
 
-        <!-- Etkileşimli Özellik Kartları (Hover ve Tıklama ile Sol Görseli Tetikler) -->
+        <!-- Özellik Kartları (İkon Yok - Numaralı Sade Düzen) -->
         <div class="about-interactive-cards">
           
           <!-- Kart 1: 3.500+ Model -->
-          <div class="about-feature-card active" data-target-showcase="fleet">
-            <div class="feature-card-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 17h4V5H2v12h3m11 0h2l3-3v-4h-5v7m-7 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0m10 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0"/></svg>
-            </div>
+          <div class="about-feature-card active" data-target-showcase="warehouse">
+            <div class="feature-card-num">01</div>
             <div class="feature-card-text">
-              <div class="feature-card-head">
-                <span class="feature-check">✓</span>
-                <h4 class="feature-card-title">3.500+ Farklı Tır Egzoz Parça Modeli</h4>
-              </div>
-              <p class="feature-card-sub">Mercedes-Benz, Scania, Volvo, MAN, DAF, Iveco ve Ford Cargo için susturucu, boru, spiral ve tüm egzoz parçaları tek çatı altında.</p>
+              <h4 class="feature-card-title">3.500+ Farklı Egzoz Parça Modeli</h4>
+              <p class="feature-card-sub">Binek araç, tır, kamyon ve iş makineleri için susturucu, egzoz borusu, spiral, kelepçe ve manifold seçenekleri.</p>
             </div>
           </div>
 
-          <!-- Kart 2: Dayanımlı Malzeme -->
-          <div class="about-feature-card" data-target-showcase="parts">
-            <div class="feature-card-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
+          <!-- Kart 2: Yüksek Dayanım -->
+          <div class="about-feature-card" data-target-showcase="truck">
+            <div class="feature-card-num">02</div>
             <div class="feature-card-text">
-              <div class="feature-card-head">
-                <span class="feature-check">✓</span>
-                <h4 class="feature-card-title">Ağır Vasıta Şartlarına Uygun Yüksek Dayanım</h4>
-              </div>
-              <p class="feature-card-sub">Ağır yük ve uzun yol şartlarına göre üretilmiş kalın etli çelik alaşımlar, yüksek gaz basıncına mukavim kaynak ve orijinal flanş uyumu.</p>
+              <h4 class="feature-card-title">Yüksek Dayanımlı Malzeme Kalitesi</h4>
+              <p class="feature-card-sub">Ağır yük ve uzun yol koşullarına mukavim kalın etli çelik borular, sızdırmaz kaynak ve orijinal flanş oturumu.</p>
             </div>
           </div>
 
-          <!-- Kart 3: Toptan & Hızlı Tedarik -->
-          <div class="about-feature-card" data-target-showcase="tech">
-            <div class="feature-card-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-            </div>
+          <!-- Kart 3: Çevre Standartları & Hızlı Tedarik -->
+          <div class="about-feature-card" data-target-showcase="depot">
+            <div class="feature-card-num">03</div>
             <div class="feature-card-text">
-              <div class="feature-card-head">
-                <span class="feature-check">✓</span>
-                <h4 class="feature-card-title">Toptan & Hızlı Tır Parça Tedariği</h4>
-              </div>
-              <p class="feature-card-sub">Lojistik filoları, kamyon-tır servisleri ve yedek parçacılar için 81 ile aynı gün kargo ve kesintisiz stok güvencesi.</p>
+              <h4 class="feature-card-title">Çevre Standartlarına Tam Uyum</h4>
+              <p class="feature-card-sub">Euro normlarına uygun emisyon performansı, minimum geri basınç ve uzun servis ömrü sağlayan sistemler.</p>
             </div>
           </div>
 
         </div>
 
-        <!-- Hızlı Metrik Rozetleri -->
+        <!-- Hızlı Metrik Rozetleri (İkon Yok) -->
         <div class="about-metric-row">
           <div class="about-metric-item">
-            <span class="metric-num">15+</span>
-            <span class="metric-lbl">Yıl Sektörel Güven</span>
+            <span class="metric-num">15+ Yıl</span>
+            <span class="metric-lbl">Sektörel Tecrübe</span>
           </div>
           <div class="about-metric-divider"></div>
           <div class="about-metric-item">
@@ -742,6 +652,9 @@ async function loadPage() {
       catGrid.innerHTML = filtered.map(renderCategoryCard).join('');
     }
 
+    // Initialize 5-second automatic sliding for categories single-row carousel
+    initCategoryCarousel();
+
     // Featured Products
     const featuredEl = document.getElementById('featured-products');
     if (prodData.products && prodData.products.length > 0) {
@@ -752,6 +665,70 @@ async function loadPage() {
   } catch (err) {
     console.error('Sayfa yüklenirken hata:', err);
   }
+}
+
+// ── Categories Carousel (Tek Satır & 5 Saniyede Bir Sola Kayma) ──
+function initCategoryCarousel() {
+  const grid = document.getElementById('categories-grid');
+  const prevBtn = document.getElementById('cat-btn-prev');
+  const nextBtn = document.getElementById('cat-btn-next');
+  if (!grid) return;
+
+  let timer = null;
+  const getStep = () => {
+    const card = grid.querySelector('.category-card');
+    return card ? (card.offsetWidth + 18) : 280;
+  };
+
+  const slideNext = () => {
+    const step = getStep();
+    const maxScroll = grid.scrollWidth - grid.clientWidth;
+    if (grid.scrollLeft >= maxScroll - 15) {
+      grid.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      grid.scrollBy({ left: step, behavior: 'smooth' });
+    }
+  };
+
+  const slidePrev = () => {
+    const step = getStep();
+    if (grid.scrollLeft <= 15) {
+      grid.scrollTo({ left: grid.scrollWidth, behavior: 'smooth' });
+    } else {
+      grid.scrollBy({ left: -step, behavior: 'smooth' });
+    }
+  };
+
+  const startAuto = () => {
+    stopAuto();
+    timer = setInterval(slideNext, 5000);
+  };
+
+  const stopAuto = () => {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  };
+
+  prevBtn?.addEventListener('click', () => {
+    stopAuto();
+    slidePrev();
+    startAuto();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    stopAuto();
+    slideNext();
+    startAuto();
+  });
+
+  grid.addEventListener('mouseenter', stopAuto);
+  grid.addEventListener('mouseleave', startAuto);
+  grid.addEventListener('touchstart', stopAuto, { passive: true });
+  grid.addEventListener('touchend', () => setTimeout(startAuto, 2000), { passive: true });
+
+  startAuto();
 }
 
 loadPage();
@@ -784,7 +761,7 @@ if ('IntersectionObserver' in window) {
   const featureCards = document.querySelectorAll('.about-feature-card');
   const progressBar = document.getElementById('showcase-progress-bar');
 
-  const slideKeys = ['fleet', 'parts', 'tech'];
+  const slideKeys = ['warehouse', 'truck', 'depot'];
   let currentIndex = 0;
   let timer = null;
   let isPaused = false;
